@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kontakt — SmartSites</title>
+<meta name="description" content="Kontaktieren Sie mich für ein kostenloses Erstgespräch über eine KI-gestützte Webseite, die mehr qualifizierte Kundenanfragen generiert.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header" id="site-header">
+  <div class="container site-header__inner">
+    <a href="index.html" class="logo">Smart<span>Sites</span></a>
+
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
+      <span></span><span></span><span></span>
+      <span class="sr-only">Menü öffnen</span>
+    </button>
+
+    <nav class="site-nav" id="site-nav">
+      <a href="index.html#leistungen">Leistungen</a>
+      <a href="index.html#ablauf">Ablauf</a>
+      <a href="ueber-uns.html">Über mich</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="kontakt.html" class="btn btn-primary btn-small">Anfrage sichern</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="contact" id="kontakt">
+    <div class="container contact__layout">
+      <div class="contact__intro">
+        <p class="eyebrow">Nächster Schritt</p>
+        <h1>Sprechen Sie mit mir über Ihre Webseite</h1>
+        <p class="section-lead">
+          Im Erstgespräch schaue ich mir gemeinsam mit Ihnen an, wo Ihre aktuelle Webseite Kunden verliert
+          — oder was eine neue Webseite leisten soll. Im zweiten Gespräch gehe ich konkret durch, wie
+          Aufbau und Anfrage-Qualifizierung bei Ihnen aussehen.
+        </p>
+      </div>
+
+      <div class="contact__form-wrap">
+        <form id="contact-form" novalidate>
+          <div class="form-row">
+            <label for="name">Name*</label>
+            <input type="text" id="name" name="name" required autocomplete="name">
+          </div>
+
+          <div class="form-row">
+            <label for="firma">Unternehmen</label>
+            <input type="text" id="firma" name="firma" autocomplete="organization">
+          </div>
+
+          <div class="form-row">
+            <label for="email">E-Mail*</label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+          </div>
+
+          <div class="form-row">
+            <label for="nachricht">Worum geht es?</label>
+            <textarea id="nachricht" name="nachricht" rows="4"></textarea>
+          </div>
+
+          <div class="form-row form-row--checkbox">
+            <input type="checkbox" id="datenschutz" name="datenschutz" required>
+            <label for="datenschutz">
+              Ich habe die <a href="datenschutz.html">Datenschutzerklärung</a> gelesen und bin damit
+              einverstanden, dass meine Angaben zur Bearbeitung meiner Anfrage gespeichert werden.*
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Anfrage absenden</button>
+        </form>
+
+        <div class="form-success" id="form-success" hidden>
+          <h3>Anfrage erhalten.</h3>
+          <p>Danke — ich melde mich innerhalb eines Werktags bei Ihnen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <a href="index.html" class="logo">Smart<span>Sites</span></a>
+    <p>Platzhalter Straße 1, 12345 Musterstadt · kontakt@smartsites.de</p>
+    <p class="site-footer__links"><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="agb.html">AGB</a></p>
+    <p class="site-footer__copy">© 2026 SmartSites. Alle Rechte vorbehalten.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datenschutz — SmartSites</title>
+<meta name="robots" content="noindex">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header" id="site-header">
+  <div class="container site-header__inner">
+    <a href="index.html" class="logo">Smart<span>Sites</span></a>
+
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
+      <span></span><span></span><span></span>
+      <span class="sr-only">Menü öffnen</span>
+    </button>
+
+    <nav class="site-nav" id="site-nav">
+      <a href="index.html#leistungen">Leistungen</a>
+      <a href="index.html#ablauf">Ablauf</a>
+      <a href="ueber-uns.html">Über mich</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="kontakt.html" class="btn btn-primary btn-small">Anfrage sichern</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-intro">
+    <div class="container legal__layout">
+      <p class="eyebrow">Datenschutz</p>
+      <h1>Datenschutzerklärung</h1>
+
+      <div class="legal__notice">
+        <p>
+          <strong>Hinweis:</strong> Diese Vorlage deckt die üblichen Pflichtangaben ab, ist aber an zwei Stellen
+          direkt von echten Entscheidungen abhängig, die noch offen sind: (1) welches Tool das Kontaktformular am
+          Ende tatsächlich verarbeitet (z. B. n8n-Webhook, Tally, o. ä. — dafür ist ggf. ein
+          Auftragsverarbeitungsvertrag mit dem Anbieter nötig), und (2) ob später Analyse-/Tracking-Tools
+          (z. B. Google Analytics) eingebunden werden — dann braucht es zusätzlich einen Cookie-Consent-Banner
+          und einen entsprechenden Abschnitt hier. Bitte vor Live-Gang von einer sachkundigen Person prüfen lassen.
+        </p>
+      </div>
+
+      <div class="legal__block">
+        <h2>1. Verantwortlicher</h2>
+        <p>
+          SmartSites<br>
+          [Straße und Hausnummer]<br>
+          [Postleitzahl, Ort]<br>
+          E-Mail: [E-Mail-Adresse] · Telefon: [Telefonnummer]
+        </p>
+      </div>
+
+      <div class="legal__block">
+        <h2>2. Verarbeitung bei Nutzung des Kontaktformulars</h2>
+        <p>
+          Wenn Sie das Kontaktformular nutzen, verarbeite ich die von Ihnen eingegebenen Daten (Name, ggf.
+          Unternehmen, E-Mail-Adresse, Ihre Nachricht) ausschließlich zur Bearbeitung Ihrer Anfrage und zur
+          Kontaktaufnahme. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anfrage vor Vertragsschluss) sowie,
+          soweit Sie der Speicherung per Checkbox zugestimmt haben, Art. 6 Abs. 1 lit. a DSGVO.
+        </p>
+        <p>[Platzhalter: Hier ergänzen, welcher Dienst die Formulardaten technisch empfängt/verarbeitet, z. B.
+        n8n (Selbsthosting oder n8n Cloud) oder Tally, inkl. Serverstandort des Anbieters.]</p>
+      </div>
+
+      <div class="legal__block">
+        <h2>3. Speicherdauer</h2>
+        <p>
+          [Platzhalter: Angabe, wie lange Anfragedaten gespeichert werden, z. B. bis zur vollständigen
+          Bearbeitung der Anfrage plus angemessene Nachfrist, danach Löschung.]
+        </p>
+      </div>
+
+      <div class="legal__block">
+        <h2>4. Hosting</h2>
+        <p>
+          [Platzhalter: Angabe des Hosting-Anbieters dieser Website, z. B. GitHub Pages oder Vercel, inkl.
+          Hinweis auf deren Datenschutzerklärung, sofern Server-Logs personenbezogene Daten wie IP-Adressen
+          enthalten.]
+        </p>
+      </div>
+
+      <div class="legal__block">
+        <h2>5. Cookies und Tracking</h2>
+        <p>
+          Diese Website setzt aktuell keine Analyse- oder Marketing-Cookies ein. Sollte das künftig hinzukommen,
+          wird diese Erklärung ergänzt und vorab ein Einwilligungs-Banner eingebunden.
+        </p>
+      </div>
+
+      <div class="legal__block">
+        <h2>6. Ihre Rechte</h2>
+        <p>
+          Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer
+          Daten sowie auf Datenübertragbarkeit und Widerspruch. Zudem können Sie eine erteilte Einwilligung
+          jederzeit mit Wirkung für die Zukunft widerrufen. Wenden Sie sich dazu an die oben genannte Kontaktadresse.
+          Ihnen steht außerdem ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <a href="index.html" class="logo">Smart<span>Sites</span></a>
+    <p>Platzhalter Straße 1, 12345 Musterstadt · kontakt@smartsites.de</p>
+    <p class="site-footer__links"><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="agb.html">AGB</a></p>
+    <p class="site-footer__copy">© 2026 SmartSites. Alle Rechte vorbehalten.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartSites — KI-gestützte Webseiten, die Anfragen qualifizieren</title>
+<meta name="description" content="Ich baue KI-gestützte Webseiten, die gezielt Kundenanfragen generieren und automatisch vorqualifizieren — statt nur gut auszusehen.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header" id="site-header">
+  <div class="container site-header__inner">
+    <a href="index.html" class="logo">Smart<span>Sites</span></a>
+
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
+      <span></span><span></span><span></span>
+      <span class="sr-only">Menü öffnen</span>
+    </button>
+
+    <nav class="site-nav" id="site-nav">
+      <a href="index.html#leistungen">Leistungen</a>
+      <a href="index.html#ablauf">Ablauf</a>
+      <a href="ueber-uns.html">Über mich</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="kontakt.html" class="btn btn-primary btn-small">Anfrage sichern</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero" id="hero">
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="hero__sweep" aria-hidden="true"></div>
+    <div class="container hero__layout">
+      <div class="hero__inner">
+        <p class="eyebrow">Für Unternehmen, die online mehr qualifizierte Anfragen gewinnen wollen</p>
+        <h1>Eine Webseite ohne künstliche Intelligenz lässt Anfragen liegen.</h1>
+        <p class="hero__lead">
+          Ich baue und optimiere Webseiten, die mit KI arbeiten: Anfragen werden automatisch eingeordnet,
+          bei echtem Interesse geht der Kontakt direkt weiter, und ein Termin lässt sich sofort über die
+          Seite buchen. Keine austauschbare Vorlage, sondern eine Seite, die mitdenkt.
+        </p>
+        <div class="hero__actions">
+          <a href="#leistungen" class="btn btn-primary">Leistungen ansehen</a>
+          <a href="#ablauf" class="btn btn-ghost">So funktioniert's</a>
+        </div>
+      </div>
+
+      <div class="automation-demo" aria-hidden="true">
+        <div class="automation-demo__bar">
+          <span class="automation-demo__dot"></span>
+          <span>Automatisierter Ablauf</span>
+        </div>
+        <ul class="automation-demo__feed">
+          <li class="automation-demo__step">
+            <span class="automation-demo__status"></span>
+            <span>Neue Anfrage über Webseite</span>
+          </li>
+          <li class="automation-demo__step">
+            <span class="automation-demo__status"></span>
+            <span>Automatisch qualifiziert</span>
+          </li>
+          <li class="automation-demo__step">
+            <span class="automation-demo__status"></span>
+            <span>Priorität zugewiesen</span>
+          </li>
+          <li class="automation-demo__step">
+            <span class="automation-demo__status"></span>
+            <span>Termin direkt über Webseite gebucht</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="leistungen">
+    <div class="container services__layout">
+      <div class="services__intro">
+        <p class="eyebrow">Leistungen</p>
+        <h2>Was ich für Sie umsetze</h2>
+        <p class="section-lead">
+          Keine Pakete, keine Stufen — abgestimmt darauf, ob Sie eine neue Webseite brauchen
+          oder die bestehende mehr leisten soll.
+        </p>
+      </div>
+
+      <ul class="service-list">
+        <li class="service-item" data-reveal>
+          <div class="service-item__body">
+            <h3>Neue Webseite mit Anfrage-Fokus</h3>
+            <p>Aufbau einer Webseite, die von Grund auf darauf ausgelegt ist, Besucher in qualifizierte Anfragen zu verwandeln.</p>
+          </div>
+        </li>
+
+        <li class="service-item" data-reveal>
+          <div class="service-item__body">
+            <h3>Direkte Terminbuchung</h3>
+            <p>Kunden können direkt über die Webseite einen Termin bei Ihnen buchen — ganz ohne Rückruf oder E-Mail-Ping-Pong.</p>
+          </div>
+        </li>
+
+        <li class="service-item" data-reveal>
+          <div class="service-item__body">
+            <h3>KI-gestützte Vorqualifizierung</h3>
+            <p>Eine KI erfasst Anfragen direkt über die Webseite und ordnet sie automatisch ein, bevor sie bei Ihnen landen.</p>
+          </div>
+        </li>
+
+        <li class="service-item" data-reveal>
+          <div class="service-item__body">
+            <h3>Webseiten-Optimierung</h3>
+            <p>Wenn Ihre bestehende Webseite Probleme macht, finde ich die Schwachstellen und behebe sie — damit sie besser läuft.</p>
+          </div>
+        </li>
+
+        <li class="service-item" data-reveal>
+          <div class="service-item__body">
+            <h3>Technische Grundlagen</h3>
+            <p>Ladezeit, mobile Darstellung und Struktur werden so gelöst, dass nichts zwischen Besucher und Anfrage steht.</p>
+          </div>
+        </li>
+
+        <li class="service-item" data-reveal>
+          <div class="service-item__body">
+            <h3>Laufende Anpassung</h3>
+            <p>Nach dem Livegang justiere ich nach — auf Basis echter Anfragedaten statt Bauchgefühl.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="services trust" id="vertrauen">
+    <div class="container services__layout">
+      <div class="services__intro">
+        <p class="eyebrow">Vertrauen</p>
+        <h2>So arbeite ich</h2>
+        <p class="section-lead">
+          Ein transparenter Prozess, bei dem Sie die ganze Zeit direkt mit mir sprechen — kein
+          Callcenter, keine Weiterleitung.
+        </p>
+      </div>
+
+      <ul class="service-list">
+        <li class="service-item" data-reveal>
+          <div class="service-item__body">
+            <h3>Direkter Ansprechpartner</h3>
+            <p>Sie sprechen während des gesamten Projekts direkt mit mir — keine wechselnden Zuständigkeiten.</p>
+          </div>
+        </li>
+
+        <li class="service-item" data-reveal>
+          <div class="service-item__body">
+            <h3>Transparenter Ablauf</h3>
+            <p>Sie wissen vor Projektstart genau, was passiert und wie lange es dauert.</p>
+          </div>
+        </li>
+
+        <li class="service-item" data-reveal>
+          <div class="service-item__body">
+            <h3>DSGVO-konforme Umsetzung</h3>
+            <p>Formulare und Terminbuchung werden datenschutzkonform umgesetzt — ohne nachträgliche Überraschungen.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="convo-section">
+    <div class="container">
+      <p class="eyebrow">So sieht das in der Praxis aus</p>
+      <h2>Eine Anfrage, live qualifiziert</h2>
+      <p class="section-lead">
+        Kein Beispiel-Screenshot — so läuft eine echte Anfrage über eine richtig gebaute Webseite ab:
+        links die Anfrage, rechts die automatische Reaktion darauf.
+      </p>
+
+      <div class="convo">
+        <div class="convo__track convo__track--in">
+          <span class="convo__indicator" id="convo-in-dot"></span>
+          <div class="convo__msg convo__msg--in" id="convo-in">
+            <span class="convo__time"></span>
+            <p></p>
+          </div>
+        </div>
+
+        <div class="convo__track convo__track--out">
+          <span class="convo__indicator" id="convo-out-dot"></span>
+          <div class="convo__msg convo__msg--out" id="convo-out">
+            <span class="convo__time"></span>
+            <p></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ablauf" id="ablauf">
+    <div class="container">
+      <p class="eyebrow">Ablauf</p>
+      <h2>So beginnt die Zusammenarbeit</h2>
+      <p class="section-lead">
+        Vier Schritte von der ersten Analyse bis zum laufenden Betrieb — kein Papierkram, keine Blackbox.
+      </p>
+
+      <div class="flow" id="flow">
+        <div class="flow__node" data-reveal>
+          <span class="flow__badge">1</span>
+          <h3>Erstgespräch</h3>
+          <p>Ich schaue mir an, wo Ihre aktuelle Webseite Kunden verliert — oder was eine neue leisten soll.</p>
+        </div>
+
+        <div class="flow__connector" data-reveal>
+          <span class="flow__connector-line"></span>
+          <span class="flow__connector-dot"></span>
+        </div>
+
+        <div class="flow__node" data-reveal>
+          <span class="flow__badge">2</span>
+          <h3>Konzept</h3>
+          <p>Ich gehe mit Ihnen konkret durch, wie Aufbau und Anfrage-Qualifizierung bei Ihnen aussehen.</p>
+        </div>
+
+        <div class="flow__connector" data-reveal>
+          <span class="flow__connector-line"></span>
+          <span class="flow__connector-dot"></span>
+        </div>
+
+        <div class="flow__node" data-reveal>
+          <span class="flow__badge">3</span>
+          <h3>Umsetzung</h3>
+          <p>Ich baue die Webseite oder behebe die gefundenen Schwachstellen.</p>
+        </div>
+
+        <div class="flow__connector" data-reveal>
+          <span class="flow__connector-line"></span>
+          <span class="flow__connector-dot"></span>
+        </div>
+
+        <div class="flow__node" data-reveal>
+          <span class="flow__badge">4</span>
+          <h3>Betrieb</h3>
+          <p>Anfragen werden automatisch qualifiziert, Termine direkt über die Webseite gebucht.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Bereit für eine Webseite, die Anfragen qualifiziert?</h2>
+      <p>Im kostenlosen Erstgespräch schaue ich mir gemeinsam mit Ihnen an, wo Ihre aktuelle Webseite Kunden verliert — oder was eine neue leisten soll.</p>
+      <a href="kontakt.html" class="btn btn-primary">Kostenloses Erstgespräch sichern</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <a href="index.html" class="logo">Smart<span>Sites</span></a>
+    <p>Platzhalter Straße 1, 12345 Musterstadt · kontakt@smartsites.de</p>
+    <p class="site-footer__links"><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="agb.html">AGB</a></p>
+    <p class="site-footer__copy">© 2026 SmartSites. Alle Rechte vorbehalten.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
