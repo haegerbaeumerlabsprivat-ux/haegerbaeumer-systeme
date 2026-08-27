@@ -35,9 +35,11 @@ siteNav.querySelectorAll('a').forEach((link) => {
 // ---------- Contact form ----------
 const contactForm = document.getElementById('contact-form');
 const formSuccess = document.getElementById('form-success');
+const formError = document.getElementById('form-error');
+const CONTACT_ENDPOINT = 'https://nicklaurin.app.n8n.cloud/webhook/kontakt-haegerbaeumer-systeme';
 
 if (contactForm) {
-  contactForm.addEventListener('submit', (event) => {
+  contactForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     if (!contactForm.checkValidity()) {
@@ -45,9 +47,42 @@ if (contactForm) {
       return;
     }
 
-    contactForm.hidden = true;
-    formSuccess.hidden = false;
-    contactForm.reset();
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Wird gesendet …';
+    }
+    if (formError) formError.hidden = true;
+
+    const payload = {
+      name: contactForm.elements.name.value.trim(),
+      email: contactForm.elements.email.value.trim(),
+      firma: contactForm.elements.firma ? contactForm.elements.firma.value.trim() : '',
+      nachricht: contactForm.elements.nachricht ? contactForm.elements.nachricht.value.trim() : '',
+    };
+
+    try {
+      const res = await fetch(CONTACT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error('Request failed: ' + res.status);
+
+      contactForm.hidden = true;
+      formSuccess.hidden = false;
+      contactForm.reset();
+    } catch (err) {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Anfrage absenden';
+      }
+      if (formError) {
+        formError.hidden = false;
+      } else {
+        alert('Das hat leider nicht geklappt. Bitte schreiben Sie mir direkt an kontakt@haegerbaeumer-systeme.de.');
+      }
+    }
   });
 }
 

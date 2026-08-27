@@ -611,6 +611,17 @@ textarea { resize: vertical; }
 .form-success h3 { color: var(--accent-light); margin-bottom: 0.3em; }
 .form-success p { color: var(--text-muted); margin: 0; }
 
+.form-error {
+  margin-top: 20px;
+  padding: 14px 18px;
+  background: rgba(244, 99, 30, 0.08);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+.form-error a { color: var(--accent-light); }
+
 /* ---------- Footer ---------- */
 .site-footer {
   border-top: 1px solid var(--border-soft);
