@@ -370,7 +370,7 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); }
 }
 .services__intro { position: sticky; top: 120px; }
 
-.service-list { border-top: 1px solid var(--border-soft); }
+.service-list { border-top: 1px solid var(--border-soft); list-style: none; margin: 0; padding: 0; }
 .service-item {
   padding: 28px 0 28px 18px;
   border-bottom: 1px solid var(--border-soft);
@@ -381,8 +381,18 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); }
   border-left-color: var(--accent);
   padding-left: 28px;
 }
-.service-item__body h3 { font-size: 1.1rem; }
+.service-item__num {
+  display: inline-block;
+  font-family: var(--font-head);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.service-item__body h3 { font-size: 1.1rem; margin-top: 0; }
 .service-item__body p { color: var(--text-muted); margin-bottom: 0; font-size: 0.95rem; max-width: 520px; }
+.service-item__for { color: var(--text-primary); font-weight: 500; margin-bottom: 8px; }
 
 /* ---------- Page intro (subpage header, no hero visual above) ---------- */
 .page-intro { padding-top: 160px; }
