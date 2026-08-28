@@ -165,12 +165,18 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); }
   padding-bottom: 16px;
 }
 .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
   font-family: var(--font-head);
-  font-weight: 700;
-  font-size: 1.15rem;
-  letter-spacing: -0.01em;
+  font-weight: 600;
+  font-size: 1.12rem;
+  letter-spacing: -0.005em;
+  color: var(--text-primary);
 }
-.logo span { color: var(--accent); }
+.logo__mark { flex: none; color: var(--text-primary); }
+.logo__word { white-space: nowrap; }
+.logo__word .sys { color: var(--accent); }
 
 .site-nav {
   display: flex;
@@ -688,7 +694,7 @@ textarea { resize: vertical; }
 }
 .site-footer__inner { text-align: center; }
 .site-footer p { color: var(--text-muted); font-size: 0.9rem; margin: 0.4em 0; }
-.site-footer .logo { display: inline-block; margin-bottom: 0.6em; }
+.site-footer .logo { display: inline-flex; margin-bottom: 0.6em; }
 .site-footer__copy { font-size: 0.8rem; opacity: 0.7; }
 .site-footer__links a { color: var(--text-muted); transition: color 0.2s ease; }
 .site-footer__links a:hover { color: var(--accent-light); }
