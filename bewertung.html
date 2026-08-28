@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erfahrung teilen — Hägerbäumer Systeme</title>
+<meta name="description" content="Sie haben mit Hägerbäumer Systeme zusammengearbeitet? Teilen Sie Ihre Erfahrung und helfen Sie anderen Unternehmen bei der Entscheidung.">
+<meta name="robots" content="noindex">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header" id="site-header">
+  <div class="container site-header__inner">
+    <a href="/" class="logo">Hägerbäumer&nbsp;<span>Systeme</span></a>
+
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
+      <span></span><span></span><span></span>
+      <span class="sr-only">Menü öffnen</span>
+    </button>
+
+    <nav class="site-nav" id="site-nav">
+      <a href="/#leistungen">Leistungen</a>
+      <a href="/#ablauf">Ablauf</a>
+      <a href="ueber-uns.html">Über mich</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="kontakt.html" class="btn btn-primary btn-small">Anfrage sichern</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="contact" id="bewertung">
+    <div class="container contact__layout">
+      <div class="contact__intro">
+        <p class="eyebrow">Erfahrung teilen</p>
+        <h1>Wie war die Zusammenarbeit?</h1>
+        <p class="section-lead">
+          Wenn wir zusammengearbeitet haben, freue ich mich über Ihre ehrliche Rückmeldung.
+          Ihre Bewertung wird erst nach einer kurzen Prüfung durch mich auf der Website
+          veröffentlicht — mit Ihrem Namen und, falls angegeben, Ihrem Unternehmen.
+        </p>
+      </div>
+
+      <div class="contact__form-wrap">
+        <form id="review-form" novalidate>
+          <div class="form-row">
+            <label for="r-name">Name*</label>
+            <input type="text" id="r-name" name="name" required autocomplete="name">
+          </div>
+
+          <div class="form-row">
+            <label for="r-firma">Unternehmen</label>
+            <input type="text" id="r-firma" name="firma" autocomplete="organization">
+          </div>
+
+          <div class="form-row">
+            <span class="form-label" id="sterne-label">Ihre Bewertung*</span>
+            <div class="star-rating" role="radiogroup" aria-labelledby="sterne-label">
+              <input type="radio" id="star5" name="sterne" value="5" required><label for="star5" title="5 Sterne"><span class="sr-only">5 Sterne</span>★</label>
+              <input type="radio" id="star4" name="sterne" value="4"><label for="star4" title="4 Sterne"><span class="sr-only">4 Sterne</span>★</label>
+              <input type="radio" id="star3" name="sterne" value="3"><label for="star3" title="3 Sterne"><span class="sr-only">3 Sterne</span>★</label>
+              <input type="radio" id="star2" name="sterne" value="2"><label for="star2" title="2 Sterne"><span class="sr-only">2 Sterne</span>★</label>
+              <input type="radio" id="star1" name="sterne" value="1"><label for="star1" title="1 Stern"><span class="sr-only">1 Stern</span>★</label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="r-text">Ihre Erfahrung*</label>
+            <textarea id="r-text" name="text" rows="5" required
+              placeholder="Was hat gut funktioniert? Was war das Ergebnis für Ihr Unternehmen?"></textarea>
+          </div>
+
+          <div class="form-row form-row--checkbox">
+            <input type="checkbox" id="r-consent" name="consent" required>
+            <label for="r-consent">
+              Ich bin damit einverstanden, dass diese Bewertung mit meinem Namen (und ggf.
+              Unternehmen) auf der Website veröffentlicht wird. Details in der
+              <a href="datenschutz.html">Datenschutzerklärung</a>.*
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Bewertung absenden</button>
+        </form>
+
+        <div class="form-success" id="review-success" hidden>
+          <h3>Vielen Dank!</h3>
+          <p>Ihre Bewertung ist bei mir eingegangen. Nach einer kurzen Prüfung erscheint sie auf der Website.</p>
+        </div>
+
+        <p class="form-error" id="review-error" role="alert" hidden>
+          Das Senden hat nicht geklappt. Bitte versuchen Sie es erneut oder schreiben Sie mir direkt an
+          <a href="mailto:kontakt@haegerbaeumer-systeme.de">kontakt@haegerbaeumer-systeme.de</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <a href="/" class="logo">Hägerbäumer&nbsp;<span>Systeme</span></a>
+    <p>Feilenstraße 11a, 32120 Hiddenhausen · kontakt@haegerbaeumer-systeme.de</p>
+    <p class="site-footer__links"><a href="bewertung.html">Erfahrung teilen</a> · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></p>
+    <p class="site-footer__copy">© 2026 Hägerbäumer Systeme. Alle Rechte vorbehalten.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -217,3 +217,99 @@ if (convo) {
     convoObserver.observe(convo);
   }
 }
+
+// ---------- Bewertungen (n8n) ----------
+const REVIEW_POST_ENDPOINT = 'https://nicklaurin.app.n8n.cloud/webhook/bewertung-abgeben';
+const REVIEW_GET_ENDPOINT = 'https://nicklaurin.app.n8n.cloud/webhook/bewertungen-anzeigen';
+
+function renderStars(n) {
+  const full = Math.max(0, Math.min(5, Math.round(Number(n) || 0)));
+  return '★'.repeat(full) + '☆'.repeat(5 - full);
+}
+
+// --- Bewertung abschicken (bewertung.html) ---
+const reviewForm = document.getElementById('review-form');
+const reviewSuccess = document.getElementById('review-success');
+const reviewError = document.getElementById('review-error');
+
+if (reviewForm) {
+  reviewForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!reviewForm.checkValidity()) {
+      reviewForm.reportValidity();
+      return;
+    }
+
+    const submitBtn = reviewForm.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Wird gesendet …';
+    }
+    if (reviewError) reviewError.hidden = true;
+
+    const checkedStar = reviewForm.querySelector('input[name="sterne"]:checked');
+    const payload = {
+      name: reviewForm.elements.name.value.trim(),
+      firma: reviewForm.elements.firma ? reviewForm.elements.firma.value.trim() : '',
+      sterne: checkedStar ? Number(checkedStar.value) : 0,
+      text: reviewForm.elements.text.value.trim(),
+    };
+
+    try {
+      const res = await fetch(REVIEW_POST_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error('Request failed: ' + res.status);
+      reviewForm.hidden = true;
+      reviewSuccess.hidden = false;
+      reviewForm.reset();
+    } catch (err) {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Bewertung absenden';
+      }
+      if (reviewError) reviewError.hidden = false;
+    }
+  });
+}
+
+// --- Freigegebene Bewertungen anzeigen (index.html) ---
+const reviewsSection = document.getElementById('erfahrungen');
+const reviewsGrid = document.getElementById('reviews-grid');
+
+if (reviewsSection && reviewsGrid) {
+  fetch(REVIEW_GET_ENDPOINT)
+    .then((res) => (res.ok ? res.json() : []))
+    .then((reviews) => {
+      if (!Array.isArray(reviews) || reviews.length === 0) return;
+
+      reviews.slice(0, 12).forEach((r) => {
+        const card = document.createElement('figure');
+        card.className = 'review-card';
+
+        const stars = document.createElement('div');
+        stars.className = 'review-card__stars';
+        stars.setAttribute('aria-label', (Number(r.sterne) || 0) + ' von 5 Sternen');
+        stars.textContent = renderStars(r.sterne);
+
+        const quote = document.createElement('blockquote');
+        quote.className = 'review-card__text';
+        quote.textContent = r.text || '';
+
+        const who = document.createElement('figcaption');
+        who.className = 'review-card__who';
+        const firma = (r.firma || '').trim();
+        who.textContent = (r.name || 'Anonym') + (firma ? ' · ' + firma : '');
+
+        card.appendChild(stars);
+        card.appendChild(quote);
+        card.appendChild(who);
+        reviewsGrid.appendChild(card);
+      });
+
+      reviewsSection.hidden = false;
+    })
+    .catch(() => {});
+}
