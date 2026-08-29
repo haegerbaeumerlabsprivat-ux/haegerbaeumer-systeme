@@ -774,6 +774,15 @@ textarea { resize: vertical; }
 .project-card__body p { color: var(--text-muted); font-size: 0.92rem; margin: 0 0 0.6em; }
 .project-card__body p:last-child { margin-bottom: 0; }
 .project-card__body strong { color: var(--text-primary); }
+.project-card__link {
+  display: inline-block;
+  margin-top: 1em;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--accent-light);
+}
+.project-card__link:hover { text-decoration: underline; }
 
 /* ---------- Trust (Vertrauen) — alternate background for visual rhythm ---------- */
 .trust { background: var(--bg-base); }
