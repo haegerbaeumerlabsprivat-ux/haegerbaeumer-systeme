@@ -129,26 +129,33 @@
   <section class="convo-section">
     <div class="container">
       <p class="eyebrow">So sieht das in der Praxis aus</p>
-      <h2>Eine Anfrage, live qualifiziert</h2>
+      <h2>Ein Termin, automatisch gebucht</h2>
       <p class="section-lead">
-        Kein Beispiel-Screenshot — so läuft eine echte Anfrage über eine richtig gebaute Webseite ab:
-        links die Anfrage, rechts die automatische Reaktion darauf.
+        Kein Beispiel-Screenshot — so bucht sich ein Termin über eine richtig gebaute Webseite von
+        selbst: links die Anfrage auf der Webseite, rechts die automatische Terminbuchung. Kein
+        Chat, keine Rückfragen — die Automatisierung trägt den Termin direkt ein.
       </p>
 
-      <div class="convo">
-        <div class="convo__track convo__track--in">
-          <span class="convo__indicator" id="convo-in-dot"></span>
-          <div class="convo__msg convo__msg--in" id="convo-in">
-            <span class="convo__time"></span>
-            <p></p>
-          </div>
+      <div class="convo-frame">
+        <div class="convo-frame__bar">
+          <span></span><span></span><span></span>
+          <span class="convo-frame__url">ihre-webseite.de</span>
         </div>
+        <div class="convo">
+          <div class="convo__track convo__track--in">
+            <span class="convo__indicator" id="convo-in-dot"></span>
+            <div class="convo__msg convo__msg--in" id="convo-in">
+              <span class="convo__time"></span>
+              <p></p>
+            </div>
+          </div>
 
-        <div class="convo__track convo__track--out">
-          <span class="convo__indicator" id="convo-out-dot"></span>
-          <div class="convo__msg convo__msg--out" id="convo-out">
-            <span class="convo__time"></span>
-            <p></p>
+          <div class="convo__track convo__track--out">
+            <span class="convo__indicator" id="convo-out-dot"></span>
+            <div class="convo__msg convo__msg--out" id="convo-out">
+              <span class="convo__time"></span>
+              <p></p>
+            </div>
           </div>
         </div>
       </div>

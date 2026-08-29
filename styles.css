@@ -439,7 +439,35 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); }
 
 /* ---------- Conversation (signature element, on homepage under Leistungen) ---------- */
 .convo-section { background: var(--bg-panel); }
+.convo-frame {
+  margin-top: 56px;
+  background: var(--bg-base);
+  border: 1px solid var(--border-soft);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.convo-frame__bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.convo-frame__bar span:not(.convo-frame__url) {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+.convo-frame__url {
+  margin-left: 12px;
+  font-family: var(--font-head);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
 .convo {
+  margin-top: 0;
+  padding: 40px 32px;
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;

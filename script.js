@@ -152,18 +152,18 @@ if (convo) {
   const convoPairs = [
     {
       time: '14:02',
-      in: 'Ich habe Interesse an Ihrem Angebot, was sind die nächsten Schritte?',
-      out: 'Danke für Ihre Anfrage — ein passender Ansprechpartner meldet sich innerhalb eines Werktags.',
+      in: 'Terminanfrage über das Kontaktformular eingegangen.',
+      out: 'Termin automatisch eingetragen: Donnerstag, 14:00 Uhr. Bestätigung ist unterwegs.',
     },
     {
       time: '09:47',
-      in: 'Können Sie mir ein unverbindliches Angebot erstellen?',
-      out: 'Gerne — dafür brauche ich zwei kurze Angaben, die ich Ihnen direkt per E-Mail zuschicke.',
+      in: 'Terminanfrage über das Kontaktformular eingegangen.',
+      out: 'Freier Slot gefunden und gebucht: Freitag, 10:30 Uhr.',
     },
     {
       time: '16:15',
-      in: 'Kann ich direkt einen Termin buchen?',
-      out: 'Klar — wählen Sie einfach einen freien Slot im Kalender, ganz ohne Rückfrage.',
+      in: 'Terminanfrage über das Kontaktformular eingegangen.',
+      out: 'Termin im Kalender eingetragen: Montag, 09:00 Uhr.',
     },
   ];
 
