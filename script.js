@@ -214,21 +214,45 @@ if (footerGiant && siteFooter && !prefersReducedMotion) {
   });
 }
 
-const heroGlow = document.querySelector('.hero__glow');
+// ---------- Scroll-Fortschrittsbalken + Scroll-Parallax (Ambient-Blobs, Hero-Szene) ----------
+const scrollProgress = document.getElementById('scroll-progress');
+const ambientBlobs = document.querySelectorAll('.ambient-blob');
+const showcaseForScroll = document.getElementById('hero-showcase');
 
-if (heroGlow && !prefersReducedMotion) {
-  // Parallax on hero background glow while scrolling (scroll-driven, not cursor-driven)
+{
   let ticking = false;
+
+  const onScroll = () => {
+    const doc = document.documentElement;
+    const scrollY = window.scrollY;
+    const max = doc.scrollHeight - doc.clientHeight;
+    const pct = max > 0 ? (scrollY / max) * 100 : 0;
+
+    if (scrollProgress) scrollProgress.style.width = `${pct}%`;
+
+    if (!prefersReducedMotion) {
+      ambientBlobs.forEach((blob, i) => {
+        const speed = 0.08 + i * 0.05;
+        blob.style.translate = `0 ${scrollY * speed}px`;
+      });
+      if (showcaseForScroll) {
+        const heroRect = document.getElementById('hero').getBoundingClientRect();
+        const progress = Math.min(1, Math.max(0, -heroRect.top / (heroRect.height || 1)));
+        showcaseForScroll.style.transform = `translateY(${progress * -60}px) scale(${1 - progress * 0.08})`;
+        showcaseForScroll.style.opacity = String(1 - progress * 0.6);
+      }
+    }
+  };
 
   window.addEventListener('scroll', () => {
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(() => {
-      const offset = window.scrollY * 0.15;
-      heroGlow.style.transform = `translateY(${offset}px)`;
+      onScroll();
       ticking = false;
     });
   });
+  onScroll();
 }
 
 // ---------- Bewertungen (n8n) ----------

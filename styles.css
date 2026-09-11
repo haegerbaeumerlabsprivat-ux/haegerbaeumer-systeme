@@ -230,34 +230,6 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); }
   padding: 140px 0 110px;
   overflow: hidden;
 }
-.hero__glow {
-  position: absolute;
-  top: -200px;
-  right: -160px;
-  width: 560px;
-  height: 560px;
-  background: radial-gradient(circle, rgba(244, 99, 30, 0.22) 0%, rgba(244, 99, 30, 0) 70%);
-  pointer-events: none;
-  will-change: transform;
-}
-.hero__sweep {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 45%;
-  height: 100%;
-  background: linear-gradient(100deg, transparent 20%, rgba(244, 99, 30, 0.14) 50%, transparent 80%);
-  pointer-events: none;
-  transform: translateX(-140%);
-  animation: hero-sweep 10s ease-in-out infinite;
-}
-@keyframes hero-sweep {
-  0%, 100% { transform: translateX(-140%); }
-  50% { transform: translateX(220%); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero__sweep { animation: none; display: none; }
-}
 .hero__layout {
   position: relative;
   display: block;
@@ -625,15 +597,34 @@ main, .site-header, .site-footer, .marquee { position: relative; z-index: 1; }
   .flip-card__inner { transition: none; }
 }
 
+/* ---------- Scroll-Fortschrittsbalken ---------- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  box-shadow: 0 0 12px 1px rgba(244, 99, 30, 0.6);
+  z-index: 200;
+  transform-origin: left;
+  will-change: width;
+}
+
 /* ---------- Reveal (scroll animation) ---------- */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(36px) scale(0.97);
+  filter: blur(4px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
 }
 [data-reveal].is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { filter: none; }
 }
 
 /* ---------- Services (Leistungen) ---------- */
