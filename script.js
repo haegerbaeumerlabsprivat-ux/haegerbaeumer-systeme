@@ -137,11 +137,16 @@ if (laptopKeys) {
   }
 
   if (!prefersReducedMotion) {
+    let lastKey = null;
     setInterval(() => {
-      const key = keys[Math.floor(Math.random() * keys.length)];
+      let key = keys[Math.floor(Math.random() * keys.length)];
+      while (key === lastKey) {
+        key = keys[Math.floor(Math.random() * keys.length)];
+      }
+      lastKey = key;
       key.classList.add('is-active');
-      setTimeout(() => key.classList.remove('is-active'), 140);
-    }, 90);
+      setTimeout(() => key.classList.remove('is-active'), 200);
+    }, 280);
   }
 }
 
@@ -233,28 +238,35 @@ if (waveHost && wavePath && waveEdge && !prefersReducedMotion) {
     [0, 420], [300, 320], [500, 500], [800, 400], [1000, 340], [1100, 370], [1200, 330],
   ];
 
-  const buildPath = (offsetX, offsetY) => {
+  let mouseX = 0;
+  let mouseY = 0;
+
+  const buildPath = (offsetX, offsetY, t) => {
     const p = basePoints.map(([x, y], i) => {
-      const wobble = Math.sin(i * 1.7) * offsetY;
-      return [x + offsetX * (i % 2 === 0 ? 1 : -1) * 0.4, y + wobble];
+      const idleWobble = Math.sin(t * 0.0006 + i * 1.9) * 26;
+      const cursorWobble = Math.sin(i * 1.7) * offsetY;
+      return [x + offsetX * (i % 2 === 0 ? 1 : -1) * 0.4, y + idleWobble + cursorWobble];
     });
     return `M${p[0][0]},${p[0][1]} C${p[1][0]},${p[1][1]} ${p[2][0]},${p[2][1]} ${p[3][0]},${p[3][1]} C${p[4][0]},${p[4][1]} ${p[5][0]},${p[5][1]} ${p[6][0]},${p[6][1]}`;
   };
 
   waveHost.addEventListener('mousemove', (e) => {
     const rect = waveHost.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    const d = buildPath(x * 60, y * 50);
-    waveEdge.setAttribute('d', d);
-    wavePath.setAttribute('d', `${d} L1200,700 L0,700 Z`);
+    mouseX = (e.clientX - rect.left) / rect.width - 0.5;
+    mouseY = (e.clientY - rect.top) / rect.height - 0.5;
+  });
+  waveHost.addEventListener('mouseleave', () => {
+    mouseX = 0;
+    mouseY = 0;
   });
 
-  waveHost.addEventListener('mouseleave', () => {
-    const d = buildPath(0, 0);
+  const animateWave = (t) => {
+    const d = buildPath(mouseX * 60, mouseY * 50, t);
     waveEdge.setAttribute('d', d);
     wavePath.setAttribute('d', `${d} L1200,700 L0,700 Z`);
-  });
+    requestAnimationFrame(animateWave);
+  };
+  requestAnimationFrame(animateWave);
 }
 
 // Tilt-Effekt (3D) für Karten bei Mausbewegung
@@ -320,10 +332,10 @@ if (footerGiant && siteFooter && !prefersReducedMotion) {
   siteFooter.addEventListener('mousemove', (e) => {
     const rect = siteFooter.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width - 0.5) * 28;
-    footerGiant.style.transform = `translateX(${x}px)`;
+    footerGiant.style.translate = `${x}px 0`;
   });
   siteFooter.addEventListener('mouseleave', () => {
-    footerGiant.style.transform = 'translateX(0)';
+    footerGiant.style.translate = '0 0';
   });
 }
 

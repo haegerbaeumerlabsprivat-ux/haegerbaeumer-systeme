@@ -1019,6 +1019,7 @@ textarea { resize: vertical; }
   pointer-events: none;
 }
 .site-footer__giant span {
+  position: relative;
   display: block;
   text-align: center;
   font-family: var(--font-head);
@@ -1027,10 +1028,31 @@ textarea { resize: vertical; }
   letter-spacing: -0.02em;
   color: transparent;
   -webkit-text-stroke: 1px var(--border-strong);
-  transition: transform 0.25s ease-out, -webkit-text-stroke-color 0.3s ease;
-  will-change: transform;
+  transition: translate 0.25s ease-out, -webkit-text-stroke-color 0.3s ease;
+  will-change: translate;
 }
 .site-footer:hover .site-footer__giant span { -webkit-text-stroke-color: var(--accent-light); }
+
+.site-footer__giant span::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, var(--accent-light) 48%, #fff 50%, var(--accent-light) 52%, transparent 70%);
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: footer-shine 6s ease-in-out infinite;
+}
+@keyframes footer-shine {
+  0% { background-position: 160% 0; }
+  50% { background-position: -60% 0; }
+  100% { background-position: 160% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-footer__giant span::before { animation: none; display: none; }
+}
 
 /* ---------- Legal pages (Impressum, AGB) ---------- */
 .legal__layout { max-width: 720px; }
