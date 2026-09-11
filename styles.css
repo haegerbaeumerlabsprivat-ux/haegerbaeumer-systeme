@@ -616,77 +616,6 @@ main, .site-header, .site-footer, .marquee { position: relative; z-index: 1; }
   color: var(--text-primary);
 }
 
-/* ---------- Conversation (signature element, on homepage under Leistungen) ---------- */
-.convo-section { background: var(--bg-panel); }
-.convo-frame {
-  margin-top: 56px;
-  background: var(--bg-base);
-  border: 1px solid var(--border-soft);
-  border-radius: 14px;
-  overflow: hidden;
-}
-.convo-frame__bar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--border-soft);
-}
-.convo-frame__bar span:not(.convo-frame__url) {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--border-strong);
-}
-.convo-frame__url {
-  margin-left: 12px;
-  font-family: var(--font-head);
-  font-size: 0.78rem;
-  color: var(--text-muted);
-}
-.convo {
-  margin-top: 0;
-  padding: 40px 32px;
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  margin-top: 56px;
-}
-.convo__track {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 220px;
-}
-.convo__track--out { align-items: flex-end; text-align: right; }
-.convo__indicator {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--accent-light);
-  margin-bottom: 16px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.convo__indicator.is-active {
-  opacity: 1;
-  box-shadow: 0 0 8px 2px rgba(255, 122, 61, 0.5);
-}
-
-.convo__msg {
-  max-width: 340px;
-  border-top: 2px solid var(--border-soft);
-  padding-top: 12px;
-  opacity: 0;
-  transform: translateY(10px) scale(0.98);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-.convo__msg.is-active { opacity: 1; transform: translateY(0) scale(1); }
-.convo__track--out .convo__msg { border-top-color: rgba(244, 99, 30, 0.4); align-self: flex-end; }
-.convo__time { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px; }
-.convo__msg p { margin: 0; font-size: 0.95rem; color: var(--text-primary); }
-
 /* ---------- Ablauf (process flow, signature element) ---------- */
 .flow {
   display: flex;
@@ -1069,11 +998,6 @@ textarea { resize: vertical; }
   .services__intro { position: static; }
   .contact__layout { grid-template-columns: 1fr; gap: 40px; }
   .contact__form-wrap { max-width: none; }
-
-  .convo { grid-template-columns: 1fr; gap: 32px; }
-  .convo__track { min-height: 0; }
-  .convo__track--out { align-items: flex-start; text-align: left; }
-  .convo__track--out .convo__msg { align-self: flex-start; }
 
   .about__layout { grid-template-columns: 1fr; }
   .about__photo-wrap { order: -1; }
