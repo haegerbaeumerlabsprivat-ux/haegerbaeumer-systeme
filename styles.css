@@ -354,7 +354,7 @@ main, .site-header, .site-footer, .marquee { position: relative; z-index: 1; }
   font-size: 1.1rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  animation: marquee-scroll 26s linear infinite;
+  animation: marquee-scroll 70s linear infinite;
 }
 .marquee__track span { color: var(--text-muted); }
 .marquee__dot { color: var(--accent); font-size: 0.9rem; }
