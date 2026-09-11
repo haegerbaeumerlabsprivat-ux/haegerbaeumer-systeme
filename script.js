@@ -123,6 +123,61 @@ document.querySelectorAll('.automation-demo').forEach((demo) => {
   }, 1500);
 });
 
+// Flip-Card "Über mich" — Klick zeigt Text statt Foto
+const flipCard = document.getElementById('flip-card');
+if (flipCard) {
+  flipCard.addEventListener('click', () => {
+    const isFlipped = flipCard.classList.toggle('is-flipped');
+    flipCard.setAttribute('aria-expanded', String(isFlipped));
+  });
+}
+
+// Cursor-reaktiver Spotlight im Hero
+const heroSection = document.getElementById('hero');
+const heroSpot = document.getElementById('hero-spot');
+
+if (heroSection && heroSpot && !prefersReducedMotion) {
+  heroSection.addEventListener('mousemove', (e) => {
+    const rect = heroSection.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    heroSpot.style.setProperty('--spot-x', `${x}%`);
+    heroSpot.style.setProperty('--spot-y', `${y}%`);
+    heroSpot.classList.add('is-active');
+  });
+  heroSection.addEventListener('mouseleave', () => heroSpot.classList.remove('is-active'));
+}
+
+// Magnetic buttons — leicht zum Cursor hingezogen
+if (!prefersReducedMotion) {
+  document.querySelectorAll('.magnetic').forEach((btn) => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.25}px, ${y * 0.35}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = 'translate(0, 0)';
+    });
+  });
+}
+
+// Riesige Footer-Type reagiert auf die Mausposition (leichter Parallax-Shift)
+const footerGiant = document.querySelector('.site-footer__giant span');
+const siteFooter = document.querySelector('.site-footer');
+
+if (footerGiant && siteFooter && !prefersReducedMotion) {
+  siteFooter.addEventListener('mousemove', (e) => {
+    const rect = siteFooter.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 28;
+    footerGiant.style.transform = `translateX(${x}px)`;
+  });
+  siteFooter.addEventListener('mouseleave', () => {
+    footerGiant.style.transform = 'translateX(0)';
+  });
+}
+
 const heroGlow = document.querySelector('.hero__glow');
 
 if (heroGlow && !prefersReducedMotion) {

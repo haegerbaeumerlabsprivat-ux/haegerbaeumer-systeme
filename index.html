@@ -35,21 +35,63 @@
   <section class="hero" id="hero">
     <div class="hero__glow" aria-hidden="true"></div>
     <div class="hero__sweep" aria-hidden="true"></div>
+    <div class="hero__spot" id="hero-spot" aria-hidden="true"></div>
     <div class="container hero__layout">
-      <div class="hero__inner">
-        <p class="eyebrow">Für Unternehmen, die online mehr qualifizierte Termine gewinnen wollen</p>
-        <h1>Eine Webseite, die Anfragen nicht nur zeigt, sondern selbst bearbeitet und Termine bucht.</h1>
-        <p class="hero__lead">
-          Ich baue und verbessere Webseiten, damit sie wirklich laufen: technisch sauber, klar
-          aufgebaut und mit einem ersten Eindruck, der bei Besuchern hängen bleibt. Keine
-          austauschbare Vorlage, sondern eine Seite, die ihren Zweck erfüllt — und auf Wunsch
-          zusätzlich durch Automatisierung Anfragen bearbeitet und Termine bucht.
-        </p>
-        <div class="hero__actions">
-          <a href="#leistungen" class="btn btn-primary">Leistungen ansehen</a>
-          <a href="#ablauf" class="btn btn-ghost">So funktioniert's</a>
+      <p class="eyebrow">Für Unternehmen, die online mehr qualifizierte Termine gewinnen wollen</p>
+      <h1 class="hero__giant" data-reveal>Webseiten,<br>die <span>arbeiten.</span></h1>
+
+      <div class="hero__grid">
+        <div class="hero__inner">
+          <p class="hero__lead">
+            Ich baue und verbessere Webseiten, damit sie wirklich laufen: technisch sauber, klar
+            aufgebaut und mit einem ersten Eindruck, der bei Besuchern hängen bleibt. Keine
+            austauschbare Vorlage, sondern eine Seite, die ihren Zweck erfüllt — und auf Wunsch
+            zusätzlich durch Automatisierung Anfragen bearbeitet und Termine bucht.
+          </p>
+          <div class="hero__actions">
+            <a href="#leistungen" class="btn btn-primary magnetic">Leistungen ansehen</a>
+            <a href="#ablauf" class="btn btn-ghost magnetic">So funktioniert's</a>
+          </div>
+        </div>
+
+        <div class="hero__card" data-reveal>
+          <span class="hero__card-dot" aria-hidden="true"></span>
+          <span class="hero__card-label">Hägerbäumer Systeme</span>
+          <p class="hero__card-text">Webdesign &amp; KI-gestützte Automatisierung aus Hiddenhausen. Direkt mit mir, ohne Umwege.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Neue Webseiten</span><span class="marquee__dot">•</span>
+      <span>Automatisierung</span><span class="marquee__dot">•</span>
+      <span>KI-Qualifizierung</span><span class="marquee__dot">•</span>
+      <span>Terminbuchung</span><span class="marquee__dot">•</span>
+      <span>Neue Webseiten</span><span class="marquee__dot">•</span>
+      <span>Automatisierung</span><span class="marquee__dot">•</span>
+      <span>KI-Qualifizierung</span><span class="marquee__dot">•</span>
+      <span>Terminbuchung</span><span class="marquee__dot">•</span>
+    </div>
+  </div>
+
+  <section class="intro-me">
+    <div class="container intro-me__layout">
+      <button class="flip-card" id="flip-card" type="button" aria-expanded="false">
+        <span class="flip-card__inner">
+          <span class="flip-card__face flip-card__face--front">
+            <span class="flip-card__photo">
+              <img src="assets/ueber-uns-foto.webp" alt="Nick Laurin Hägerbäumer" loading="lazy">
+            </span>
+          </span>
+          <span class="flip-card__face flip-card__face--back">
+            <span class="flip-card__label">Hi, ich bin Nick.</span>
+            <span class="flip-card__text">Ich gestalte Webseiten nicht nur schön, sondern vor allem nutzbar. Mir ist wichtig, dass eine Webseite nicht nur gut aussieht, sondern auch funktioniert — technisch sauber umgesetzt und auf dem Stand aktueller Design- und Web-Standards.</span>
+          </span>
+        </span>
+      </button>
+      <p class="intro-me__hint">Klicken für mehr über mich →</p>
     </div>
   </section>
 
@@ -290,6 +332,9 @@
     <p>Feilenstraße 11a, 32120 Hiddenhausen · kontakt@haegerbaeumer-systeme.de</p>
     <p class="site-footer__links"><a href="bewertung.html">Erfahrung teilen</a> · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></p>
     <p class="site-footer__copy">© 2026 Hägerbäumer Systeme. Alle Rechte vorbehalten.</p>
+  </div>
+  <div class="site-footer__giant" id="footer-giant" aria-hidden="true">
+    <span>Hägerbäumer</span>
   </div>
 </footer>
 
