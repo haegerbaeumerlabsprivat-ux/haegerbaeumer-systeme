@@ -521,6 +521,131 @@ main, .site-header, .site-footer, .marquee { position: relative; z-index: 1; }
   .automation-demo, .automation-demo__dot { animation: none; }
 }
 
+/* ---------- Build-Demo: Laptop tippt eine Webseite zusammen ---------- */
+.build-demo { background: var(--bg-panel); }
+.build-demo .section-lead { margin-bottom: 0; }
+
+.laptop {
+  max-width: 640px;
+  margin: 56px auto 0;
+}
+.laptop__screen {
+  background: #0c0d10;
+  border: 3px solid #2a2d33;
+  border-bottom: none;
+  border-radius: 14px 14px 0 0;
+  padding: 10px;
+}
+.laptop__browser-bar {
+  display: flex;
+  gap: 6px;
+  padding: 0 4px 10px;
+}
+.laptop__browser-bar span {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border-strong);
+}
+.laptop__canvas {
+  position: relative;
+  height: 220px;
+  background: var(--bg-base);
+  border-radius: 6px;
+  overflow: hidden;
+  padding: 14px;
+}
+.build-block {
+  position: absolute;
+  border-radius: 5px;
+  background: rgba(244, 99, 30, 0.14);
+  border: 1px solid var(--border-soft);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.build-block.is-visible { opacity: 1; transform: scale(1); }
+.build-block--nav { top: 14px; left: 14px; right: 14px; height: 20px; }
+.build-block--hero { top: 46px; left: 14px; width: 40%; height: 60px; }
+.build-block--text { top: 46px; left: calc(40% + 26px); right: 14px; height: 60px; padding: 10px; background: transparent; border: none; display: flex; align-items: flex-start; }
+.build-block--text span#type-text {
+  font-family: var(--font-head);
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+.type-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 14px;
+  background: var(--accent-light);
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: cursor-blink 0.9s step-end infinite;
+}
+@keyframes cursor-blink { 50% { opacity: 0; } }
+.build-block--img { top: 118px; left: 14px; right: 14px; bottom: 14px; }
+
+.laptop__base {
+  background: linear-gradient(180deg, #24262b, #17181c);
+  border: 3px solid #2a2d33;
+  border-radius: 0 0 10px 10px;
+  padding: 14px 22px 18px;
+}
+.laptop__keyboard {
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 4px;
+  margin-bottom: 10px;
+}
+.key {
+  height: 12px;
+  border-radius: 2px;
+  background: #35383f;
+  transition: background 0.12s ease, box-shadow 0.12s ease;
+}
+.key.is-active {
+  background: var(--accent-light);
+  box-shadow: 0 0 8px 1px rgba(255, 122, 61, 0.7);
+}
+.laptop__trackpad {
+  width: 110px;
+  height: 18px;
+  margin: 0 auto;
+  border-radius: 4px;
+  background: #2c2f35;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .type-cursor { animation: none; }
+}
+
+/* ---------- Wave-Banner ---------- */
+.wave-banner {
+  position: relative;
+  background: #0c0d10;
+  overflow: hidden;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wave-banner__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.wave-banner__text {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-style: italic;
+  text-align: center;
+  line-height: 1.05;
+  color: var(--text-primary);
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
 /* ---------- Intro-Me (flip card teaser) ---------- */
 .intro-me { padding: 72px 0; }
 .intro-me__layout {
@@ -1074,6 +1199,9 @@ textarea { resize: vertical; }
 @media (max-width: 900px) {
   .hero__grid { grid-template-columns: 1fr; gap: 32px; align-items: start; }
   .hero__showcase { height: 300px; }
+  .laptop { max-width: 100%; }
+  .laptop__canvas { height: 180px; }
+  .wave-banner { height: 260px; }
   .automation-demo { max-width: 460px; }
 
   .services__layout { grid-template-columns: 1fr; gap: 32px; }

@@ -84,6 +84,44 @@
     </div>
   </div>
 
+  <section class="build-demo">
+    <div class="container">
+      <p class="eyebrow">So sieht das aus</p>
+      <h2>Eine Webseite entsteht</h2>
+      <p class="section-lead">Kein Video, keine Animation von der Stange — so baut sich eine Webseite Element für Element auf.</p>
+
+      <div class="laptop" aria-hidden="true">
+        <div class="laptop__screen">
+          <div class="laptop__browser-bar"><span></span><span></span><span></span></div>
+          <div class="laptop__canvas" id="build-canvas">
+            <div class="build-block build-block--nav" id="block-nav"></div>
+            <div class="build-block build-block--hero" id="block-hero"></div>
+            <div class="build-block build-block--text" id="block-text"><span id="type-text"></span><span class="type-cursor"></span></div>
+            <div class="build-block build-block--img" id="block-img"></div>
+          </div>
+        </div>
+        <div class="laptop__base">
+          <div class="laptop__keyboard" id="laptop-keys"></div>
+          <div class="laptop__trackpad"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wave-banner" id="wave-banner">
+    <svg class="wave-banner__svg" viewBox="0 0 1200 420" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="waveFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#24262b"/>
+          <stop offset="100%" stop-color="#0c0d10"/>
+        </linearGradient>
+      </defs>
+      <path id="wave-path" fill="url(#waveFill)" d="M0,260 C300,160 500,340 800,240 C1000,180 1100,210 1200,170 L1200,420 L0,420 Z"></path>
+      <path id="wave-edge" fill="none" stroke="#F4631E" stroke-width="4" d="M0,260 C300,160 500,340 800,240 C1000,180 1100,210 1200,170"></path>
+    </svg>
+    <h2 class="wave-banner__text">Hägerbäumer<br>Systeme</h2>
+  </section>
+
   <section class="intro-me">
     <div class="container intro-me__layout">
       <button class="flip-card" id="flip-card" type="button" aria-expanded="false">

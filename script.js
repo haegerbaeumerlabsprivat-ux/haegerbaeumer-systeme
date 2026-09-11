@@ -123,6 +123,140 @@ document.querySelectorAll('.automation-demo').forEach((demo) => {
   }, 1500);
 });
 
+// ---------- Build-Demo: Tastatur tippt, Webseite baut sich zusammen ----------
+const laptopKeys = document.getElementById('laptop-keys');
+
+if (laptopKeys) {
+  const KEY_COUNT = 39;
+  const keys = [];
+  for (let i = 0; i < KEY_COUNT; i += 1) {
+    const key = document.createElement('span');
+    key.className = 'key';
+    laptopKeys.appendChild(key);
+    keys.push(key);
+  }
+
+  if (!prefersReducedMotion) {
+    setInterval(() => {
+      const key = keys[Math.floor(Math.random() * keys.length)];
+      key.classList.add('is-active');
+      setTimeout(() => key.classList.remove('is-active'), 140);
+    }, 90);
+  }
+}
+
+const buildCanvas = document.getElementById('build-canvas');
+
+if (buildCanvas) {
+  const blockNav = document.getElementById('block-nav');
+  const blockHero = document.getElementById('block-hero');
+  const blockText = document.getElementById('block-text');
+  const blockImg = document.getElementById('block-img');
+  const typeTarget = document.getElementById('type-text');
+
+  const headlines = ['Ihre neue Webseite.', 'Klar. Modern. Schnell.', 'Gebaut für Kunden.'];
+
+  const typeText = (text, done) => {
+    if (prefersReducedMotion) {
+      typeTarget.textContent = text;
+      done();
+      return;
+    }
+    typeTarget.textContent = '';
+    let i = 0;
+    const step = () => {
+      if (i <= text.length) {
+        typeTarget.textContent = text.slice(0, i);
+        i += 1;
+        setTimeout(step, 55);
+      } else {
+        done();
+      }
+    };
+    step();
+  };
+
+  const eraseText = (done) => {
+    if (prefersReducedMotion) { done(); return; }
+    const step = () => {
+      const current = typeTarget.textContent;
+      if (current.length > 0) {
+        typeTarget.textContent = current.slice(0, -1);
+        setTimeout(step, 30);
+      } else {
+        done();
+      }
+    };
+    step();
+  };
+
+  const runBuildCycle = () => {
+    [blockNav, blockHero, blockImg].forEach((el) => el.classList.remove('is-visible'));
+    typeTarget.textContent = '';
+
+    setTimeout(() => blockNav.classList.add('is-visible'), 300);
+    setTimeout(() => blockHero.classList.add('is-visible'), 900);
+    setTimeout(() => {
+      typeText(headlines[Math.floor(Math.random() * headlines.length)], () => {
+        setTimeout(() => blockImg.classList.add('is-visible'), 400);
+        setTimeout(() => {
+          eraseText(() => {
+            setTimeout(runBuildCycle, 900);
+          });
+        }, 2200);
+      });
+    }, 1500);
+  };
+
+  if (prefersReducedMotion) {
+    [blockNav, blockHero, blockImg].forEach((el) => el.classList.add('is-visible'));
+    typeTarget.textContent = headlines[0];
+  } else {
+    const buildObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        runBuildCycle();
+        buildObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.3 });
+    buildObserver.observe(buildCanvas);
+  }
+}
+
+// ---------- Wave-Banner: reaktive Welle folgt dem Cursor ----------
+const waveBanner = document.getElementById('wave-banner');
+const wavePath = document.getElementById('wave-path');
+const waveEdge = document.getElementById('wave-edge');
+
+if (waveBanner && wavePath && waveEdge && !prefersReducedMotion) {
+  const basePoints = [
+    [0, 260], [300, 160], [500, 340], [800, 240], [1000, 180], [1100, 210], [1200, 170],
+  ];
+
+  const buildPath = (offsetX, offsetY) => {
+    const p = basePoints.map(([x, y], i) => {
+      const wobble = Math.sin(i * 1.7) * offsetY;
+      return [x + offsetX * (i % 2 === 0 ? 1 : -1) * 0.4, y + wobble];
+    });
+    return `M${p[0][0]},${p[0][1]} C${p[1][0]},${p[1][1]} ${p[2][0]},${p[2][1]} ${p[3][0]},${p[3][1]} C${p[4][0]},${p[4][1]} ${p[5][0]},${p[5][1]} ${p[6][0]},${p[6][1]}`;
+  };
+
+  waveBanner.addEventListener('mousemove', (e) => {
+    const rect = waveBanner.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    const d = buildPath(x * 60, y * 50);
+    waveEdge.setAttribute('d', d);
+    wavePath.setAttribute('d', `${d} L1200,420 L0,420 Z`);
+  });
+
+  waveBanner.addEventListener('mouseleave', () => {
+    const d = buildPath(0, 0);
+    waveEdge.setAttribute('d', d);
+    wavePath.setAttribute('d', `${d} L1200,420 L0,420 Z`);
+  });
+}
+
 // Tilt-Effekt (3D) für Karten bei Mausbewegung
 if (!prefersReducedMotion) {
   document.querySelectorAll('.tilt').forEach((card) => {
