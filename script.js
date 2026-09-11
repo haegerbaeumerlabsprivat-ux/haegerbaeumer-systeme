@@ -163,6 +163,27 @@ if (heroSection && heroSpot && !prefersReducedMotion) {
   heroSection.addEventListener('mouseleave', () => heroSpot.classList.remove('is-active'));
 }
 
+// Showcase-Szene im Hero: Orb + Glas-Splitter mit Tiefenversatz (Parallax)
+const heroShowcase = document.getElementById('hero-showcase');
+
+if (heroShowcase && !prefersReducedMotion) {
+  const depthEls = Array.from(heroShowcase.querySelectorAll('[data-depth]'));
+
+  heroShowcase.addEventListener('mousemove', (e) => {
+    const rect = heroShowcase.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    depthEls.forEach((el) => {
+      const depth = Number(el.dataset.depth) || 0.5;
+      el.style.translate = `${x * 44 * depth}px ${y * 44 * depth}px`;
+    });
+  });
+
+  heroShowcase.addEventListener('mouseleave', () => {
+    depthEls.forEach((el) => { el.style.translate = '0px 0px'; });
+  });
+}
+
 // Magnetic buttons — leicht zum Cursor hingezogen
 if (!prefersReducedMotion) {
   document.querySelectorAll('.magnetic').forEach((btn) => {
