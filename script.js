@@ -123,6 +123,21 @@ document.querySelectorAll('.automation-demo').forEach((demo) => {
   }, 1500);
 });
 
+// Tilt-Effekt (3D) für Karten bei Mausbewegung
+if (!prefersReducedMotion) {
+  document.querySelectorAll('.tilt').forEach((card) => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `perspective(700px) rotateX(${y * -8}deg) rotateY(${x * 8}deg) translateY(-4px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+}
+
 // Flip-Card "Über mich" — Klick zeigt Text statt Foto
 const flipCard = document.getElementById('flip-card');
 if (flipCard) {
