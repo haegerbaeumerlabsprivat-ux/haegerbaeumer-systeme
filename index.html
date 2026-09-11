@@ -41,33 +41,33 @@
 <main>
 
   <section class="hero" id="hero">
+    <div class="hero__wave-bg" aria-hidden="true">
+      <svg class="hero__wave-svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="waveFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#24262b"/>
+            <stop offset="100%" stop-color="#0c0d10"/>
+          </linearGradient>
+        </defs>
+        <path id="wave-path" fill="url(#waveFill)" d="M0,420 C300,320 500,500 800,400 C1000,340 1100,370 1200,330 L1200,700 L0,700 Z"></path>
+        <path id="wave-edge" fill="none" stroke="#F4631E" stroke-width="4" d="M0,420 C300,320 500,500 800,400 C1000,340 1100,370 1200,330"></path>
+      </svg>
+    </div>
     <div class="hero__spot" id="hero-spot" aria-hidden="true"></div>
     <div class="container hero__layout">
       <p class="eyebrow">Für Unternehmen, die mit ihrer Webseite aus der Masse stechen wollen</p>
-      <h1 class="hero__giant" data-reveal>Webseiten,<br>die <span>arbeiten.</span></h1>
+      <h1 class="hero__brand" data-reveal>Hägerbäumer<br><span>Systeme</span></h1>
 
-      <div class="hero__grid">
-        <div class="hero__inner">
-          <p class="hero__lead">
-            Ich gestalte und verbessere Webseiten, damit sie einen bleibenden ersten Eindruck
-            hinterlassen: technisch sauber, klar aufgebaut und optisch auf der Höhe aktueller
-            Designstandards. Keine austauschbare Vorlage, sondern eine Seite, die zu Ihrem
-            Unternehmen passt und aus der Masse sticht.
-          </p>
-          <div class="hero__actions">
-            <a href="#leistungen" class="btn btn-primary magnetic">Leistungen ansehen</a>
-            <a href="#ablauf" class="btn btn-ghost magnetic">So funktioniert's</a>
-          </div>
-        </div>
-
-        <div class="hero__showcase" id="hero-showcase" aria-hidden="true">
-          <span class="shard shard--1" data-depth="0.6"></span>
-          <span class="shard shard--2" data-depth="0.9"></span>
-          <span class="shard shard--3" data-depth="0.4"></span>
-          <span class="shard shard--4" data-depth="1.1"></span>
-          <div class="orb" data-depth="0.25"></div>
-          <div class="glass-pill glass-pill--top" data-depth="0.8">Webdesign · Hiddenhausen</div>
-          <div class="glass-pill glass-pill--bottom" data-depth="0.5">Aktuelle Designstandards</div>
+      <div class="hero__inner">
+        <p class="hero__lead">
+          Ich gestalte und verbessere Webseiten, damit sie einen bleibenden ersten Eindruck
+          hinterlassen: technisch sauber, klar aufgebaut und optisch auf der Höhe aktueller
+          Designstandards. Keine austauschbare Vorlage, sondern eine Seite, die zu Ihrem
+          Unternehmen passt und aus der Masse sticht.
+        </p>
+        <div class="hero__actions">
+          <a href="#leistungen" class="btn btn-primary magnetic">Leistungen ansehen</a>
+          <a href="#ablauf" class="btn btn-ghost magnetic">So funktioniert's</a>
         </div>
       </div>
     </div>
@@ -90,36 +90,35 @@
       <h2>Eine Webseite entsteht</h2>
       <p class="section-lead">Kein Video, keine Animation von der Stange — so baut sich eine Webseite Element für Element auf.</p>
 
-      <div class="laptop" aria-hidden="true">
-        <div class="laptop__screen">
-          <div class="laptop__browser-bar"><span></span><span></span><span></span></div>
-          <div class="laptop__canvas" id="build-canvas">
-            <div class="build-block build-block--nav" id="block-nav"></div>
-            <div class="build-block build-block--hero" id="block-hero"></div>
-            <div class="build-block build-block--text" id="block-text"><span id="type-text"></span><span class="type-cursor"></span></div>
-            <div class="build-block build-block--img" id="block-img"></div>
+      <div class="laptop-stage">
+        <div class="laptop laptop--iso" aria-hidden="true">
+          <div class="laptop__screen">
+            <div class="laptop__browser-bar"><span></span><span></span><span></span></div>
+            <div class="laptop__canvas" id="build-canvas">
+              <div class="build-block build-block--nav" id="block-nav"></div>
+              <div class="build-block build-block--hero" id="block-hero"></div>
+              <div class="build-block build-block--text" id="block-text"><span id="type-text"></span><span class="type-cursor"></span></div>
+              <div class="build-block build-block--img" id="block-img"></div>
+            </div>
+          </div>
+          <div class="laptop__base">
+            <div class="laptop__keyboard" id="laptop-keys"></div>
+            <div class="laptop__trackpad"></div>
           </div>
         </div>
-        <div class="laptop__base">
-          <div class="laptop__keyboard" id="laptop-keys"></div>
-          <div class="laptop__trackpad"></div>
+
+        <div class="floating-window" aria-hidden="true">
+          <div class="floating-window__bar">
+            <span></span><span></span><span></span>
+            <span class="floating-window__url">ihre-webseite.de</span>
+          </div>
+          <div class="floating-window__body">
+            <span class="floating-window__check">✓</span>
+            <span>Live &amp; startklar</span>
+          </div>
         </div>
       </div>
     </div>
-  </section>
-
-  <section class="wave-banner" id="wave-banner">
-    <svg class="wave-banner__svg" viewBox="0 0 1200 420" preserveAspectRatio="none" aria-hidden="true">
-      <defs>
-        <linearGradient id="waveFill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#24262b"/>
-          <stop offset="100%" stop-color="#0c0d10"/>
-        </linearGradient>
-      </defs>
-      <path id="wave-path" fill="url(#waveFill)" d="M0,260 C300,160 500,340 800,240 C1000,180 1100,210 1200,170 L1200,420 L0,420 Z"></path>
-      <path id="wave-edge" fill="none" stroke="#F4631E" stroke-width="4" d="M0,260 C300,160 500,340 800,240 C1000,180 1100,210 1200,170"></path>
-    </svg>
-    <h2 class="wave-banner__text">Hägerbäumer<br>Systeme</h2>
   </section>
 
   <section class="intro-me">

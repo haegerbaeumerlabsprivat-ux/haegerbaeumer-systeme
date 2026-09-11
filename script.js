@@ -223,14 +223,14 @@ if (buildCanvas) {
   }
 }
 
-// ---------- Wave-Banner: reaktive Welle folgt dem Cursor ----------
-const waveBanner = document.getElementById('wave-banner');
+// ---------- Hero-Wellen-Hintergrund: reaktive Welle folgt dem Cursor ----------
+const waveHost = document.getElementById('hero');
 const wavePath = document.getElementById('wave-path');
 const waveEdge = document.getElementById('wave-edge');
 
-if (waveBanner && wavePath && waveEdge && !prefersReducedMotion) {
+if (waveHost && wavePath && waveEdge && !prefersReducedMotion) {
   const basePoints = [
-    [0, 260], [300, 160], [500, 340], [800, 240], [1000, 180], [1100, 210], [1200, 170],
+    [0, 420], [300, 320], [500, 500], [800, 400], [1000, 340], [1100, 370], [1200, 330],
   ];
 
   const buildPath = (offsetX, offsetY) => {
@@ -241,19 +241,19 @@ if (waveBanner && wavePath && waveEdge && !prefersReducedMotion) {
     return `M${p[0][0]},${p[0][1]} C${p[1][0]},${p[1][1]} ${p[2][0]},${p[2][1]} ${p[3][0]},${p[3][1]} C${p[4][0]},${p[4][1]} ${p[5][0]},${p[5][1]} ${p[6][0]},${p[6][1]}`;
   };
 
-  waveBanner.addEventListener('mousemove', (e) => {
-    const rect = waveBanner.getBoundingClientRect();
+  waveHost.addEventListener('mousemove', (e) => {
+    const rect = waveHost.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
     const d = buildPath(x * 60, y * 50);
     waveEdge.setAttribute('d', d);
-    wavePath.setAttribute('d', `${d} L1200,420 L0,420 Z`);
+    wavePath.setAttribute('d', `${d} L1200,700 L0,700 Z`);
   });
 
-  waveBanner.addEventListener('mouseleave', () => {
+  waveHost.addEventListener('mouseleave', () => {
     const d = buildPath(0, 0);
     waveEdge.setAttribute('d', d);
-    wavePath.setAttribute('d', `${d} L1200,420 L0,420 Z`);
+    wavePath.setAttribute('d', `${d} L1200,700 L0,700 Z`);
   });
 }
 
@@ -297,27 +297,6 @@ if (heroSection && heroSpot && !prefersReducedMotion) {
   heroSection.addEventListener('mouseleave', () => heroSpot.classList.remove('is-active'));
 }
 
-// Showcase-Szene im Hero: Orb + Glas-Splitter mit Tiefenversatz (Parallax)
-const heroShowcase = document.getElementById('hero-showcase');
-
-if (heroShowcase && !prefersReducedMotion) {
-  const depthEls = Array.from(heroShowcase.querySelectorAll('[data-depth]'));
-
-  heroShowcase.addEventListener('mousemove', (e) => {
-    const rect = heroShowcase.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    depthEls.forEach((el) => {
-      const depth = Number(el.dataset.depth) || 0.5;
-      el.style.translate = `${x * 44 * depth}px ${y * 44 * depth}px`;
-    });
-  });
-
-  heroShowcase.addEventListener('mouseleave', () => {
-    depthEls.forEach((el) => { el.style.translate = '0px 0px'; });
-  });
-}
-
 // Magnetic buttons — leicht zum Cursor hingezogen
 if (!prefersReducedMotion) {
   document.querySelectorAll('.magnetic').forEach((btn) => {
@@ -351,7 +330,7 @@ if (footerGiant && siteFooter && !prefersReducedMotion) {
 // ---------- Scroll-Fortschrittsbalken + Scroll-Parallax (Ambient-Blobs, Hero-Szene) ----------
 const scrollProgress = document.getElementById('scroll-progress');
 const ambientBlobs = document.querySelectorAll('.ambient-blob');
-const showcaseForScroll = document.getElementById('hero-showcase');
+const heroWaveBg = document.querySelector('.hero__wave-bg');
 
 {
   let ticking = false;
@@ -369,11 +348,10 @@ const showcaseForScroll = document.getElementById('hero-showcase');
         const speed = 0.08 + i * 0.05;
         blob.style.translate = `0 ${scrollY * speed}px`;
       });
-      if (showcaseForScroll) {
+      if (heroWaveBg) {
         const heroRect = document.getElementById('hero').getBoundingClientRect();
         const progress = Math.min(1, Math.max(0, -heroRect.top / (heroRect.height || 1)));
-        showcaseForScroll.style.transform = `translateY(${progress * -60}px) scale(${1 - progress * 0.08})`;
-        showcaseForScroll.style.opacity = String(1 - progress * 0.6);
+        heroWaveBg.style.translate = `0 ${progress * 40}px`;
       }
     }
   };
