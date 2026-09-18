@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /demo-na-x7k2m9a1/
 
 Sitemap: https://haegerbaeumer-systeme.de/sitemap.xml
