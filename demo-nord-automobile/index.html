@@ -104,6 +104,7 @@
   .car .price{color:var(--accent);font-weight:800;font-size:15px;margin-top:6px;}
   .car .meta{font-size:12.5px;color:var(--ink-soft);display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
   .car .meta span{background:var(--line-soft);padding:3px 9px;border-radius:999px;}
+  .car-cta{margin-top:14px;width:100%;justify-content:center;}
 
   .services{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
   @media (max-width:820px){ .services{grid-template-columns:1fr 1fr;} }
@@ -207,6 +208,24 @@
   .contact-line:first-of-type{border-top:none;}
   .contact-line b{width:84px;flex:none;color:var(--ink-soft);font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;}
 
+  .ankauf-form{background:var(--surface);border-radius:20px;padding:32px;box-shadow:0 2px 0 var(--line);}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;}
+  @media (max-width:640px){ .form-grid{grid-template-columns:1fr;} }
+  .form-field-wide{grid-column:1 / -1;}
+  .form-field label, .form-field span{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em;}
+  .form-field input, .form-field select, .form-field textarea,
+  .ankauf-form input, .ankauf-form select, .ankauf-form textarea{
+    width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--line);
+    background:var(--bg);color:var(--ink);font-family:inherit;font-size:14px;
+  }
+  .ankauf-form input:focus, .ankauf-form select:focus, .ankauf-form textarea:focus,
+  .termin-form input:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .form-upload{background:var(--line-soft);border:1px dashed var(--line);border-radius:14px;padding:18px;margin-bottom:18px;}
+  .form-upload label{display:block;font-weight:700;font-size:14px;margin-bottom:8px;}
+  .form-upload span{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:6px;}
+  .termin-form{display:flex;flex-direction:column;gap:14px;justify-content:center;}
+  .termin-form .form-field{margin:0;}
+
   footer{padding-block:28px;color:var(--ink-soft);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;border-top:1px solid var(--line);}
 
   .fab{
@@ -237,6 +256,7 @@
       <a href="#fahrzeuge">Fahrzeuge</a>
       <a href="#ueber-uns">Über uns</a>
       <a href="#bewertungen">Bewertungen</a>
+      <a href="#ankauf">Ankauf</a>
       <a href="#kontakt">Kontakt</a>
     </nav>
     <a class="btn btn-sm" href="tel:043357319182">04335 7319182</a>
@@ -281,6 +301,7 @@
           <h3>Kompaktklasse, Benzin</h3>
           <div class="meta"><span>Bj. 2019</span><span>68.000 km</span><span>Klima</span></div>
           <div class="price">ab 9.900 €</div>
+          <a class="btn btn-line btn-sm car-cta" href="#kontakt" data-fahrzeug="Kompaktklasse, Benzin (Bj. 2019)">Termin vereinbaren</a>
         </div>
       </div>
       <div class="car reveal">
@@ -289,6 +310,7 @@
           <h3>Kombi, Diesel</h3>
           <div class="meta"><span>Bj. 2020</span><span>82.000 km</span><span>AHK</span></div>
           <div class="price">ab 14.500 €</div>
+          <a class="btn btn-line btn-sm car-cta" href="#kontakt" data-fahrzeug="Kombi, Diesel (Bj. 2020)">Termin vereinbaren</a>
         </div>
       </div>
       <div class="car reveal">
@@ -297,6 +319,7 @@
           <h3>SUV, Allrad</h3>
           <div class="meta"><span>Bj. 2021</span><span>54.000 km</span><span>Navi</span></div>
           <div class="price">ab 19.900 €</div>
+          <a class="btn btn-line btn-sm car-cta" href="#kontakt" data-fahrzeug="SUV, Allrad (Bj. 2021)">Termin vereinbaren</a>
         </div>
       </div>
     </div>
@@ -411,6 +434,45 @@
     </div>
   </section>
 
+  <section id="ankauf">
+    <div class="section-head reveal">
+      <div>
+        <span class="label">Ankauf</span>
+        <h2>Ihr Fahrzeug verkaufen — schnell, fair, unkompliziert.</h2>
+      </div>
+      <p>Senden Sie mir kurz die Eckdaten. Ich melde mich zeitnah mit einer unverbindlichen Einschätzung.</p>
+    </div>
+    <form class="ankauf-form reveal" onsubmit="event.preventDefault(); alert('Demo — im echten Betrieb würde diese Anfrage jetzt bei Nord Automobile eingehen.');">
+      <div class="form-grid">
+        <div class="form-field"><label>Marke</label><input type="text" placeholder="z. B. Volkswagen"></div>
+        <div class="form-field"><label>Modell</label><input type="text" placeholder="z. B. Golf"></div>
+        <div class="form-field"><label>Baujahr</label><input type="text" placeholder="z. B. 2018"></div>
+        <div class="form-field"><label>Kilometerstand</label><input type="text" placeholder="z. B. 85.000 km"></div>
+        <div class="form-field form-field-wide"><label>Zustand</label>
+          <select>
+            <option>Bitte wählen</option>
+            <option>Sehr gepflegt</option>
+            <option>Gepflegt mit normalen Gebrauchsspuren</option>
+            <option>Reparaturbedarf vorhanden</option>
+            <option>Unfallfahrzeug</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-upload">
+        <label>Fahrzeugbilder hinzufügen</label>
+        <input type="file" accept="image/*" multiple>
+        <span>Bis zu 6 Bilder — auf dem Smartphone auch direkt per Kamera.</span>
+      </div>
+      <div class="form-grid">
+        <div class="form-field"><label>Name</label><input type="text" placeholder="Ihr Name"></div>
+        <div class="form-field"><label>Telefon</label><input type="tel" placeholder="Ihre Telefonnummer"></div>
+        <div class="form-field form-field-wide"><label>E-Mail</label><input type="email" placeholder="Ihre E-Mail-Adresse"></div>
+        <div class="form-field form-field-wide"><label>Nachricht</label><textarea rows="3" placeholder="Weitere Details zu Ihrem Fahrzeug"></textarea></div>
+      </div>
+      <button type="submit" class="btn">Fahrzeug anbieten</button>
+    </form>
+  </section>
+
   <section id="kontakt" style="padding-top:0;">
     <div class="section-head reveal">
       <div><span class="label">Kontakt &amp; Anfahrt</span><h2>Nord Automobile, Hohn</h2></div>
@@ -421,10 +483,12 @@
         <div class="contact-line"><b>Telefon</b><span>04335 7319182</span></div>
         <div class="contact-line"><b>E-Mail</b><span>info@nord-automobile-hohn.de (Platzhalter)</span></div>
       </div>
-      <div class="contact-card reveal" style="display:flex;flex-direction:column;justify-content:center;gap:12px;">
-        <a class="btn" style="justify-content:center;" href="tel:043357319182">Jetzt anrufen</a>
-        <a class="btn btn-line" style="justify-content:center;" href="#fahrzeuge">Fahrzeuge ansehen</a>
-      </div>
+      <form class="contact-card reveal termin-form" onsubmit="event.preventDefault(); alert('Demo — im echten Betrieb würde diese Terminanfrage jetzt bei Nord Automobile eingehen.');">
+        <label class="form-field"><span>Fahrzeug (optional)</span><input type="text" id="terminFahrzeug" placeholder="z. B. Kompaktklasse, Benzin (Bj. 2019)"></label>
+        <label class="form-field"><span>Name</span><input type="text" placeholder="Ihr Name"></label>
+        <label class="form-field"><span>Telefon oder E-Mail</span><input type="text" placeholder="Wie erreiche ich Sie?"></label>
+        <button type="submit" class="btn" style="justify-content:center;">Termin anfragen</button>
+      </form>
     </div>
   </section>
 
@@ -463,6 +527,17 @@
     gsap.from(grid.children, {
       opacity: 0, y: 18, duration: 0.45, stagger: 0.06, ease: 'power1.out',
       scrollTrigger: { trigger: grid, start: 'top 85%', toggleActions: 'play none none reverse' }
+    });
+  });
+})();
+
+(function(){
+  var buttons = document.querySelectorAll('.car-cta');
+  var field = document.getElementById('terminFahrzeug');
+  if (!field) return;
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      field.value = btn.getAttribute('data-fahrzeug') || '';
     });
   });
 })();
