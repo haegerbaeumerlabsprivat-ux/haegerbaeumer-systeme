@@ -524,7 +524,7 @@
     });
   });
 
-  gsap.utils.toArray('.cars, .services, .trust-stats').forEach(function(grid){
+  gsap.utils.toArray('.trust-stats').forEach(function(grid){
     gsap.from(grid.children, {
       opacity: 0, y: 18, duration: 0.45, stagger: 0.06, ease: 'power1.out',
       scrollTrigger: { trigger: grid, start: 'top 85%', toggleActions: 'play none none reverse' }
