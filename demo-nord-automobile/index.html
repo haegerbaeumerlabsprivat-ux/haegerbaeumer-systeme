@@ -1,0 +1,502 @@
+<title>Nord Automobile Hohn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --bg:#faf6ef;
+    --ink:#20242b;
+    --ink-soft:#6b7280;
+    --line:#e7e0d3;
+    --line-soft:#f1ece1;
+    --surface:#ffffff;
+    --accent:#1f5c4a;
+    --accent-2:#3d8267;
+    --accent-ink:#fbf9f2;
+    --shadow:rgba(20,24,20,0.10);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12140f; --ink:#f2ede0; --ink-soft:#a8a394; --line:#2a2c22; --line-soft:#1d1f18;
+      --surface:#1a1c15; --accent:#4c9c7e; --accent-2:#6cb897; --accent-ink:#0d1410; --shadow:rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12140f;--ink:#f2ede0;--ink-soft:#a8a394;--line:#2a2c22;--line-soft:#1d1f18;--surface:#1a1c15;--accent:#4c9c7e;--accent-2:#6cb897;--accent-ink:#0d1410;--shadow:rgba(0,0,0,0.45);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    margin:0;-webkit-font-smoothing:antialiased;
+    font-size:16px;line-height:1.55;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding-inline:24px;}
+  h1,h2,h3{font-family:'Inter',Arial,Helvetica,sans-serif;font-weight:800;letter-spacing:-0.02em;text-wrap:balance;margin:0;}
+  a{color:inherit;}
+  img{max-width:100%;}
+  .label{font-size:11.5px;text-transform:uppercase;letter-spacing:0.14em;color:var(--accent);font-weight:700;}
+
+  header{position:sticky;top:0;z-index:40;background:color-mix(in srgb, var(--bg) 88%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .header-inner{display:flex;justify-content:space-between;align-items:center;padding-block:18px;flex-wrap:wrap;gap:14px;}
+  .logo{font-weight:800;font-size:19px;letter-spacing:-0.01em;}
+  .logo span{color:var(--ink-soft);font-weight:500;font-size:14px;}
+  nav{display:flex;gap:26px;font-size:14px;font-weight:600;}
+  nav a{text-decoration:none;color:var(--ink);position:relative;}
+  nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s ease;}
+  nav a:hover::after{transform:scaleX(1);}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--accent);color:var(--accent-ink);
+    padding:13px 24px;font-weight:700;font-size:14px;border-radius:999px;
+    text-decoration:none;border:1px solid var(--accent);white-space:nowrap;
+    transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+  }
+  .btn:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 14px 28px -12px color-mix(in srgb, var(--accent) 65%, transparent);}
+  .btn:active{transform:translateY(0);}
+  .btn-line{background:transparent;color:var(--ink);border-color:var(--ink);}
+  .btn-line:hover{background:var(--ink);color:var(--bg);}
+  .btn:focus-visible, a:focus-visible, button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .btn-sm{padding:9px 16px;font-size:13px;}
+
+  .hero{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);}
+  .hero-inner{padding-block:96px 120px;position:relative;z-index:2;}
+  .hero .label{color:var(--accent-ink);opacity:.85;}
+  .hero h1{font-size:clamp(32px,5.4vw,56px);line-height:1.05;max-width:16ch;color:var(--accent-ink);margin-top:14px;}
+  .hero p.lede{font-size:17px;max-width:52ch;margin-top:18px;color:color-mix(in srgb, var(--accent-ink) 88%, transparent);}
+  .hero-actions{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;align-items:center;}
+  .hero-actions .phone{font-size:16px;font-weight:600;text-decoration:none;border-bottom:1px solid color-mix(in srgb, var(--accent-ink) 50%, transparent);padding-bottom:2px;color:var(--accent-ink);}
+  .hero .btn{background:var(--accent-ink);color:var(--accent);border-color:var(--accent-ink);}
+  .hero .btn:hover{filter:none;background:color-mix(in srgb, var(--accent-ink) 92%, black 4%);}
+  .hero-shapes{position:absolute;inset:0;z-index:1;opacity:.15;}
+  .hero-shapes svg{width:100%;height:100%;}
+
+  .fact-card{
+    position:relative;z-index:2;margin-top:-56px;margin-bottom:8px;
+    background:var(--surface);border-radius:20px;box-shadow:0 24px 48px -20px var(--shadow);
+    display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden;
+  }
+  @media (max-width:760px){ .fact-card{grid-template-columns:repeat(2,1fr);} }
+  .fact{padding:22px 20px;border-right:1px solid var(--line-soft);}
+  .fact:nth-child(4n){border-right:none;}
+  @media (max-width:760px){ .fact:nth-child(2n){border-right:none;} .fact:nth-child(odd){border-right:1px solid var(--line-soft);} }
+  .fact b{display:block;font-size:19px;font-weight:800;margin-bottom:3px;}
+  .fact span{font-size:12.5px;color:var(--ink-soft);}
+
+  section{padding-block:64px;}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:36px;}
+  .section-head h2{font-size:clamp(24px,3vw,34px);margin-top:8px;}
+  .section-head p{color:var(--ink-soft);max-width:42ch;font-size:14.5px;}
+
+  .cars{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:860px){ .cars{grid-template-columns:1fr 1fr;} }
+  @media (max-width:600px){ .cars{grid-template-columns:1fr;} }
+  .car{
+    background:var(--surface);border-radius:18px;overflow:hidden;
+    box-shadow:0 2px 0 var(--line);
+    transition:transform .22s ease, box-shadow .22s ease;
+  }
+  .car:hover{transform:translateY(-6px);box-shadow:0 22px 40px -20px var(--shadow);}
+  .car-media{height:150px;background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 18%, var(--surface)), color-mix(in srgb, var(--accent-2) 14%, var(--surface)));display:flex;align-items:center;justify-content:center;font-size:38px;}
+  .car-body{padding:20px 22px;}
+  .car h3{font-size:16px;margin-bottom:4px;}
+  .car .price{color:var(--accent);font-weight:800;font-size:15px;margin-top:6px;}
+  .car .meta{font-size:12.5px;color:var(--ink-soft);display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
+  .car .meta span{background:var(--line-soft);padding:3px 9px;border-radius:999px;}
+
+  .services{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:820px){ .services{grid-template-columns:1fr 1fr;} }
+  @media (max-width:560px){ .services{grid-template-columns:1fr;} }
+  .service{
+    background:var(--surface);border-radius:18px;padding:26px 24px;
+    box-shadow:0 2px 0 var(--line);
+    transition:transform .22s ease, box-shadow .22s ease;
+  }
+  .service:hover{transform:translateY(-6px);box-shadow:0 22px 40px -20px var(--shadow);}
+  .service .icon{
+    width:42px;height:42px;border-radius:12px;background:color-mix(in srgb, var(--accent) 14%, var(--surface));
+    display:flex;align-items:center;justify-content:center;margin-bottom:14px;color:var(--accent);font-size:20px;
+  }
+  .service h3{font-size:16.5px;margin-bottom:8px;}
+  .service p{font-size:13.8px;color:var(--ink-soft);line-height:1.55;margin:0;}
+
+  .about-card{
+    display:grid;grid-template-columns:180px 1fr;gap:32px;align-items:center;
+    background:var(--surface);border-radius:20px;padding:32px;box-shadow:0 2px 0 var(--line);
+  }
+  @media (max-width:640px){ .about-card{grid-template-columns:1fr;text-align:center;} .about-card .about-photo{margin:0 auto;} }
+  .about-photo{
+    width:150px;height:150px;border-radius:50%;
+    background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 20%, var(--surface)), color-mix(in srgb, var(--accent-2) 16%, var(--surface)));
+    display:flex;align-items:center;justify-content:center;font-size:64px;flex:none;
+    border:3px solid var(--line-soft);
+  }
+  .about-body h3{font-size:20px;}
+  .about-role{color:var(--accent);font-weight:700;font-size:13.5px;margin-top:4px;text-transform:uppercase;letter-spacing:.04em;}
+  .about-body p{color:var(--ink-soft);font-size:14.5px;margin-top:12px;}
+  .about-tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+  @media (max-width:640px){ .about-tags{justify-content:center;} }
+  .about-tags span{background:var(--line-soft);color:var(--ink);font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px;}
+
+  .trust-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px;}
+  @media (max-width:760px){ .trust-stats{grid-template-columns:1fr 1fr;} }
+  .trust-stat{background:var(--surface);border-radius:16px;padding:20px;text-align:center;box-shadow:0 2px 0 var(--line);}
+  .trust-stat b{display:block;font-size:24px;font-weight:800;color:var(--accent);}
+  .trust-stat span{font-size:12.5px;color:var(--ink-soft);}
+
+  .review-marquee{
+    overflow:hidden;position:relative;cursor:grab;
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+  .review-marquee:active{cursor:grabbing;}
+  .review-track{display:flex;gap:18px;width:max-content;animation:review-scroll 42s linear infinite;}
+  .review-marquee:hover .review-track,
+  .review-marquee.is-dragging .review-track{animation-play-state:paused;}
+  .review{
+    background:var(--surface);border-radius:18px;padding:24px;box-shadow:0 2px 0 var(--line);
+    flex:0 0 300px;transition:transform .22s ease, box-shadow .22s ease;
+  }
+  .review:hover{transform:translateY(-4px);box-shadow:0 18px 34px -20px var(--shadow);}
+  .review-stars{color:var(--accent);font-size:14px;letter-spacing:2px;margin-bottom:10px;}
+  .review p{font-size:13.8px;color:var(--ink);margin:0 0 14px;line-height:1.55;}
+  .review-author{font-size:12.5px;color:var(--ink-soft);font-weight:600;white-space:nowrap;}
+  @keyframes review-scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  @media (max-width:640px){ .review{flex-basis:250px;} }
+
+  .split{display:grid;grid-template-columns:1.05fr 0.95fr;gap:48px;align-items:start;}
+  @media (max-width:860px){ .split{grid-template-columns:1fr;} }
+  .steps{margin-top:26px;display:grid;gap:14px;}
+  .step{
+    display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px;
+    background:var(--surface);border-radius:16px;box-shadow:0 2px 0 var(--line);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .step:hover{transform:translateX(4px);box-shadow:0 14px 28px -18px var(--shadow);}
+  .step b{
+    width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--accent-ink);
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;
+  }
+  .step h4{font-size:15px;font-weight:700;margin:0 0 4px;}
+  .step p{margin:0;font-size:13.5px;color:var(--ink-soft);}
+
+  .hours-panel{background:var(--surface);border-radius:18px;padding:28px;box-shadow:0 2px 0 var(--line);}
+  .hours-row{display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid var(--line-soft);font-size:14px;}
+  .hours-row:first-of-type{border-top:none;}
+  .hours-row.today{font-weight:700;color:var(--accent);}
+  .hours-row.today span:last-child::before{content:"— heute ";color:var(--ink-soft);font-weight:400;}
+
+  .cta-band{
+    background:linear-gradient(135deg, var(--accent), var(--accent-2));
+    color:var(--accent-ink);border-radius:24px;padding:48px;display:flex;justify-content:space-between;
+    align-items:center;gap:24px;flex-wrap:wrap;
+  }
+  .cta-band h2{font-size:clamp(22px,3vw,30px);max-width:16ch;color:var(--accent-ink);}
+  .cta-band p{margin-top:8px;font-size:14.5px;max-width:38ch;opacity:0.85;}
+  .cta-band .btn{background:var(--accent-ink);color:var(--accent);border-color:var(--accent-ink);}
+  .cta-band .btn:hover{filter:none;background:color-mix(in srgb, var(--accent-ink) 90%, black 6%);}
+
+  .contact-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:18px;}
+  @media (max-width:760px){ .contact-grid{grid-template-columns:1fr;} }
+  .contact-card{background:var(--surface);border-radius:18px;padding:28px;box-shadow:0 2px 0 var(--line);}
+  .contact-line{display:flex;gap:14px;padding:11px 0;border-top:1px solid var(--line-soft);font-size:14.5px;}
+  .contact-line:first-of-type{border-top:none;}
+  .contact-line b{width:84px;flex:none;color:var(--ink-soft);font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;}
+
+  footer{padding-block:28px;color:var(--ink-soft);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;border-top:1px solid var(--line);}
+
+  .fab{
+    position:fixed;right:20px;bottom:20px;z-index:50;
+    display:flex;align-items:center;gap:10px;
+    background:var(--accent);color:var(--accent-ink);
+    border-radius:999px;padding:10px 10px 10px 10px;
+    box-shadow:0 16px 32px -12px color-mix(in srgb, var(--accent) 70%, transparent);
+    text-decoration:none;transition:transform .2s ease, box-shadow .2s ease, padding .2s ease;
+    overflow:hidden;
+  }
+  .fab-icon{
+    width:40px;height:40px;border-radius:50%;background:var(--accent-ink);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;flex:none;
+  }
+  .fab-icon svg{width:20px;height:20px;}
+  .fab-label{max-width:0;opacity:0;white-space:nowrap;font-weight:700;font-size:13.5px;overflow:hidden;transition:max-width .25s ease, opacity .2s ease, margin .25s ease;}
+  .fab:hover{transform:translateY(-2px);box-shadow:0 20px 40px -14px color-mix(in srgb, var(--accent) 75%, transparent);}
+  .fab:hover .fab-label{max-width:160px;opacity:1;margin-right:6px;}
+
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important;animation:none !important;} html{scroll-behavior:auto;} }
+</style>
+
+<header>
+  <div class="wrap header-inner">
+    <div class="logo">Nord Automobile <span>Hohn</span></div>
+    <nav>
+      <a href="#fahrzeuge">Fahrzeuge</a>
+      <a href="#ueber-uns">Über uns</a>
+      <a href="#bewertungen">Bewertungen</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <a class="btn btn-sm" href="tel:043357319182">04335 7319182</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-shapes">
+    <svg viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice"><circle cx="1050" cy="80" r="240" fill="#ffffff"/><circle cx="120" cy="420" r="180" fill="#ffffff"/></svg>
+  </div>
+  <div class="wrap hero-inner">
+    <span class="label reveal-in">Gebrauchtwagen in Hohn</span>
+    <h1 class="reveal-in">Geprüfte Gebrauchtwagen, faire Preise, ehrliche Beratung.</h1>
+    <p class="lede reveal-in">Sie kennen meine Fahrzeuge vielleicht schon von mobile.de. Hier lernen Sie kennen, wer dahintersteht: seit wann es mich gibt, wie ich arbeite und was Sie von mir erwarten können.</p>
+    <div class="hero-actions reveal-in">
+      <a class="btn" href="tel:043357319182">Jetzt anrufen</a>
+      <a class="phone" href="#fahrzeuge">Fahrzeuge ansehen →</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="fact-card reveal-in">
+    <div class="fact"><b>Geprüft</b><span>Jedes Fahrzeug mit Zustandsbericht</span></div>
+    <div class="fact"><b>Fair</b><span>Transparente Preise ohne Verhandlungstheater</span></div>
+    <div class="fact"><b>Vor Ort</b><span>Hohn, direkt erreichbar</span></div>
+    <div class="fact"><b>Beratung</b><span>Persönlich statt Formular</span></div>
+  </div>
+
+  <section id="fahrzeuge">
+    <div class="section-head reveal">
+      <div>
+        <span class="label">Aktuelle Fahrzeuge</span>
+        <h2>Eine Auswahl aus unserem Bestand.</h2>
+      </div>
+      <p>Mein Bestand ändert sich laufend — rufen Sie an, ich sage Ihnen, was gerade verfügbar ist.</p>
+    </div>
+    <div class="cars">
+      <div class="car reveal">
+        <div class="car-media">🚗</div>
+        <div class="car-body">
+          <h3>Kompaktklasse, Benzin</h3>
+          <div class="meta"><span>Bj. 2019</span><span>68.000 km</span><span>Klima</span></div>
+          <div class="price">ab 9.900 €</div>
+        </div>
+      </div>
+      <div class="car reveal">
+        <div class="car-media">🚙</div>
+        <div class="car-body">
+          <h3>Kombi, Diesel</h3>
+          <div class="meta"><span>Bj. 2020</span><span>82.000 km</span><span>AHK</span></div>
+          <div class="price">ab 14.500 €</div>
+        </div>
+      </div>
+      <div class="car reveal">
+        <div class="car-media">🚐</div>
+        <div class="car-body">
+          <h3>SUV, Allrad</h3>
+          <div class="meta"><span>Bj. 2021</span><span>54.000 km</span><span>Navi</span></div>
+          <div class="price">ab 19.900 €</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="service">
+    <div class="section-head reveal">
+      <div>
+        <span class="label">Service</span>
+        <h2>Rund um Ihr Fahrzeug — nicht nur beim Kauf.</h2>
+      </div>
+      <p>Ich begleite Sie auch nach dem Kauf, wenn Sie mich brauchen.</p>
+    </div>
+    <div class="services">
+      <div class="service reveal"><div class="icon">🔍</div><h3>Fahrzeugprüfung</h3><p>Jedes Auto prüfe ich vor dem Verkauf technisch und dokumentiere den Zustand offen.</p></div>
+      <div class="service reveal"><div class="icon">🤝</div><h3>Ankauf &amp; Inzahlungnahme</h3><p>Ihr aktuelles Fahrzeug bewerte ich fair — ich rechne es auf Wunsch an.</p></div>
+      <div class="service reveal"><div class="icon">📄</div><h3>Finanzierung</h3><p>Auf Wunsch vermittle ich Ihnen ein passendes Finanzierungsangebot für Ihren Kauf.</p></div>
+      <div class="service reveal"><div class="icon">🛡️</div><h3>Garantie</h3><p>Gebrauchtwagengarantie nach Absprache — sprechen Sie mich beim Termin darauf an.</p></div>
+      <div class="service reveal"><div class="icon">🚚</div><h3>Zulassung &amp; Überführung</h3><p>Auf Wunsch übernehme ich Zulassung und Lieferung Ihres neuen Fahrzeugs.</p></div>
+      <div class="service reveal"><div class="icon">☎️</div><h3>Persönliche Beratung</h3><p>Kein Callcenter — Sie sprechen direkt mit mir über Ihr Wunschfahrzeug.</p></div>
+    </div>
+  </section>
+
+  <section id="ueber-uns">
+    <div class="section-head reveal">
+      <div>
+        <span class="label">Über uns</span>
+        <h2>Ein Gesicht, das für sein Auto geradesteht.</h2>
+      </div>
+      <p>Auf mobile.de sehen Sie nur das Fahrzeug. Hier sehen Sie, wer dahintersteht.</p>
+    </div>
+    <div class="about-card reveal">
+      <div class="about-photo">👤</div>
+      <div class="about-body">
+        <h3>Ich bin Herr Balin</h3>
+        <p class="about-role">Inhaber, Nord Automobile Hohn</p>
+        <p>Seit <b>2014</b> verkaufe ich Gebrauchtwagen in Hohn — persönlich, ohne Zwischenhändler und mit dem Anspruch, dass jedes Fahrzeug hält, was es verspricht. Über 190 Kunden haben ihre Erfahrung mit mir öffentlich bewertet — transparent nachlesbar, nicht nur behauptet.</p>
+        <div class="about-tags">
+          <span>Seit 2014 in Hohn</span>
+          <span>Geprüfte Fahrzeuge</span>
+          <span>Persönliche Übergabe</span>
+        </div>
+      </div>
+    </div>
+    <div class="trust-stats reveal">
+      <div class="trust-stat"><b>12+</b><span>Jahre am Markt</span></div>
+      <div class="trust-stat"><b>191</b><span>mobile.de Bewertungen</span></div>
+      <div class="trust-stat"><b>4,9★</b><span>Durchschnittsbewertung</span></div>
+      <div class="trust-stat"><b>97%</b><span>Weiterempfehlungsquote</span></div>
+    </div>
+  </section>
+
+  <section id="bewertungen">
+    <div class="section-head reveal">
+      <div>
+        <span class="label">Kundenstimmen</span>
+        <h2>Was Kunden über mich sagen.</h2>
+      </div>
+      <p>Echte Bewertungen von mobile.de. Transparenz und Ehrlichkeit sind kein Werbespruch, sondern nachprüfbar.</p>
+    </div>
+    <div class="review-marquee reveal" id="reviewMarquee">
+      <div class="review-track" id="reviewTrack">
+        <div class="review"><div class="review-stars">★★★★★</div><p>„Fahrzeug top! Preis top! Abwicklung top! Wir waren nach dem Kauf sogar noch alle zusammen zum Mittagessen gegangen. Ich würde den Händler uneingeschränkt weiterempfehlen.“</p><span class="review-author">— Julia, Fahrzeug gekauft</span></div>
+        <div class="review"><div class="review-stars">★★★★★</div><p>„Sehr schnelle Abwicklung — er hat es geschafft, 5 Tage vor dem eigentlichen Abholtermin das Auto zu übergeben.“</p><span class="review-author">— Sascha Pakusch, Fahrzeug gekauft</span></div>
+        <div class="review"><div class="review-stars">★★★★★</div><p>„Herr Balin war ein stets freundlicher Händler, der stets auf meine Kundenwünsche eingegangen ist und mir ein auf meine Bedürfnisse zugeschnittenes Auto verkauft.“</p><span class="review-author">— Thomas Heckmann, Fahrzeug gekauft</span></div>
+        <div class="review"><div class="review-stars">★★★★★</div><p>„Ehrlich, hilfsbereit und lösungsorientiert. Hat schnell und unkompliziert bei Ab-, Um- und Anmeldung unterstützt.“</p><span class="review-author">— Steffi, Fahrzeug gekauft</span></div>
+        <div class="review"><div class="review-stars">★★★★★</div><p>„Sehr authentischer, freundlicher Händler. Sind spontan hingefahren und haben direkt ein paar Autos vorgeschlagen bekommen. Klasse, dass alles so schnell geklappt hat.“</p><span class="review-author">— Kerrin, Fahrzeug gekauft</span></div>
+        <div class="review"><div class="review-stars">★★★★★</div><p>„Ein sehr freundlicher Verkäufer, wir haben uns super wohl gefühlt. Kleine Mängel wurden abgestellt, TÜV neu wie versprochen. Nichts versteckt.“</p><span class="review-author">— Christian Höppner, Fahrzeug gekauft</span></div>
+        <div class="review"><div class="review-stars">★★★★★</div><p>„Der Händler war freundlich und die Kommunikation verlief unkompliziert. Das Fahrzeug entsprach weitgehend der Beschreibung.“</p><span class="review-author">— Damian, Fahrzeug gekauft</span></div>
+        <div class="review"><div class="review-stars">★★★★★</div><p>„Der Händler war sehr sympathisch und super freundlich.“</p><span class="review-author">— Robin Jeß, Fahrzeug gekauft</span></div>
+      </div>
+    </div>
+    <a class="btn btn-line reveal" style="margin-top:24px;" href="https://www.mobile.de/bewertungen/NORDAUTOMOBILERENDSBURG" target="_blank" rel="noopener">Alle 191 Bewertungen ansehen →</a>
+  </section>
+
+  <section id="ablauf">
+    <div class="split">
+      <div>
+        <span class="label">So läuft der Kauf</span>
+        <h2 style="margin-top:8px;" class="reveal">Drei Schritte bis zur Übergabe.</h2>
+        <div class="steps">
+          <div class="step reveal"><b>1</b><div><h4>Anruf oder Vorbeikommen</h4><p>Sie sagen mir, was Sie suchen — ich zeige Ihnen passende Fahrzeuge aus dem Bestand.</p></div></div>
+          <div class="step reveal"><b>2</b><div><h4>Probefahrt &amp; Zustandsbericht</h4><p>In Ruhe testen, alle Fragen zu Historie und Zustand kläre ich mit Ihnen.</p></div></div>
+          <div class="step reveal"><b>3</b><div><h4>Kauf &amp; Übergabe</h4><p>Papiere, Zulassung, Übergabe — ich kümmere mich um die Details.</p></div></div>
+        </div>
+      </div>
+      <div class="hours-panel reveal">
+        <span class="label">Öffnungszeiten</span>
+        <div style="margin-top:16px;">
+          <div class="hours-row today"><span>Montag</span><span>09:00–18:00</span></div>
+          <div class="hours-row"><span>Dienstag</span><span>09:00–18:00</span></div>
+          <div class="hours-row"><span>Mittwoch</span><span>09:00–18:00</span></div>
+          <div class="hours-row"><span>Donnerstag</span><span>09:00–18:00</span></div>
+          <div class="hours-row"><span>Freitag</span><span>09:00–18:00</span></div>
+          <div class="hours-row"><span>Samstag</span><span>10:00–13:00</span></div>
+          <div class="hours-row"><span>Sonntag</span><span>geschlossen</span></div>
+        </div>
+        <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px;color:var(--ink-soft);">
+          Termine außerhalb der Zeiten <b style="color:var(--ink);">nach Vereinbarung.</b>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0;">
+    <div class="cta-band reveal">
+      <div>
+        <h2>Fahrzeug im Kopf? Rufen Sie einfach an.</h2>
+        <p>Kein Formular, keine Warteschleife — Sie sprechen direkt mit mir.</p>
+      </div>
+      <a class="btn" href="tel:043357319182">04335 7319182 anrufen</a>
+    </div>
+  </section>
+
+  <section id="kontakt" style="padding-top:0;">
+    <div class="section-head reveal">
+      <div><span class="label">Kontakt &amp; Anfahrt</span><h2>Nord Automobile, Hohn</h2></div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card reveal">
+        <div class="contact-line"><b>Standort</b><span>Hauptstr. 26, 24806 Hohn</span></div>
+        <div class="contact-line"><b>Telefon</b><span>04335 7319182</span></div>
+        <div class="contact-line"><b>E-Mail</b><span>info@nord-automobile-hohn.de (Platzhalter)</span></div>
+      </div>
+      <div class="contact-card reveal" style="display:flex;flex-direction:column;justify-content:center;gap:12px;">
+        <a class="btn" style="justify-content:center;" href="tel:043357319182">Jetzt anrufen</a>
+        <a class="btn btn-line" style="justify-content:center;" href="#fahrzeuge">Fahrzeuge ansehen</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Nord Automobile Hohn</span>
+    <span>Kontakt · Impressum · Datenschutz</span>
+  </footer>
+</div>
+
+<a class="fab" href="tel:043357319182" aria-label="Direkt anrufen">
+  <span class="fab-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  </span>
+  <span class="fab-label">Anrufen</span>
+</a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced || typeof gsap === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.timeline({ defaults: { ease: 'power2.out', duration: 0.7 } })
+    .from('.reveal-in', { opacity: 0, y: 18, stagger: 0.1 });
+
+  gsap.utils.toArray('.reveal').forEach(function(el){
+    gsap.from(el, {
+      opacity: 0, y: 16, duration: 0.5, ease: 'power1.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none reverse' }
+    });
+  });
+
+  gsap.utils.toArray('.cars, .services, .trust-stats').forEach(function(grid){
+    gsap.from(grid.children, {
+      opacity: 0, y: 18, duration: 0.45, stagger: 0.06, ease: 'power1.out',
+      scrollTrigger: { trigger: grid, start: 'top 85%', toggleActions: 'play none none reverse' }
+    });
+  });
+})();
+
+(function(){
+  var wrap = document.getElementById('reviewMarquee');
+  var track = document.getElementById('reviewTrack');
+  if (!wrap || !track) return;
+
+  track.insertAdjacentHTML('beforeend', track.innerHTML);
+
+  var isDown = false, startX = 0, startScroll = 0;
+
+  wrap.addEventListener('pointerdown', function(e){
+    isDown = true;
+    wrap.classList.add('is-dragging');
+    startX = e.clientX;
+    startScroll = track.getBoundingClientRect().left;
+    track.style.animationPlayState = 'paused';
+    wrap.setPointerCapture(e.pointerId);
+  });
+  wrap.addEventListener('pointermove', function(e){
+    if (!isDown) return;
+    var dx = e.clientX - startX;
+    track.style.transform = 'translateX(' + dx + 'px)';
+  });
+  function endDrag(){
+    if (!isDown) return;
+    isDown = false;
+    wrap.classList.remove('is-dragging');
+    track.style.transform = '';
+    track.style.animationPlayState = '';
+  }
+  wrap.addEventListener('pointerup', endDrag);
+  wrap.addEventListener('pointerleave', endDrag);
+})();
+</script>
