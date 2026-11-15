@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI-Ready Check – Hägerbäumer Systeme</title>
+<style>
+  :root {
+    --orange: #E8540A;
+    --orange-light: #ff6b2b;
+    --bg: #111111;
+    --bg2: #1a1a1a;
+    --bg3: #242424;
+    --border: #2e2e2e;
+    --text: #f0f0f0;
+    --text-muted: #888;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-triangle {
+    width: 32px;
+    height: 32px;
+  }
+
+  .logo-text {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .logo-text span { color: var(--orange); }
+
+  .nav-badge {
+    background: var(--orange);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 70px 20px 50px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .hero-label {
+    color: var(--orange);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 span { color: var(--orange); }
+
+  .hero p {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 540px;
+    margin: 0 auto 32px;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  .hero-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hero-meta .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--orange);
+  }
+
+  /* PROGRESS */
+  .progress-wrap {
+    max-width: 720px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+  }
+
+  .progress-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .progress-top strong {
+    color: var(--text);
+  }
+
+  .progress-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+    width: 20%;
+  }
+
+  .steps-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .step-pill {
+    flex: 1;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    background: var(--bg3);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .step-pill.active {
+    background: var(--orange);
+    color: #fff;
+    border-color: var(--orange);
+  }
+
+  .step-pill.done {
+    background: var(--bg3);
+    color: var(--orange);
+    border-color: var(--orange);
+  }
+
+  /* FORM CONTAINER */
+  .form-container {
+    max-width: 720px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+  }
+
+  .page {
+    display: none;
+  }
+
+  .page.active {
+    display: block;
+  }
+
+  .page-header {
+    margin-bottom: 32px;
+  }
+
+  .page-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    margin-bottom: 6px;
+  }
+
+  .page-header p {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* QUESTION CARDS */
+  .question {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s;
+  }
+
+  .question:hover {
+    border-color: #3a3a3a;
+  }
+
+  .question.answered {
+    border-color: var(--orange);
+    border-opacity: 0.4;
+  }
+
+  .question-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+
+  .question-label .q-num {
+    color: var(--orange);
+    margin-right: 6px;
+  }
+
+  /* OPTIONS */
+  .options {
+    display: grid;
+    gap: 8px;
+  }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: left;
+  }
+
+  .option:hover {
+    border-color: #444;
+    background: #2a2a2a;
+  }
+
+  .option.selected {
+    border-color: var(--orange);
+    background: rgba(232, 84, 10, 0.08);
+  }
+
+  .option-radio {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s;
+  }
+
+  .option.selected .option-radio {
+    border-color: var(--orange);
+    background: var(--orange);
+  }
+
+  .option.selected .option-radio::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .option-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .option.selected .option-check {
+    border-color: var(--orange);
+    background: var(--orange);
+  }
+
+  .option.selected .option-check::after {
+    content: '✓';
+    font-size: 11px;
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .option-text {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .option-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* TEXT INPUT */
+  .text-input {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 14px;
+    font-family: inherit;
+    padding: 12px 14px;
+    resize: vertical;
+    min-height: 44px;
+    transition: border-color 0.15s;
+    outline: none;
+  }
+
+  .text-input:focus {
+    border-color: var(--orange);
+  }
+
+  .text-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  /* NAV BUTTONS */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+    gap: 12px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: var(--orange-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: var(--bg3);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover {
+    border-color: #444;
+    background: #2a2a2a;
+  }
+
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  /* RESULT PAGE */
+  #result-page {
+    display: none;
+    max-width: 720px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+  }
+
+  .result-header {
+    text-align: center;
+    padding: 40px 0 32px;
+  }
+
+  .score-ring {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 24px;
+  }
+
+  .score-ring svg {
+    transform: rotate(-90deg);
+  }
+
+  .score-ring .score-bg {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 8;
+  }
+
+  .score-ring .score-arc {
+    fill: none;
+    stroke: var(--orange);
+    stroke-width: 8;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s ease;
+  }
+
+  .score-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .score-label .score-num {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--text);
+    display: block;
+    line-height: 1;
+  }
+
+  .score-label .score-pct {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .result-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .result-subtitle {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+
+  .result-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  @media (max-width: 540px) {
+    .result-cards { grid-template-columns: 1fr; }
+    .steps-row { display: none; }
+    nav { padding: 14px 20px; }
+  }
+
+  .result-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .result-card h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  .result-card p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .result-card.highlight {
+    border-color: var(--orange);
+    background: rgba(232, 84, 10, 0.06);
+  }
+
+  .dim-bars {
+    margin: 24px 0;
+  }
+
+  .dim-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .dim-bar-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    width: 130px;
+    flex-shrink: 0;
+  }
+
+  .dim-bar-track {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .dim-bar-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 4px;
+    transition: width 0.8s ease;
+  }
+
+  .dim-bar-val {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    width: 36px;
+    text-align: right;
+  }
+
+  /* CTA SECTION */
+  .cta-box {
+    background: var(--bg2);
+    border: 1px solid var(--orange);
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  .cta-box h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .cta-box p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .cta-form input, .cta-form textarea {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 14px;
+    font-family: inherit;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .cta-form input:focus, .cta-form textarea:focus {
+    border-color: var(--orange);
+  }
+
+  .cta-form input::placeholder, .cta-form textarea::placeholder {
+    color: var(--text-muted);
+  }
+
+  .cta-form textarea { resize: vertical; min-height: 80px; }
+
+  .consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    text-align: left;
+    margin: 12px 0 20px;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .consent input[type="checkbox"] {
+    width: 16px !important;
+    height: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    accent-color: var(--orange);
+    cursor: pointer;
+  }
+
+  .send-status {
+    font-size: 13px;
+    margin-top: 10px;
+    min-height: 20px;
+  }
+
+  .send-status.success { color: #4caf50; }
+  .send-status.error { color: #f44336; }
+
+  /* WAVE DIVIDER */
+  .wave {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-width: 100%;
+  }
+
+  footer .logo { opacity: 0.6; }
+
+  footer .footer-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  footer .footer-links a {
+    color: var(--text-muted);
+    font-size: 12px;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  footer .footer-links a:hover { color: var(--text); }
+
+  /* ORANGE LINE ACCENT */
+  .accent-line {
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: var(--orange);
+    border-radius: 2px;
+    margin-bottom: 12px;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://haegerbaeumer-systeme.de" class="logo">
+    <svg class="logo-triangle" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="16,3 30,28 2,28" fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
+      <polygon points="16,3 30,28 2,28" fill="none" stroke="#E8540A" stroke-width="2.5" stroke-linejoin="round" stroke-dasharray="62" stroke-dashoffset="20" opacity="0.6"/>
+    </svg>
+    <div class="logo-text">Hägerbäumer<span> Systeme</span></div>
+  </a>
+  <div class="nav-badge">AI-Ready Check</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Kostenlose Analyse</div>
+  <h1>Ist Ihr Unternehmen<br>bereit für <span>KI-Automatisierung?</span></h1>
+  <p>Dieser Check analysiert in 5 Minuten, wo Ihr Unternehmen steht — und zeigt konkret, wo KI-Automatisierung für Sie sofort Wirkung zeigt.</p>
+  <div class="hero-meta">
+    <span><div class="dot"></div> 5 Minuten</span>
+    <span><div class="dot"></div> 20 Fragen</span>
+    <span><div class="dot"></div> Sofort-Auswertung</span>
+    <span><div class="dot"></div> Kostenlos</span>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-top">
+    <strong id="progress-title">Schritt 1 von 5</strong>
+    <span id="progress-pct">20 %</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
+  <div class="steps-row">
+    <div class="step-pill active" onclick="goToPage(0)">Unternehmen</div>
+    <div class="step-pill" onclick="goToPage(1)">Prozesse</div>
+    <div class="step-pill" onclick="goToPage(2)">Use Cases</div>
+    <div class="step-pill" onclick="goToPage(3)">Infrastruktur</div>
+    <div class="step-pill" onclick="goToPage(4)">Organisation</div>
+  </div>
+</div>
+
+<!-- FORM PAGES -->
+<div class="form-container">
+
+  <!-- PAGE 1: Unternehmen -->
+  <div class="page active" id="page-0">
+    <div class="page-header">
+      <span class="accent-line"></span>
+      <h2>Ihr Unternehmen</h2>
+      <p>Damit wir Ihre Situation richtig einschätzen können.</p>
+    </div>
+
+    <div class="question" id="q0">
+      <div class="question-label"><span class="q-num">01</span> Wie viele Mitarbeiter hat Ihr Unternehmen?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q0','single')">
+          <div class="option-radio"></div>
+          <div class="option-text">1–9 Mitarbeiter<div class="option-sub">Einzelunternehmen / Kleinstbetrieb</div></div>
+        </div>
+        <div class="option" onclick="select(this,'q0','single')">
+          <div class="option-radio"></div>
+          <div class="option-text">10–49 Mitarbeiter<div class="option-sub">Kleines Unternehmen</div></div>
+        </div>
+        <div class="option" onclick="select(this,'q0','single')">
+          <div class="option-radio"></div>
+          <div class="option-text">50–249 Mitarbeiter<div class="option-sub">Mittelständisches Unternehmen</div></div>
+        </div>
+        <div class="option" onclick="select(this,'q0','single')">
+          <div class="option-radio"></div>
+          <div class="option-text">250+ Mitarbeiter<div class="option-sub">Großunternehmen / Konzern</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="question" id="q1">
+      <div class="question-label"><span class="q-num">02</span> In welcher Branche ist Ihr Unternehmen tätig?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q1','single')"><div class="option-radio"></div><div class="option-text">Handel / E-Commerce</div></div>
+        <div class="option" onclick="select(this,'q1','single')"><div class="option-radio"></div><div class="option-text">Produktion / Industrie</div></div>
+        <div class="option" onclick="select(this,'q1','single')"><div class="option-radio"></div><div class="option-text">Dienstleistung / Beratung</div></div>
+        <div class="option" onclick="select(this,'q1','single')"><div class="option-radio"></div><div class="option-text">Gesundheitswesen / Pflege</div></div>
+        <div class="option" onclick="select(this,'q1','single')"><div class="option-radio"></div><div class="option-text">Handwerk / Bau</div></div>
+        <div class="option" onclick="select(this,'q1','single')"><div class="option-radio"></div><div class="option-text">Andere Branche</div></div>
+      </div>
+    </div>
+
+    <div class="question" id="q2">
+      <div class="question-label"><span class="q-num">03</span> Was ist Ihre aktuelle Hauptmotivation für KI?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q2','single')"><div class="option-radio"></div><div class="option-text">Kosten senken<div class="option-sub">Manuelle Aufgaben automatisieren</div></div></div>
+        <div class="option" onclick="select(this,'q2','single')"><div class="option-radio"></div><div class="option-text">Effizienz steigern<div class="option-sub">Schnellere Prozesse, weniger Fehler</div></div></div>
+        <div class="option" onclick="select(this,'q2','single')"><div class="option-radio"></div><div class="option-text">Wettbewerbsfähig bleiben<div class="option-sub">Mitbewerber nutzen KI bereits</div></div></div>
+        <div class="option" onclick="select(this,'q2','single')"><div class="option-radio"></div><div class="option-text">Neugier / Exploration<div class="option-sub">Möglichkeiten ausloten</div></div></div>
+      </div>
+    </div>
+
+    <div class="question" id="q3">
+      <div class="question-label"><span class="q-num">04</span> Haben Sie bereits Erfahrungen mit KI-Tools gemacht?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q3','single')"><div class="option-radio"></div><div class="option-text">Nein, noch gar nicht</div></div>
+        <div class="option" onclick="select(this,'q3','single')"><div class="option-radio"></div><div class="option-text">Ja, privat (z. B. ChatGPT)</div></div>
+        <div class="option" onclick="select(this,'q3','single')"><div class="option-radio"></div><div class="option-text">Ja, vereinzelt im Betrieb getestet</div></div>
+        <div class="option" onclick="select(this,'q3','single')"><div class="option-radio"></div><div class="option-text">Ja, bereits aktiv im Einsatz</div></div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <div></div>
+      <button class="btn btn-primary" onclick="nextPage()">Weiter &rarr;</button>
+    </div>
+  </div>
+
+  <!-- PAGE 2: Prozesse -->
+  <div class="page" id="page-1">
+    <div class="page-header">
+      <span class="accent-line"></span>
+      <h2>Ihre Prozesse</h2>
+      <p>Wie laufen Abläufe in Ihrem Unternehmen heute?</p>
+    </div>
+
+    <div class="question" id="q4">
+      <div class="question-label"><span class="q-num">05</span> Wie viele Ihrer Prozesse laufen noch manuell ab?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q4','single')"><div class="option-radio"></div><div class="option-text">Nahezu alle<div class="option-sub">Wenig bis keine Automatisierung</div></div></div>
+        <div class="option" onclick="select(this,'q4','single')"><div class="option-radio"></div><div class="option-text">Die Mehrheit<div class="option-sub">Einzelne Tools, aber kein System</div></div></div>
+        <div class="option" onclick="select(this,'q4','single')"><div class="option-radio"></div><div class="option-text">Etwa die Hälfte<div class="option-sub">Mix aus manuell und automatisiert</div></div></div>
+        <div class="option" onclick="select(this,'q4','single')"><div class="option-radio"></div><div class="option-text">Wenige<div class="option-sub">Vieles ist bereits automatisiert</div></div></div>
+      </div>
+    </div>
+
+    <div class="question" id="q5">
+      <div class="question-label"><span class="q-num">06</span> Welche Bereiche kosten Ihr Team am meisten Zeit? (Mehrfachauswahl)</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q5','multi')"><div class="option-check"></div><div class="option-text">E-Mail & Kommunikation</div></div>
+        <div class="option" onclick="select(this,'q5','multi')"><div class="option-check"></div><div class="option-text">Angebote, Rechnungen, Buchhaltung</div></div>
+        <div class="option" onclick="select(this,'q5','multi')"><div class="option-check"></div><div class="option-text">Kundensupport & Anfragen</div></div>
+        <div class="option" onclick="select(this,'q5','multi')"><div class="option-check"></div><div class="option-text">Datenerfassung & -pflege</div></div>
+        <div class="option" onclick="select(this,'q5','multi')"><div class="option-check"></div><div class="option-text">Reporting & Auswertungen</div></div>
+        <div class="option" onclick="select(this,'q5','multi')"><div class="option-check"></div><div class="option-text">HR & interne Verwaltung</div></div>
+      </div>
+    </div>
+
+    <div class="question" id="q6">
+      <div class="question-label"><span class="q-num">07</span> Wie gut sind Ihre Prozesse dokumentiert?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q6','single')"><div class="option-radio"></div><div class="option-text">Kaum dokumentiert<div class="option-sub">Vieles liegt im Kopf einzelner Mitarbeiter</div></div></div>
+        <div class="option" onclick="select(this,'q6','single')"><div class="option-radio"></div><div class="option-text">Teilweise<div class="option-sub">Wichtige Prozesse sind beschrieben</div></div></div>
+        <div class="option" onclick="select(this,'q6','single')"><div class="option-radio"></div><div class="option-text">Gut dokumentiert<div class="option-sub">Klare SOPs und Handbücher vorhanden</div></div></div>
+      </div>
+    </div>
+
+    <div class="question" id="q7">
+      <div class="question-label"><span class="q-num">08</span> Wie reagieren Ihre Mitarbeiter auf neue Tools?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q7','single')"><div class="option-radio"></div><div class="option-text">Skepsis überwiegt<div class="option-sub">Änderungen werden zögerlich angenommen</div></div></div>
+        <div class="option" onclick="select(this,'q7','single')"><div class="option-radio"></div><div class="option-text">Gemischt<div class="option-sub">Teils offen, teils zurückhaltend</div></div></div>
+        <div class="option" onclick="select(this,'q7','single')"><div class="option-radio"></div><div class="option-text">Offen und neugierig<div class="option-sub">Team probiert Neues gerne aus</div></div></div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn btn-secondary" onclick="prevPage()">&larr; Zurück</button>
+      <button class="btn btn-primary" onclick="nextPage()">Weiter &rarr;</button>
+    </div>
+  </div>
+
+  <!-- PAGE 3: Use Cases -->
+  <div class="page" id="page-2">
+    <div class="page-header">
+      <span class="accent-line"></span>
+      <h2>Konkrete Anwendungsfälle</h2>
+      <p>Wo sehen Sie das größte Potenzial für KI?</p>
+    </div>
+
+    <div class="question" id="q8">
+      <div class="question-label"><span class="q-num">09</span> Was würde KI bei Ihnen automatisieren sollen?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q8','multi')"><div class="option-check"></div><div class="option-text">Eingehende Anfragen beantworten<div class="option-sub">Chatbot, Erstantworten, FAQ</div></div></div>
+        <div class="option" onclick="select(this,'q8','multi')"><div class="option-check"></div><div class="option-text">Dokumente erstellen & prüfen<div class="option-sub">Angebote, Verträge, Berichte</div></div></div>
+        <div class="option" onclick="select(this,'q8','multi')"><div class="option-check"></div><div class="option-text">Daten auswerten & zusammenfassen<div class="option-sub">Berichte, Auswertungen, Dashboards</div></div></div>
+        <div class="option" onclick="select(this,'q8','multi')"><div class="option-check"></div><div class="option-text">Leads qualifizieren & nachfassen<div class="option-sub">CRM-Integration, Follow-up-Mails</div></div></div>
+        <div class="option" onclick="select(this,'q8','multi')"><div class="option-check"></div><div class="option-text">Internes Wissen nutzbar machen<div class="option-sub">Wissensdatenbank, KI-Assistent</div></div></div>
+        <div class="option" onclick="select(this,'q8','multi')"><div class="option-check"></div><div class="option-text">Ich weiß noch nicht genau</div></div>
+      </div>
+    </div>
+
+    <div class="question" id="q9">
+      <div class="question-label"><span class="q-num">10</span> Wie dringend ist die Einführung von KI für Sie?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q9','single')"><div class="option-radio"></div><div class="option-text">Mittelfristig (12–24 Monate)</div></div>
+        <div class="option" onclick="select(this,'q9','single')"><div class="option-radio"></div><div class="option-text">Kurzfristig (3–12 Monate)</div></div>
+        <div class="option" onclick="select(this,'q9','single')"><div class="option-radio"></div><div class="option-text">Sofort (unter 3 Monate)</div></div>
+        <div class="option" onclick="select(this,'q9','single')"><div class="option-radio"></div><div class="option-text">Noch kein konkreter Zeitplan</div></div>
+      </div>
+    </div>
+
+    <div class="question" id="q10">
+      <div class="question-label"><span class="q-num">11</span> Welches Budget steht für KI-Einführung zur Verfügung?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q10','single')"><div class="option-radio"></div><div class="option-text">Noch nicht definiert</div></div>
+        <div class="option" onclick="select(this,'q10','single')"><div class="option-radio"></div><div class="option-text">Unter 500 € / Monat</div></div>
+        <div class="option" onclick="select(this,'q10','single')"><div class="option-radio"></div><div class="option-text">500–2.000 € / Monat</div></div>
+        <div class="option" onclick="select(this,'q10','single')"><div class="option-radio"></div><div class="option-text">Über 2.000 € / Monat</div></div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn btn-secondary" onclick="prevPage()">&larr; Zurück</button>
+      <button class="btn btn-primary" onclick="nextPage()">Weiter &rarr;</button>
+    </div>
+  </div>
+
+  <!-- PAGE 4: Infrastruktur -->
+  <div class="page" id="page-3">
+    <div class="page-header">
+      <span class="accent-line"></span>
+      <h2>Technische Infrastruktur</h2>
+      <p>Welche Tools und Systeme nutzen Sie heute?</p>
+    </div>
+
+    <div class="question" id="q11">
+      <div class="question-label"><span class="q-num">12</span> Welche Software-Systeme sind bei Ihnen im Einsatz? (Mehrfachauswahl)</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q11','multi')"><div class="option-check"></div><div class="option-text">CRM (z. B. HubSpot, Salesforce)</div></div>
+        <div class="option" onclick="select(this,'q11','multi')"><div class="option-check"></div><div class="option-text">ERP / Buchhaltung (z. B. DATEV, SAP)</div></div>
+        <div class="option" onclick="select(this,'q11','multi')"><div class="option-check"></div><div class="option-text">E-Mail / Office 365 / Google Workspace</div></div>
+        <div class="option" onclick="select(this,'q11','multi')"><div class="option-check"></div><div class="option-text">Projektmanagement (z. B. Asana, Notion)</div></div>
+        <div class="option" onclick="select(this,'q11','multi')"><div class="option-check"></div><div class="option-text">E-Commerce / Shop-System</div></div>
+        <div class="option" onclick="select(this,'q11','multi')"><div class="option-check"></div><div class="option-text">Keine spezifischen Systeme</div></div>
+      </div>
+    </div>
+
+    <div class="question" id="q12">
+      <div class="question-label"><span class="q-num">13</span> Wo liegen Ihre Unternehmensdaten hauptsächlich?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q12','single')"><div class="option-radio"></div><div class="option-text">Lokale Server / PCs<div class="option-sub">Daten bleiben im Unternehmen</div></div></div>
+        <div class="option" onclick="select(this,'q12','single')"><div class="option-radio"></div><div class="option-text">Cloud-Dienste (z. B. Google Drive, OneDrive)</div></div>
+        <div class="option" onclick="select(this,'q12','single')"><div class="option-radio"></div><div class="option-text">Mix aus lokal und Cloud</div></div>
+        <div class="option" onclick="select(this,'q12','single')"><div class="option-radio"></div><div class="option-text">Verteilte Systeme ohne klare Struktur</div></div>
+      </div>
+    </div>
+
+    <div class="question" id="q13">
+      <div class="question-label"><span class="q-num">14</span> Wie bewerten Sie die Qualität Ihrer Daten?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q13','single')"><div class="option-radio"></div><div class="option-text">Lückenhaft und unstrukturiert<div class="option-sub">Daten verstreut, oft veraltet</div></div></div>
+        <div class="option" onclick="select(this,'q13','single')"><div class="option-radio"></div><div class="option-text">Teils strukturiert<div class="option-sub">Wichtige Daten gepflegt, Rest ausbaufähig</div></div></div>
+        <div class="option" onclick="select(this,'q13','single')"><div class="option-radio"></div><div class="option-text">Gut strukturiert und gepflegt<div class="option-sub">Klare Systeme, aktuelle Daten</div></div></div>
+      </div>
+    </div>
+
+    <div class="question" id="q14">
+      <div class="question-label"><span class="q-num">15</span> Haben Sie IT-Fachkräfte im Unternehmen?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q14','single')"><div class="option-radio"></div><div class="option-text">Nein, kein IT-Personal</div></div>
+        <div class="option" onclick="select(this,'q14','single')"><div class="option-radio"></div><div class="option-text">Externer IT-Dienstleister</div></div>
+        <div class="option" onclick="select(this,'q14','single')"><div class="option-radio"></div><div class="option-text">Ja, eigene IT-Abteilung</div></div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn btn-secondary" onclick="prevPage()">&larr; Zurück</button>
+      <button class="btn btn-primary" onclick="nextPage()">Weiter &rarr;</button>
+    </div>
+  </div>
+
+  <!-- PAGE 5: Organisation -->
+  <div class="page" id="page-4">
+    <div class="page-header">
+      <span class="accent-line"></span>
+      <h2>Organisation & Entscheidung</h2>
+      <p>Wie ist Ihr Unternehmen für KI aufgestellt?</p>
+    </div>
+
+    <div class="question" id="q15">
+      <div class="question-label"><span class="q-num">16</span> Wer trifft in Ihrem Unternehmen Entscheidungen zu KI?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q15','single')"><div class="option-radio"></div><div class="option-text">Ich selbst (Geschäftsführer / Inhaber)</div></div>
+        <div class="option" onclick="select(this,'q15','single')"><div class="option-radio"></div><div class="option-text">Gemeinsam mit Führungsteam</div></div>
+        <div class="option" onclick="select(this,'q15','single')"><div class="option-radio"></div><div class="option-text">Noch nicht festgelegt</div></div>
+      </div>
+    </div>
+
+    <div class="question" id="q16">
+      <div class="question-label"><span class="q-num">17</span> Gibt es bei Ihnen datenschutzrechtliche Anforderungen?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q16','single')"><div class="option-radio"></div><div class="option-text">DSGVO-Standard reicht aus</div></div>
+        <div class="option" onclick="select(this,'q16','single')"><div class="option-radio"></div><div class="option-text">Erhöhte Anforderungen (Gesundheit, Recht etc.)</div></div>
+        <div class="option" onclick="select(this,'q16','single')"><div class="option-radio"></div><div class="option-text">Ich bin unsicher, was gilt</div></div>
+      </div>
+    </div>
+
+    <div class="question" id="q17">
+      <div class="question-label"><span class="q-num">18</span> Wie groß ist die Bereitschaft, Prozesse zu ändern?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q17','single')"><div class="option-radio"></div><div class="option-text">Gering — wir ändern ungern Bewährtes</div></div>
+        <div class="option" onclick="select(this,'q17','single')"><div class="option-radio"></div><div class="option-text">Mittel — wenn der Nutzen klar ist</div></div>
+        <div class="option" onclick="select(this,'q17','single')"><div class="option-radio"></div><div class="option-text">Hoch — wir sind sehr veränderungsbereit</div></div>
+      </div>
+    </div>
+
+    <div class="question" id="q18">
+      <div class="question-label"><span class="q-num">19</span> Was ist Ihr Haupthindernis für den KI-Einstieg?</div>
+      <div class="options">
+        <div class="option" onclick="select(this,'q18','single')"><div class="option-radio"></div><div class="option-text">Fehlendes Know-how<div class="option-sub">Ich weiß nicht, wo ich anfangen soll</div></div></div>
+        <div class="option" onclick="select(this,'q18','single')"><div class="option-radio"></div><div class="option-text">Zeit<div class="option-sub">Kein Kapazitäten für neue Projekte</div></div></div>
+        <div class="option" onclick="select(this,'q18','single')"><div class="option-radio"></div><div class="option-text">Budget<div class="option-sub">Investitionskosten unklar</div></div></div>
+        <div class="option" onclick="select(this,'q18','single')"><div class="option-radio"></div><div class="option-text">Datenschutz-Bedenken</div></div>
+        <div class="option" onclick="select(this,'q18','single')"><div class="option-radio"></div><div class="option-text">Kein konkretes Hindernis</div></div>
+      </div>
+    </div>
+
+    <div class="question" id="q19">
+      <div class="question-label"><span class="q-num">20</span> Was erwarten Sie von einem KI-Dienstleister?</div>
+      <textarea class="text-input" id="q19-text" placeholder="Z. B. transparente Preise, Erklärung auf Augenhöhe, laufende Betreuung …" rows="3"></textarea>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn btn-secondary" onclick="prevPage()">&larr; Zurück</button>
+      <button class="btn btn-primary" onclick="showResult()">Auswertung ansehen &rarr;</button>
+    </div>
+  </div>
+
+</div><!-- /form-container -->
+
+<!-- RESULT PAGE -->
+<div id="result-page">
+
+  <div class="result-header">
+    <div class="score-ring">
+      <svg width="140" height="140" viewBox="0 0 140 140">
+        <circle class="score-bg" cx="70" cy="70" r="58"/>
+        <circle class="score-arc" id="score-arc" cx="70" cy="70" r="58" stroke-dasharray="364.4" stroke-dashoffset="364.4"/>
+      </svg>
+      <div class="score-label">
+        <span class="score-num" id="score-num">--</span>
+        <span class="score-pct">/ 100</span>
+      </div>
+    </div>
+    <div class="result-title" id="result-title">Ihr AI-Readiness Score</div>
+    <div class="result-subtitle" id="result-subtitle"></div>
+  </div>
+
+  <div style="max-width:720px;margin:0 auto;padding:0 20px;">
+
+    <div class="dim-bars" id="dim-bars"></div>
+
+    <div class="result-cards" id="result-cards"></div>
+
+    <div class="cta-box">
+      <h3>Kostenloses Erstgespräch vereinbaren</h3>
+      <p>Ich bespreche Ihre Ergebnisse persönlich mit Ihnen und zeige konkret, welche KI-Automatisierungen für Ihr Unternehmen sofort umsetzbar sind.</p>
+      <div class="cta-form">
+        <input type="text" id="cta-name" placeholder="Ihr Name" />
+        <input type="text" id="cta-company" placeholder="Unternehmen" />
+        <input type="email" id="cta-email" placeholder="E-Mail-Adresse" />
+        <input type="tel" id="cta-phone" placeholder="Telefon (optional)" />
+        <textarea id="cta-message" placeholder="Kurze Notiz (optional)"></textarea>
+        <label class="consent">
+          <input type="checkbox" id="cta-consent" />
+          Ich bin einverstanden, dass meine Angaben zur Kontaktaufnahme gespeichert werden (DSGVO). Ich kann diese Einwilligung jederzeit widerrufen.
+        </label>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;" onclick="sendLead()">Jetzt Termin anfragen</button>
+        <div class="send-status" id="send-status"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="https://haegerbaeumer-systeme.de" class="logo">
+    <svg class="logo-triangle" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+      <polygon points="16,3 30,28 2,28" fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
+    </svg>
+    <div class="logo-text" style="font-size:13px;">Hägerbäumer<span> Systeme</span></div>
+  </a>
+  <div class="footer-links">
+    <a href="https://haegerbaeumer-systeme.de/impressum">Impressum</a>
+    <a href="https://haegerbaeumer-systeme.de/datenschutz">Datenschutz</a>
+    <a href="https://haegerbaeumer-systeme.de">Zurück zur Website</a>
+  </div>
+</footer>
+
+<script>
+  // ── State ──────────────────────────────────────────────
+  let currentPage = 0;
+  const totalPages = 5;
+  const answers = {};
+
+  const stepLabels = ['Unternehmen','Prozesse','Use Cases','Infrastruktur','Organisation'];
+  const stepPills = document.querySelectorAll('.step-pill');
+
+  // ── Option selection ───────────────────────────────────
+  function select(el, questionId, type) {
+    const container = el.closest('.question');
+    if (type === 'single') {
+      container.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      answers[questionId] = [el.querySelector('.option-text').childNodes[0].textContent.trim()];
+    } else {
+      el.classList.toggle('selected');
+      const selected = [...container.querySelectorAll('.option.selected')]
+        .map(o => o.querySelector('.option-text').childNodes[0].textContent.trim());
+      answers[questionId] = selected;
+    }
+    container.classList.add('answered');
+  }
+
+  // ── Navigation ─────────────────────────────────────────
+  function goToPage(n) {
+    if (n < 0 || n >= totalPages) return;
+    document.getElementById('page-' + currentPage).classList.remove('active');
+    currentPage = n;
+    document.getElementById('page-' + currentPage).classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function nextPage() { goToPage(currentPage + 1); }
+  function prevPage() { goToPage(currentPage - 1); }
+
+  function updateProgress() {
+    const pct = Math.round(((currentPage + 1) / totalPages) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-title').textContent = 'Schritt ' + (currentPage + 1) + ' von ' + totalPages;
+    document.getElementById('progress-pct').textContent = pct + ' %';
+    stepPills.forEach((p, i) => {
+      p.classList.remove('active', 'done');
+      if (i === currentPage) p.classList.add('active');
+      else if (i < currentPage) p.classList.add('done');
+    });
+  }
+
+  // ── Scoring ────────────────────────────────────────────
+  function calcScore() {
+    let total = 0;
+    const dims = { readiness: 0, process: 0, usecase: 0, infra: 0, org: 0 };
+
+    // Erfahrung (q3)
+    const exp = answers['q3'] ? answers['q3'][0] : '';
+    if (exp.includes('aktiv')) { dims.readiness += 20; }
+    else if (exp.includes('getestet')) { dims.readiness += 14; }
+    else if (exp.includes('privat')) { dims.readiness += 8; }
+    else { dims.readiness += 2; }
+
+    // Dringlichkeit (q9)
+    const urg = answers['q9'] ? answers['q9'][0] : '';
+    if (urg.includes('Sofort')) { dims.readiness += 20; }
+    else if (urg.includes('Kurzfristig')) { dims.readiness += 14; }
+    else if (urg.includes('Mittelfristig')) { dims.readiness += 8; }
+    else { dims.readiness += 4; }
+
+    // Prozesse manuell (q4)
+    const proc = answers['q4'] ? answers['q4'][0] : '';
+    if (proc.includes('Wenige')) { dims.process += 20; }
+    else if (proc.includes('Hälfte')) { dims.process += 13; }
+    else if (proc.includes('Mehrheit')) { dims.process += 7; }
+    else { dims.process += 3; }
+
+    // Dokumentation (q6)
+    const doc = answers['q6'] ? answers['q6'][0] : '';
+    if (doc.includes('Gut')) { dims.process += 20; }
+    else if (doc.includes('Teilweise')) { dims.process += 12; }
+    else { dims.process += 4; }
+
+    // Use Cases (q8)
+    const uc = answers['q8'] ? answers['q8'].length : 0;
+    dims.usecase = Math.min(40, uc * 10);
+    if (uc === 0) dims.usecase = 10;
+
+    // Datenlage (q13)
+    const data = answers['q13'] ? answers['q13'][0] : '';
+    if (data.includes('Gut')) { dims.infra += 25; }
+    else if (data.includes('teils')) { dims.infra += 14; }
+    else { dims.infra += 5; }
+
+    // IT (q14)
+    const it = answers['q14'] ? answers['q14'][0] : '';
+    if (it.includes('eigene')) { dims.infra += 15; }
+    else if (it.includes('Externer')) { dims.infra += 10; }
+    else { dims.infra += 3; }
+
+    // Veränderungsbereitschaft (q17)
+    const change = answers['q17'] ? answers['q17'][0] : '';
+    if (change.includes('Hoch')) { dims.org += 25; }
+    else if (change.includes('Mittel')) { dims.org += 15; }
+    else { dims.org += 5; }
+
+    // Entscheidung (q15)
+    const dec = answers['q15'] ? answers['q15'][0] : '';
+    if (dec.includes('Ich selbst')) { dims.org += 15; }
+    else if (dec.includes('Führungsteam')) { dims.org += 10; }
+    else { dims.org += 5; }
+
+    // Normalize each dim to 0–20
+    const normReadiness = Math.round(Math.min(40, dims.readiness) / 40 * 20);
+    const normProcess   = Math.round(Math.min(40, dims.process) / 40 * 20);
+    const normUsecase   = Math.round(Math.min(40, dims.usecase) / 40 * 20);
+    const normInfra     = Math.round(Math.min(40, dims.infra) / 40 * 20);
+    const normOrg       = Math.round(Math.min(40, dims.org) / 40 * 20);
+
+    total = normReadiness + normProcess + normUsecase + normInfra + normOrg;
+
+    return {
+      total: Math.min(100, total),
+      dims: [
+        { label: 'KI-Bereitschaft', val: normReadiness },
+        { label: 'Prozessreife',    val: normProcess },
+        { label: 'Anwendungsfälle', val: normUsecase },
+        { label: 'Infrastruktur',   val: normInfra },
+        { label: 'Organisation',    val: normOrg },
+      ]
+    };
+  }
+
+  function getLevel(score) {
+    if (score >= 75) return { title: 'Exzellent aufgestellt', text: 'Ihr Unternehmen ist bestens vorbereitet. KI-Automatisierung kann sofort starten und messbare Ergebnisse liefern.', recs: ['Sofortstart mit ersten KI-Projekten möglich', 'Komplexere Automatisierungen umsetzbar', 'Skalierung auf weitere Bereiche empfehlenswert'] };
+    if (score >= 55) return { title: 'Gut vorbereitet', text: 'Solide Basis. Mit gezielten Schritten holen Sie das volle KI-Potenzial heraus.', recs: ['Datenbasis in einem Bereich strukturieren', 'Pilotprojekt mit einem konkreten Use Case starten', 'Mitarbeiter frühzeitig einbinden'] };
+    if (score >= 35) return { title: 'Entwicklungspotenzial', text: 'Sie stehen am Anfang. Einige Grundlagen sollten noch gelegt werden, bevor KI voll wirkt.', recs: ['Wichtige Prozesse dokumentieren', 'Datenpflege als erstes Projekt', 'Mit einem einfachen Use Case klein anfangen'] };
+    return { title: 'Fundament legen', text: 'Noch ist etwas Vorbereitung nötig. Aber das ist kein Problem — genau dafür gibt es das Erstgespräch.', recs: ['Klären, welche Daten vorhanden sind', 'Einen einfachen Prozess als Startpunkt wählen', 'Schritt für Schritt vorgehen'] };
+  }
+
+  // ── Show result ────────────────────────────────────────
+  function showResult() {
+    // hide text q19
+    answers['q19'] = document.getElementById('q19-text').value;
+
+    document.querySelector('.progress-wrap').style.display = 'none';
+    document.querySelector('.form-container').style.display = 'none';
+    document.getElementById('result-page').style.display = 'block';
+
+    const { total, dims } = calcScore();
+    const level = getLevel(total);
+
+    // Score ring animation
+    document.getElementById('score-num').textContent = total;
+    setTimeout(() => {
+      const circumference = 364.4;
+      const offset = circumference - (total / 100) * circumference;
+      document.getElementById('score-arc').style.strokeDashoffset = offset;
+    }, 100);
+
+    document.getElementById('result-title').textContent = level.title;
+    document.getElementById('result-subtitle').textContent = level.text;
+
+    // Dimension bars
+    const dimEl = document.getElementById('dim-bars');
+    dimEl.innerHTML = '<p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Ihre Stärken im Überblick</p>';
+    dims.forEach(d => {
+      dimEl.innerHTML += `
+        <div class="dim-bar">
+          <div class="dim-bar-label">${d.label}</div>
+          <div class="dim-bar-track"><div class="dim-bar-fill" style="width:0%" data-val="${d.val * 5}%"></div></div>
+          <div class="dim-bar-val">${d.val}/20</div>
+        </div>`;
+    });
+    setTimeout(() => {
+      document.querySelectorAll('.dim-bar-fill').forEach(el => {
+        el.style.width = el.dataset.val;
+      });
+    }, 200);
+
+    // Cards
+    const cards = document.getElementById('result-cards');
+    cards.innerHTML = `
+      <div class="result-card highlight">
+        <h3>Ihr Score</h3>
+        <p><strong style="font-size:28px;color:var(--orange)">${total}</strong> / 100 Punkte</p>
+      </div>
+      <div class="result-card">
+        <h3>Handlungsempfehlung</h3>
+        <p>${level.recs.map(r => '→ ' + r).join('<br>')}</p>
+      </div>`;
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Send lead ──────────────────────────────────────────
+  async function sendLead() {
+    const name    = document.getElementById('cta-name').value.trim();
+    const email   = document.getElementById('cta-email').value.trim();
+    const company = document.getElementById('cta-company').value.trim();
+    const phone   = document.getElementById('cta-phone').value.trim();
+    const message = document.getElementById('cta-message').value.trim();
+    const consent = document.getElementById('cta-consent').checked;
+    const statusEl = document.getElementById('send-status');
+
+    if (!name || !email) { statusEl.className = 'send-status error'; statusEl.textContent = 'Bitte Name und E-Mail ausfüllen.'; return; }
+    if (!consent) { statusEl.className = 'send-status error'; statusEl.textContent = 'Bitte Datenschutzerklärung bestätigen.'; return; }
+
+    const { total } = calcScore();
+
+    const payload = {
+      name, email, company, phone, message, consent,
+      score: total,
+      answers: answers,
+      timestamp: new Date().toISOString()
+    };
+
+    statusEl.className = 'send-status'; statusEl.textContent = 'Wird gesendet …';
+
+    try {
+      // TODO: Webhook-URL eintragen
+      const webhookUrl = 'DEINE_N8N_WEBHOOK_URL_HIER';
+      if (webhookUrl === 'DEINE_N8N_WEBHOOK_URL_HIER') {
+        // Demo mode
+        await new Promise(r => setTimeout(r, 800));
+        statusEl.className = 'send-status success';
+        statusEl.textContent = '✓ Anfrage gesendet! Ich melde mich innerhalb von 24 Stunden.';
+        document.querySelector('.btn-primary[onclick="sendLead()"]').disabled = true;
+        return;
+      }
+      const res = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      statusEl.className = 'send-status success';
+      statusEl.textContent = '✓ Anfrage gesendet! Ich melde mich innerhalb von 24 Stunden.';
+      document.querySelector('.btn-primary[onclick="sendLead()"]').disabled = true;
+    } catch (e) {
+      statusEl.className = 'send-status error';
+      statusEl.textContent = 'Versand fehlgeschlagen. Bitte direkt per E-Mail melden.';
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hägerbäumer Systeme — AI Ready Analyse: [KUNDENNAME]</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0f;--card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);--border-accent:rgba(232,84,10,0.35);--yellow:#E8540A;--yellow-dim:rgba(232,84,10,0.15);--red:#ff4d4d;--red-dim:rgba(255,77,77,0.12);--green:#4ade80;--green-dim:rgba(74,222,128,0.12);--blue:#60a5fa;--blue-dim:rgba(96,165,250,0.12);--orange:#fb923c;--purple:#a78bfa;--text:#e8eaf0;--text-dim:#94a3b8;--text-muted:#64748b;--radius:16px;--nav-bg:rgba(10,10,15,0.85);--divider:rgba(255,255,255,0.04);--opt-bg:rgba(255,255,255,0.02);--opt-bg-hover:rgba(255,255,255,0.04);--textarea-bg:rgba(255,255,255,0.04);--bar-track:rgba(255,255,255,0.06);--dot-bg:rgba(255,255,255,0.08);--dot-border:rgba(255,255,255,0.12);--abtn-bg:rgba(255,255,255,0.03)}
+body.light{--bg:#fafaf5;--card:rgba(255,255,255,0.75);--border:rgba(0,0,0,0.10);--border-accent:rgba(232,84,10,0.35);--yellow:#c94800;--yellow-dim:rgba(232,84,10,0.12);--red:#c92a2a;--red-dim:rgba(201,42,42,0.10);--green:#16a34a;--green-dim:rgba(22,163,74,0.10);--blue:#2563eb;--blue-dim:rgba(37,99,235,0.10);--orange:#d97706;--purple:#7c3aed;--text:#0a0a0f;--text-dim:#3d3d3d;--text-muted:#666;--nav-bg:rgba(250,250,245,0.85);--divider:rgba(0,0,0,0.06);--opt-bg:rgba(0,0,0,0.02);--opt-bg-hover:rgba(0,0,0,0.05);--textarea-bg:rgba(255,255,255,0.7);--bar-track:rgba(0,0,0,0.08);--dot-bg:rgba(0,0,0,0.08);--dot-border:rgba(0,0,0,0.15);--abtn-bg:rgba(0,0,0,0.03)}
+html,body{height:100%;overflow:hidden}body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow:hidden;transition:background 0.4s,color 0.4s}body.light{background:linear-gradient(135deg,#f5f5f0,#fafaf5,#f0ede8)}::selection{background:var(--yellow);color:var(--bg)}body.light ::selection{color:#fff}
+#bgCanvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;transition:opacity 0.5s}
+.slide{position:fixed;top:0;left:0;width:calc(100vw / 1.5);height:calc(100vh / 1.5);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:36px 32px 14px;opacity:0;pointer-events:none;z-index:1;transition:opacity 0.5s,transform 0.5s;transform:translateY(40px) scale(0.97);overflow-y:auto;overflow-x:hidden;zoom:1.5}.slide::-webkit-scrollbar{width:0}.slide.active{opacity:1;pointer-events:auto;transform:translateY(0) scale(1);z-index:10}
+.topnav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:10px 32px;display:flex;align-items:center;justify-content:space-between;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:background 0.4s,border-color 0.4s}.topnav-brand{font-family:'Playfair Display',serif;font-weight:700;font-size:20px;color:var(--yellow)}.topnav-brand span{color:var(--text);font-weight:400}.topnav-dots{display:flex;gap:5px}.topnav-dot{width:10px;height:10px;border-radius:50%;background:var(--dot-bg);border:2px solid var(--dot-border);cursor:pointer;transition:all 0.3s}.topnav-dot.active{background:var(--yellow);border-color:var(--yellow);box-shadow:0 0 10px rgba(232,84,10,0.5)}.topnav-dot:hover{border-color:var(--yellow)}.topnav-right{display:flex;align-items:center;gap:8px}.topnav-arrows{display:flex;gap:4px}.abtn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--abtn-bg);color:var(--text-dim);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-family:system-ui}.abtn:hover:not(:disabled){border-color:var(--yellow);color:var(--yellow);background:var(--yellow-dim)}.abtn:disabled{opacity:0.25;cursor:default}.topnav-badge{background:var(--yellow);color:var(--bg);font-size:9px;font-weight:800;padding:3px 10px;border-radius:16px;text-transform:uppercase;letter-spacing:0.5px}body.light .topnav-badge{color:#fff}
+.theme-toggle{display:flex;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:50px;padding:3px;gap:2px;transition:all 0.3s}.theme-btn{width:28px;height:24px;border:none;background:transparent;color:var(--text-muted);border-radius:50px;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-family:inherit;line-height:1;padding:0}.theme-btn:hover{color:var(--text)}.theme-btn.active{background:var(--yellow);color:var(--bg)}body.light .theme-btn.active{color:#fff}
+.sl-label{font-size:13px;letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;text-align:center}.sl-label.yel{color:var(--yellow)}.sl-label.red{color:var(--red)}
+.sl-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,48px);font-weight:900;text-align:center;margin-bottom:4px}.sl-title .yel{color:var(--yellow)}.sl-title .red{color:var(--red)}.sl-title .grn{color:var(--green)}
+.sl-sub{font-size:15px;color:var(--text-dim);text-align:center;margin-bottom:16px;max-width:900px;margin-left:auto;margin-right:auto}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes heroUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}@keyframes pulseGlow{0%,100%{box-shadow:0 0 20px rgba(232,84,10,0.2)}50%{box-shadow:0 0 40px rgba(232,84,10,0.5)}}@keyframes dotPulse{0%,100%{box-shadow:0 0 0 0 rgba(232,84,10,0.4)}50%{box-shadow:0 0 0 8px rgba(232,84,10,0)}}
+/* Hero */
+.hero-wrap{text-align:center;max-width:1900px;z-index:2}.hero-excl{font-size:14px;letter-spacing:4px;text-transform:uppercase;color:var(--yellow);margin-bottom:16px;opacity:0;animation:fadeIn 0.8s 0.2s forwards}.hero-excl b{background:var(--yellow-dim);padding:5px 18px;border-radius:20px}.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(40px,6vw,88px);font-weight:900;line-height:1.05;margin-bottom:24px;opacity:0;animation:heroUp 1s 0.4s forwards}.hero-h1 em{color:var(--yellow);font-style:normal}.hero-p{font-size:clamp(15px,1.6vw,22px);color:var(--text-dim);max-width:900px;margin:0 auto 36px;line-height:1.7;opacity:0;animation:heroUp 1s 0.6s forwards}
+.hero-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;animation:heroUp 1s 0.8s forwards}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:14px;font-size:16px;font-weight:700;text-decoration:none;transition:all 0.3s;cursor:pointer;border:none;font-family:inherit}.btn-y{background:var(--yellow);color:var(--bg)}.btn-y:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(232,84,10,0.3)}.btn-o{background:transparent;color:var(--text);border:2px solid var(--border)}.btn-o:hover{border-color:var(--yellow);color:var(--yellow)}
+.hero-stats{display:flex;gap:56px;justify-content:center;margin-top:40px;opacity:0;animation:heroUp 1s 1s forwards}.hero-stat{text-align:center}.hero-stat-n{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:var(--yellow)}.hero-stat-l{font-size:13px;color:var(--text-muted);text-transform:uppercase;letter-spacing:2px;margin-top:4px}
+.hero-feats{display:flex;gap:24px;margin-top:32px;flex-wrap:wrap;justify-content:center;opacity:0;animation:heroUp 1s 1.2s forwards}.hero-feat{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--text-dim)}.hero-feat .d{width:10px;height:10px;border-radius:50%;background:var(--yellow);animation:dotPulse 2s infinite}
+/* Quiz */
+.quiz-wrap{width:100%;max-width:900px;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%}
+.quiz-progress{display:flex;align-items:center;gap:8px;margin-bottom:20px;width:100%}.quiz-prog-bar{flex:1;height:6px;background:var(--bar-track);border-radius:3px;overflow:hidden}.quiz-prog-fill{height:100%;background:var(--yellow);border-radius:3px;transition:width 0.5s}.quiz-prog-text{font-size:11px;color:var(--text-muted);white-space:nowrap}
+.quiz-dim-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);margin-bottom:8px;text-align:center;transition:all 0.4s}.quiz-dim-hidden{opacity:0;max-height:0;margin:0;overflow:hidden}
+.quiz-dim-header{width:100%;margin-bottom:20px;transition:all 0.4s}.quiz-dim-header .qdh-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,42px);font-weight:900;line-height:1.1;color:var(--text);margin-bottom:6px}.quiz-dim-header .qdh-sub{font-size:14px;color:var(--text-dim);line-height:1.5;max-width:900px}.quiz-dim-header.quiz-dim-hidden{display:none}
+.quiz-q{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px 36px;margin-bottom:14px;transition:all 0.5s;width:100%}.quiz-q-hidden{opacity:0;max-height:0;padding:0 36px;margin-bottom:0;overflow:hidden;border-color:transparent;pointer-events:none;position:absolute;visibility:hidden}.quiz-q .qq-text{font-size:18px;font-weight:700;margin-bottom:8px;line-height:1.5}.quiz-q .qq-num{display:flex;align-items:center;gap:12px;margin-bottom:14px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px}.quiz-q .qq-num .qn-circle{width:28px;height:28px;border-radius:50%;background:var(--yellow-dim);color:var(--yellow);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;letter-spacing:0;flex-shrink:0}.quiz-q .qq-num .qn-main{color:var(--yellow)}.quiz-q .qq-num .qn-cat{color:var(--text-muted);font-weight:600}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}.quiz-opt{display:flex;align-items:center;gap:14px;padding:16px 22px;background:var(--opt-bg);border:1px solid var(--border);border-radius:14px;cursor:pointer;transition:all 0.3s;font-size:16px;color:var(--text-dim)}.quiz-opt:hover{border-color:var(--border-accent);background:var(--opt-bg-hover)}.quiz-opt.selected{border-color:var(--yellow);background:var(--yellow-dim);color:var(--text)}.quiz-opt .qo-radio{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.3s}.quiz-opt.selected .qo-radio{border-color:var(--yellow);background:var(--yellow)}.quiz-opt .qo-radio::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--bg);opacity:0;transition:opacity 0.2s}.quiz-opt.selected .qo-radio::after{opacity:1}
+
+.quiz-scale{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:8px}.scale-btn{width:52px;height:52px;border-radius:12px;border:1px solid var(--border);background:var(--opt-bg);color:var(--text-dim);font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s}.scale-btn:hover{border-color:var(--border-accent);background:var(--opt-bg-hover)}.scale-btn.selected{border-color:var(--yellow);background:var(--yellow-dim);color:var(--text)}.scale-labels{width:100%;display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-top:4px}
+.qq-sub{font-size:13px;color:var(--text-muted);margin-bottom:16px;line-height:1.4}
+.qq-hint{display:inline-block;font-size:10px;color:var(--purple);background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);padding:2px 10px;border-radius:12px;margin-bottom:8px}
+.quiz-vertiefung{background:rgba(232,84,10,0.05);border:1px solid rgba(232,84,10,0.2);border-radius:12px;padding:14px 18px;margin-top:16px}.quiz-vertiefung .qv-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--yellow);margin-bottom:8px}.quiz-vertiefung ol{margin:0;padding-left:20px;list-style:decimal}.quiz-vertiefung li{font-size:13px;color:var(--text-dim);line-height:1.7;margin-bottom:2px}
+.quiz-notes{margin-top:12px}.quiz-notes .qn-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:6px;display:flex;align-items:center;gap:6px}.quiz-notes textarea{width:100%;min-height:60px;max-height:400px;padding:12px 16px;background:var(--textarea-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;font-family:inherit;outline:none;resize:vertical;transition:border-color 0.3s;line-height:1.5}.quiz-notes textarea::placeholder{color:var(--text-muted);opacity:0.6}.quiz-notes textarea:focus{border-color:var(--yellow)}
+.quiz-nav{display:flex;gap:10px;margin-top:16px;width:100%;justify-content:center}.quiz-nav .btn{min-width:160px;justify-content:center}
+.quiz-live-score{display:none}
+/* Admin */
+.admin-wrap{width:100%;max-width:600px;z-index:2}.admin-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 32px}.admin-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;text-align:center;margin-bottom:4px}.admin-sub{font-size:13px;color:var(--text-muted);text-align:center;margin-bottom:24px}
+.admin-field{margin-bottom:16px}.admin-field label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--yellow);margin-bottom:6px}.admin-field input{width:100%;padding:12px 16px;background:var(--textarea-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:15px;font-family:inherit;outline:none;transition:border-color 0.3s}.admin-field input:focus{border-color:var(--yellow)}
+.admin-actions{display:flex;flex-direction:column;gap:10px;margin-top:20px}.admin-badge{font-size:10px;color:var(--text-muted);text-align:center;margin-top:16px;padding:8px;background:rgba(255,77,77,0.06);border:1px solid rgba(255,77,77,0.15);border-radius:8px}
+/* Compare tabs */
+.cmp-tabs{display:flex;gap:8px;justify-content:center;margin-top:16px;margin-bottom:10px;flex-wrap:wrap}
+.cmp-tab{display:flex;align-items:center;gap:10px;padding:10px 18px;border:2px solid var(--border);border-radius:12px;cursor:pointer;transition:all 0.3s;background:var(--card);min-width:190px;user-select:none}.cmp-tab:hover{border-color:rgba(255,255,255,0.2)}.cmp-tab .ct-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}.cmp-tab .ct-info{flex:1}.cmp-tab .ct-name{font-size:13px;font-weight:700}.cmp-tab .ct-sub{font-size:10px;color:var(--text-muted)}.cmp-tab .ct-score{font-family:'Playfair Display',serif;font-size:24px;font-weight:900}
+.cmp-tab.off{opacity:0.4}.cmp-tab.off:hover{opacity:0.7}.cmp-tab.sel{box-shadow:0 0 0 1px rgba(255,255,255,0.1) inset}
+/* Framework */
+.fw-wrap{width:100%;max-width:1200px;margin:0 auto;z-index:2;display:flex;gap:32px;align-items:stretch;justify-content:center}.fw-left{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0}.fw-right{width:420px;display:flex;flex-direction:column;gap:5px;flex-shrink:0;overflow-y:auto;overflow-x:visible;max-height:calc(100vh - 120px);padding-right:4px;padding-left:8px}.fw-right::-webkit-scrollbar{width:3px}.fw-right::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px}
+.radar-container{position:relative;width:500px;height:500px;background:radial-gradient(circle,rgba(10,10,15,0.95) 45%,rgba(10,10,15,0.7) 70%,transparent 100%);border-radius:50%}body.light .radar-container{background:radial-gradient(circle,rgba(255,255,255,0.95) 45%,rgba(255,255,255,0.6) 70%,transparent 100%)}
+.radar-legend{display:flex;gap:14px;justify-content:center;margin-top:6px;flex-wrap:wrap}.rl-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-dim)}.rl-item .rl-line{width:18px;height:3px;border-radius:2px;flex-shrink:0}
+.fw-score-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:9px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.3s;opacity:0;transform:translateX(30px)}.fw-score-card.show{opacity:1;transform:translateX(0)}.fw-score-card:hover{border-color:var(--border-accent);transform:translateX(-3px) !important}.fw-score-card.active{border-color:var(--yellow);background:var(--yellow-dim)}.fw-score-card .sc-color{width:8px;height:8px;border-radius:50%;flex-shrink:0}.fw-score-card .sc-info{flex:1;min-width:0}.fw-score-card .sc-name{font-size:12px;font-weight:700}.fw-score-card .sc-sub{font-size:10px;color:var(--text-muted)}.fw-score-card .sc-bar{width:100%;height:5px;background:var(--bar-track);border-radius:3px;overflow:hidden;margin-top:2px}.fw-score-card .sc-bar-fill{height:100%;border-radius:3px;transition:width 0.8s;width:0}.fw-score-card .sc-score-wrap{text-align:right;flex-shrink:0}.fw-score-card .sc-score{font-family:'Playfair Display',serif;font-size:20px;font-weight:900}.fw-score-card .sc-pct{font-size:10px;color:var(--text-muted)}
+.fw-score-card.pending{opacity:0.55;cursor:default;border-style:dashed}.fw-score-card.pending:hover{transform:none !important;border-color:var(--border)}.fw-score-card.pending .sc-name{color:var(--text-muted)}.fw-score-card .sc-pending-label{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);padding:5px 10px;border:1px solid var(--border);border-radius:50px;flex-shrink:0;white-space:nowrap}
+.fw-block-label{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:2px;padding:5px 0 1px;color:var(--text-muted)}
+.fw-total{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:11px 14px;display:flex;align-items:center;gap:12px;margin-top:4px;opacity:0;transform:translateY(12px);transition:all 0.6s}.fw-total.show{opacity:1;transform:translateY(0)}.fw-total .ft-score{font-family:'Playfair Display',serif;font-size:34px;font-weight:900;white-space:nowrap}.fw-total .ft-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px}.fw-total .ft-bar{flex:1;height:8px;background:var(--bar-track);border-radius:4px;overflow:hidden}.fw-total .ft-bar-fill{height:100%;border-radius:4px;transition:width 1s;width:0}
+/* Datenfluss */
+.df-wrap{width:100%;max-width:1800px;z-index:2}.df-flow{display:grid;grid-template-columns:1fr 60px 1fr 60px 1fr;gap:0;align-items:center}.df-col{display:flex;flex-direction:column;gap:6px}.df-arrow{display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--yellow);opacity:0;transition:opacity 0.5s}.df-arrow.show{opacity:1}.df-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px 16px;opacity:0;transform:translateY(20px);transition:all 0.5s;cursor:pointer}.df-card.show{opacity:1;transform:translateY(0)}.df-card:hover{border-color:var(--border-accent);transform:translateY(-3px) !important}.df-card .dc-num{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--yellow)}.df-card .dc-label{font-size:12px;font-weight:700;margin-bottom:1px}.df-card .dc-desc{font-size:10px;color:var(--text-dim);line-height:1.35}.df-brain{background:radial-gradient(circle,rgba(232,84,10,0.12) 0%,rgba(232,84,10,0.02) 60%,transparent 100%);border:2px solid var(--border-accent);border-radius:50%;width:250px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto;animation:pulseGlow 3s infinite;opacity:0;transition:opacity 0.6s}.df-brain.show{opacity:1}.df-brain .db-title{font-family:'Playfair Display',serif;font-size:13px;font-weight:900;color:var(--yellow);letter-spacing:2px;text-transform:uppercase}.df-brain .db-name{font-family:'Playfair Display',serif;font-size:26px;font-weight:900}.df-brain .db-sub{font-size:10px;color:var(--text-dim);text-align:center;margin-top:4px;max-width:160px}.df-col-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:2px;text-align:center;padding:0 0 6px;color:var(--text-muted)}.df-card.output{border-left:3px solid var(--green)}.df-card.output .dc-num{color:var(--green)}.df-card.input{border-left:3px solid var(--blue)}.df-card.input .dc-num{color:var(--blue)}
+/* Process */
+.ap-wrap{width:100%;max-width:1600px;z-index:2}.ap-timeline{display:flex;gap:0;align-items:stretch;margin-top:16px;margin-bottom:20px;position:relative;padding-top:20px}.ap-timeline::before{content:'';position:absolute;top:8px;left:40px;right:40px;height:4px;background:linear-gradient(90deg,var(--green),var(--green),var(--yellow));border-radius:2px;z-index:0}.ap-step{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;opacity:0;transform:translateY(20px);transition:all 0.5s}.ap-step.show{opacity:1;transform:translateY(0)}.ap-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:var(--bg);margin-bottom:8px;position:relative;z-index:2}.ap-dot.done{background:var(--green)}.ap-dot.now{background:var(--yellow);animation:pulseGlow 2s infinite}.ap-dot.next{background:var(--blue)}.ap-dot.last{background:var(--purple)}.ap-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center;width:100%;margin:0 6px;transition:all 0.3s}.ap-card:hover{border-color:var(--border-accent);transform:translateY(-4px)}.ap-card .ac-title{font-size:15px;font-weight:800;margin-bottom:3px}.ap-card .ac-desc{font-size:12px;color:var(--text-dim);line-height:1.4}.ap-card .ac-tag{display:inline-block;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;border-radius:14px;margin-top:6px}.ac-tag.done{background:var(--green-dim);color:var(--green)}.ac-tag.now{background:var(--yellow-dim);color:var(--yellow)}.ac-tag.next{background:var(--blue-dim);color:var(--blue)}.ac-tag.last{background:rgba(167,139,250,0.12);color:var(--purple)}
+.ap-deliverables{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.ap-del{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;opacity:0;transform:scale(0.9);transition:all 0.4s}.ap-del.show{opacity:1;transform:scale(1)}.ap-del:hover{border-color:var(--border-accent)}.ap-del .ad-title{font-size:14px;font-weight:700;margin-bottom:2px}.ap-del .ad-desc{font-size:11px;color:var(--text-dim);line-height:1.4}
+@media(max-width:1200px){.fw-wrap{flex-direction:column}.fw-right{width:100%;max-height:none}.df-flow{grid-template-columns:1fr;gap:12px}.df-arrow{transform:rotate(90deg)}.ap-timeline{flex-direction:column;gap:10px}.ap-timeline::before{display:none}}
+</style>
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
+<nav class="topnav"><div class="topnav-brand" style="display:flex;align-items:center;gap:10px"><svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="16,3 30,28 2,28" fill="none" stroke="#E8540A" stroke-width="2.5" stroke-linejoin="round"/></svg><span style="color:#f0f0f0;font-family:Inter,sans-serif;font-weight:800;font-size:15px;letter-spacing:-0.3px">Hägerbäumer<span style="color:#E8540A"> Systeme</span></span></div><div class="topnav-dots" id="dots"></div><div style="margin-left:8px"><button onclick="resetAll()" style="background:var(--yellow);color:var(--bg);border:none;font-size:10px;font-weight:800;padding:4px 12px;border-radius:8px;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:0.5px;transition:all 0.3s;opacity:0.7" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">&#8635; Reset</button></div><div class="topnav-right"><div class="theme-toggle" role="group" aria-label="Theme"><button class="theme-btn" data-theme="light" title="Light Mode" aria-label="Light Mode">&#9728;</button><button class="theme-btn active" data-theme="dark" title="Dark Mode" aria-label="Dark Mode">&#9790;</button></div><div class="topnav-arrows"><button class="abtn" id="btnP" onclick="go(cur-1)">&#8249;</button><button class="abtn" id="btnN" onclick="go(cur+1)">&#8250;</button></div><span class="topnav-badge">AI Readiness &middot; <span id="phBadgeName">[KUNDENNAME]</span></span></div></nav>
+
+<!-- ADMIN: Interne Vorseite -->
+<div class="slide active" id="sAdmin"><div class="admin-wrap">
+  <div class="admin-card">
+    <div class="sl-label yel">&#10022; Intern</div>
+    <div class="admin-title">Pr&auml;sentation vorbereiten</div>
+    <div class="admin-sub">Kundendaten eingeben und Pr&auml;sentation starten. Diese Seite sieht der Kunde nicht.</div>
+    <div class="admin-field"><label>Kundenname</label><input type="text" id="adminKunde" placeholder="z.B. Max Mustermann" value=""></div>
+    <div class="admin-field"><label>Firmenname</label><input type="text" id="adminFirma" placeholder="z.B. Mustermann GmbH" value=""></div>
+    <div class="admin-actions">
+      <button class="btn btn-y" style="width:100%;justify-content:center" onclick="startPresentation()">Pr&auml;sentation starten &#8594;</button>
+      <button class="btn btn-o" style="width:100%;justify-content:center" onclick="resetAll()">Alles zur&uuml;cksetzen &#8634;</button>
+    </div>
+    <div class="admin-badge">&#9888; Diese Seite ist nur f&uuml;r das interne Team sichtbar. Nach dem Start beginnt die Pr&auml;sentation auf der Willkommen-Folie.</div>
+  </div>
+</div></div>
+
+<!-- S0: HERO -->
+<div class="slide" id="s0"><div class="hero-wrap">
+  <div class="hero-excl"><b>Exklusiv f&uuml;r <span id="phHeroFirma">[FIRMENNAME]</span> &middot; <span id="phHeroName">[KUNDENNAME]</span></b></div>
+  <h1 class="hero-h1">Dein <em>AI Ready</em> Score</h1>
+  <p class="hero-p">Datenbasierte Zwischenstandortbestimmung deiner KI-Bereitschaft. 11 Fragen aus 2 Dimensionen, 100 Punkte. Die weiteren 2 Dimensionen werden im n&auml;chsten Gespr&auml;ch ausgewertet.</p>
+  <div class="hero-ctas"><button class="btn btn-y" onclick="startQuiz()">Fragen starten &#8594;</button><button class="btn btn-o" onclick="resetAll()">AI Score resetten &#8634;</button></div>
+  <div class="hero-stats"><div class="hero-stat"><div class="hero-stat-n">11</div><div class="hero-stat-l">Fragen</div></div><div class="hero-stat"><div class="hero-stat-n">4</div><div class="hero-stat-l">Dimensionen</div></div><div class="hero-stat"><div class="hero-stat-n">100</div><div class="hero-stat-l">Punkte</div></div></div>
+  <div class="hero-feats"><div class="hero-feat"><span class="d"></span>Prozessreife</div><div class="hero-feat"><span class="d"></span>Datenqualit&auml;t</div><div class="hero-feat"><span class="d" style="opacity:0.4"></span>Technische Infrastruktur <span style="font-size:11px;color:var(--text-muted)">(folgt)</span></div><div class="hero-feat"><span class="d" style="opacity:0.4"></span>Organisation <span style="font-size:11px;color:var(--text-muted)">(folgt)</span></div></div>
+</div></div>
+
+<!-- S1: FRAGEBOGEN -->
+<div class="slide" id="s1"><div class="quiz-wrap">
+  <div class="quiz-progress"><div class="quiz-prog-bar"><div class="quiz-prog-fill" id="progFill" style="width:0%"></div></div><div class="quiz-prog-text" id="progText">Frage 1 von 11</div></div>
+  <div class="quiz-dim-header" data-fordim="0"><div class="qdh-title">Prozessreife</div><div class="qdh-sub">Wie gut sind Geschäftsprozesse, Wissensflüsse und wiederkehrende Abläufe dokumentiert und anschlussfähig für KI?</div></div>
+  <div class="quiz-dim-header quiz-dim-hidden" data-fordim="1"><div class="qdh-title">Datenqualität &amp; Verfügbarkeit</div><div class="qdh-sub">Wie strukturiert, zugreifbar und belastbar sind Daten und Wissensartefakte im Unternehmen?</div></div>
+  <div class="quiz-q" data-qidx="0"><div class="qq-num"><span class="qn-circle">1</span><span class="qn-main">Frage 1 von 11</span><span class="qn-cat">Kategorie 1 / 5</span></div><div class="qq-text">Wie gut sind Ihre Kernprozesse schriftlich dokumentiert und gepflegt?</div><div class="qq-sub">Gemeint sind die wichtigsten Abläufe wie Angebot, Onboarding, Projektübergabe, Service oder Reklamationen.</div><div class="quiz-opts">
+    <div class="quiz-opt" onclick="selectOpt(0,0)" id="qo0_0"><div class="qo-radio"></div>Gar nicht - kritisches Wissen steckt vor allem in Köpfen einzelner Personen</div>
+    <div class="quiz-opt" onclick="selectOpt(0,1)" id="qo0_1"><div class="qo-radio"></div>Teilweise - einzelne Checklisten oder Dokumente existieren, sind aber lückenhaft oder veraltet</div>
+    <div class="quiz-opt" onclick="selectOpt(0,2)" id="qo0_2"><div class="qo-radio"></div>Grundlegend - die wichtigsten Prozesse sind beschrieben, aber nicht durchgängig gepflegt</div>
+    <div class="quiz-opt" onclick="selectOpt(0,3)" id="qo0_3"><div class="qo-radio"></div>Gut - zentrale Prozesse sind dokumentiert, aktuell und für das Team nutzbar</div>
+  </div></div>
+  <div class="quiz-q quiz-q-hidden" data-qidx="1"><div class="qq-num"><span class="qn-circle">2</span><span class="qn-main">Frage 2 von 11</span><span class="qn-cat">Kategorie 2 / 5</span></div><div class="qq-text">Gibt es für Ihre wichtigsten Leistungen einen klaren Standardablauf?</div><div class="qq-sub">Gesucht ist der wiederholbare Happy Path, nicht jeder Sonderfall.</div><div class="quiz-opts">
+    <div class="quiz-opt" onclick="selectOpt(1,0)" id="qo1_0"><div class="qo-radio"></div>Nein - fast jeder Fall wird individuell gelöst</div>
+    <div class="quiz-opt" onclick="selectOpt(1,1)" id="qo1_1"><div class="qo-radio"></div>Ansatzweise - es gibt Leitlinien, aber viele Ausnahmen und Workarounds</div>
+    <div class="quiz-opt" onclick="selectOpt(1,2)" id="qo1_2"><div class="qo-radio"></div>Ja - für die Hauptfälle ist ein klarer Standardablauf definiert</div>
+    <div class="quiz-opt" onclick="selectOpt(1,3)" id="qo1_3"><div class="qo-radio"></div>Ja, sehr klar - der Standard deckt den Grossteil der Fälle ab und Ausnahmen sind bewusst geregelt</div>
+  </div></div>
+  <div class="quiz-q quiz-q-hidden" data-qidx="2"><div class="qq-num"><span class="qn-circle">3</span><span class="qn-main">Frage 3 von 11</span><span class="qn-cat">Kategorie 3 / 5</span></div><div class="qq-text">Wenn eine komplexe Kunden- oder Fachfrage auftaucht: Wo findet Ihr Team die verlässliche Antwort?</div><div class="qq-sub">Die Frage verbindet Prozessklarheit mit Wissenszugang im Tagesgeschäft.</div><div class="quiz-opts">
+    <div class="quiz-opt" onclick="selectOpt(2,0)" id="qo2_0"><div class="qo-radio"></div>Man muss bestimmte Personen fragen oder in Chats, Mails und Notizen suchen</div>
+    <div class="quiz-opt" onclick="selectOpt(2,1)" id="qo2_1"><div class="qo-radio"></div>Es gibt mehrere Dokumente oder Tools, aber nichts ist eindeutig führend</div>
+    <div class="quiz-opt" onclick="selectOpt(2,2)" id="qo2_2"><div class="qo-radio"></div>Die wichtigsten Antworten liegen dokumentiert vor, sind aber nicht immer vollständig aktuell</div>
+    <div class="quiz-opt" onclick="selectOpt(2,3)" id="qo2_3"><div class="qo-radio"></div>Es gibt eine zentrale, gepflegte Wissensbasis oder klare Prozessdokumentation für solche Rückfragen</div>
+  </div></div>
+  <div class="quiz-q quiz-q-hidden" data-qidx="3"><div class="qq-num"><span class="qn-circle">4</span><span class="qn-main">Frage 4 von 11</span><span class="qn-cat">Kategorie 4 / 5</span></div><div class="qq-text">Wie gut wäre kritisches Wissen abgesichert, wenn morgen eine Schlüsselperson ausfällt oder neue Mitarbeitende eingearbeitet werden müssen?</div><div class="qq-sub">Interner Signalanker für Wissensverlust und Onboarding-Reife.</div><div class="quiz-opts">
+    <div class="quiz-opt" onclick="selectOpt(3,0)" id="qo3_0"><div class="qo-radio"></div>Kritisch - Ausfall oder Kündigung würde massiven Wissensverlust verursachen, Onboarding dauert sehr lange</div>
+    <div class="quiz-opt" onclick="selectOpt(3,1)" id="qo3_1"><div class="qo-radio"></div>Riskant - viel Wissen ist personenabhängig, neue Mitarbeitende brauchen mehrere Monate</div>
+    <div class="quiz-opt" onclick="selectOpt(3,2)" id="qo3_2"><div class="qo-radio"></div>Beherrschbar - Wissen ist teilweise übertragbar, Einarbeitung ist mit Aufwand möglich</div>
+    <div class="quiz-opt" onclick="selectOpt(3,3)" id="qo3_3"><div class="qo-radio"></div>Gut abgesichert - Wissen ist dokumentiert und neue Mitarbeitende werden zügig arbeitsfähig</div>
+  </div></div>
+  <div class="quiz-q quiz-q-hidden" data-qidx="4"><div class="qq-num"><span class="qn-circle">5</span><span class="qn-main">Frage 5 von 11</span><span class="qn-cat">Kategorie 5 / 5</span></div><div class="qq-text">Wie strukturiert werden Erkenntnisse aus Meetings, Kundengesprächen oder Projekten festgehalten?</div><div class="qq-sub">Wichtig für Wissenssicherung, spätere Übergaben und KI-Nutzbarkeit.</div><div class="quiz-opts">
+    <div class="quiz-opt" onclick="selectOpt(4,0)" id="qo4_0"><div class="qo-radio"></div>Kaum - vieles bleibt in Köpfen, Chats oder Einzelnotizen</div>
+    <div class="quiz-opt" onclick="selectOpt(4,1)" id="qo4_1"><div class="qo-radio"></div>Unregelmäßig - es wird dokumentiert, wenn jemand daran denkt</div>
+    <div class="quiz-opt" onclick="selectOpt(4,2)" id="qo4_2"><div class="qo-radio"></div>Meistens - es gibt dokumentierte Ergebnisse, aber kein einheitliches Format</div>
+    <div class="quiz-opt" onclick="selectOpt(4,3)" id="qo4_3"><div class="qo-radio"></div>Durchgängig - Erkenntnisse werden strukturiert, standardisiert und teamweit verfügbar dokumentiert</div>
+  </div></div>
+  <div class="quiz-q quiz-q-hidden" data-qidx="5"><div class="qq-num"><span class="qn-circle">6</span><span class="qn-main">Frage 6 von 11</span><span class="qn-cat">Kategorie 1 / 6</span></div><div class="qq-text">In welcher Form liegen die für das Vorhaben relevanten Daten und Wissensinhalte heute vor?</div><div class="qq-sub">Es geht um operative Daten, Dokumente, Wissensartefakte und Kundeninformationen.</div><div class="quiz-opts">
+    <div class="quiz-opt" onclick="selectOpt(5,0)" id="qo5_0"><div class="qo-radio"></div>Vor allem in Köpfen, Papier, Scans, Freitext oder verstreuten Mails</div>
+    <div class="quiz-opt" onclick="selectOpt(5,1)" id="qo5_1"><div class="qo-radio"></div>Überwiegend in Dokumenten, Freitextfeldern, PDFs oder Tabellen ohne klare Struktur</div>
+    <div class="quiz-opt" onclick="selectOpt(5,2)" id="qo5_2"><div class="qo-radio"></div>Gemischt - wichtige Daten sind in Systemen, viel Wissen aber noch in Dokumenten und Freitext</div>
+    <div class="quiz-opt" onclick="selectOpt(5,3)" id="qo5_3"><div class="qo-radio"></div>Weitgehend strukturiert - relevante Daten und Wissensinhalte liegen in zentralen, auswertbaren Systemen vor</div>
+  </div></div>
+  <div class="quiz-q quiz-q-hidden" data-qidx="6"><div class="qq-num"><span class="qn-circle">7</span><span class="qn-main">Frage 7 von 11</span><span class="qn-cat">Kategorie 2 / 6</span></div><div class="qq-text">Wie sauber, aktuell und konsistent sind Ihre relevanten Daten?</div><div class="qq-sub">Objektive Datenqualität: Duplikate, veraltete Einträge oder uneinheitliche Pflege bremsen KI-Projekte direkt aus.</div><div class="quiz-opts">
+    <div class="quiz-opt" onclick="selectOpt(6,0)" id="qo6_0"><div class="qo-radio"></div>Schwach - viele Lücken, Dubletten oder veraltete Einträge</div>
+    <div class="quiz-opt" onclick="selectOpt(6,1)" id="qo6_1"><div class="qo-radio"></div>Verbesserungsbedürftig - bekannte Qualitätsprobleme werden aber nicht konsequent bearbeitet</div>
+    <div class="quiz-opt" onclick="selectOpt(6,2)" id="qo6_2"><div class="qo-radio"></div>Solide - Daten sind grundsätzlich nutzbar, haben aber erkennbare Lücken</div>
+    <div class="quiz-opt" onclick="selectOpt(6,3)" id="qo6_3"><div class="qo-radio"></div>Gut - Datenqualität wird aktiv gepflegt, validiert und ist für KI-Vorhaben belastbar</div>
+  </div></div>
+  <div class="quiz-q quiz-q-hidden" data-qidx="7"><div class="qq-num"><span class="qn-circle">8</span><span class="qn-main">Frage 8 von 11</span><span class="qn-cat">Kategorie 3 / 6</span></div><div class="qq-text">Wie zentralisiert sind Daten, Dokumente und Wissensquellen über Ihre Systeme hinweg?</div><div class="qq-sub">Die Frage verbindet Daten-Silos, Wissensinseln und Systemverteilung.</div><div class="quiz-opts">
+    <div class="quiz-opt" onclick="selectOpt(7,0)" id="qo7_0"><div class="qo-radio"></div>Stark verstreut - jede Abteilung arbeitet mit eigenen Inseln, Dateien oder Postfächern</div>
+    <div class="quiz-opt" onclick="selectOpt(7,1)" id="qo7_1"><div class="qo-radio"></div>Fragmentiert - mehrere Systeme existieren, sind aber nur lose verbunden</div>
+    <div class="quiz-opt" onclick="selectOpt(7,2)" id="qo7_2"><div class="qo-radio"></div>Teilweise zentral - Kerndaten sind in führenden Systemen, Nebenthemen bleiben verteilt</div>
+    <div class="quiz-opt" onclick="selectOpt(7,3)" id="qo7_3"><div class="qo-radio"></div>Gut zentralisiert - zentrale Daten- und Wissensbasis mit angebundenen Systemen</div>
+  </div></div>
+  <div class="quiz-q quiz-q-hidden" data-qidx="8"><div class="qq-num"><span class="qn-circle">9</span><span class="qn-main">Frage 9 von 11</span><span class="qn-cat">Kategorie 4 / 6</span></div><div class="qq-text">Wie viel Zeit verliert Ihr Team pro Woche dadurch, Informationen zu suchen, die irgendwo bereits existieren?</div><div class="qq-sub">Interner Dringlichkeitsindikator für Informationszugriff und operative Reibung.</div><div class="quiz-opts">
+    <div class="quiz-opt" onclick="selectOpt(8,0)" id="qo8_0"><div class="qo-radio"></div>Sehr viel - Suchaufwand ist ein regelmäßiger Produktivitätsverlust</div>
+    <div class="quiz-opt" onclick="selectOpt(8,1)" id="qo8_1"><div class="qo-radio"></div>Spürbar - mehrmals pro Woche geht relevante Zeit für Suchen verloren</div>
+    <div class="quiz-opt" onclick="selectOpt(8,2)" id="qo8_2"><div class="qo-radio"></div>Begrenzt - Suchaufwand kommt vor, ist aber beherrschbar</div>
+    <div class="quiz-opt" onclick="selectOpt(8,3)" id="qo8_3"><div class="qo-radio"></div>Gering - Informationen sind meist schnell auffindbar</div>
+  </div></div>
+  <div class="quiz-q quiz-q-hidden" data-qidx="9"><div class="qq-num"><span class="qn-circle">10</span><span class="qn-main">Frage 10 von 11</span><span class="qn-cat">Kategorie 5 / 6</span></div><div class="qq-text">Wenn eine entscheidungsrelevante Zahl oder KPI aus einem System kommt, wird ihr vertraut oder typischerweise gegengeprüft?</div><div class="qq-sub">Selbst saubere Daten nützen wenig, wenn das Team ihnen nicht vertraut. Indikator für die kulturelle Belastbarkeit Ihrer Datenbasis.</div><div class="quiz-opts">
+    <div class="quiz-opt" onclick="selectOpt(9,0)" id="qo9_0"><div class="qo-radio"></div>Stark misstrauisch – Systemzahlen werden selten ohne Verifikation verwendet</div>
+    <div class="quiz-opt" onclick="selectOpt(9,1)" id="qo9_1"><div class="qo-radio"></div>Spürbar zurückhaltend – wichtige KPIs werden grundsätzlich gegengeprüft</div>
+    <div class="quiz-opt" onclick="selectOpt(9,2)" id="qo9_2"><div class="qo-radio"></div>Selektives Vertrauen – Routinezahlen werden akzeptiert, bei wichtigen Entscheidungen wird geprüft</div>
+    <div class="quiz-opt" onclick="selectOpt(9,3)" id="qo9_3"><div class="qo-radio"></div>Belastbares Vertrauen – Daten aus dem System sind die anerkannte Grundlage</div>
+  </div></div>
+  <div class="quiz-q quiz-q-hidden" data-qidx="10"><div class="qq-num"><span class="qn-circle">11</span><span class="qn-main">Frage 11 von 11</span><span class="qn-cat">Kategorie 6 / 6</span></div><div class="qq-text">Wie stark schränken Datenschutz-, Hosting- oder Compliance-Vorgaben die Tool- und Modellwahl ein?</div><div class="qq-sub">Die Frage soll Aufwand und technische Freiheitsgrade realistisch einordnen.</div><div class="quiz-opts">
+    <div class="quiz-opt" onclick="selectOpt(10,0)" id="qo10_0"><div class="qo-radio"></div>Sehr stark - nur On-Premise oder stark eingeschränkte Sonderwege sind möglich</div>
+    <div class="quiz-opt" onclick="selectOpt(10,1)" id="qo10_1"><div class="qo-radio"></div>Restriktiv - EU- oder Branchenvorgaben schliessen Teile des Marktes aus</div>
+    <div class="quiz-opt" onclick="selectOpt(10,2)" id="qo10_2"><div class="qo-radio"></div>Moderat - Cloud ist möglich, aber nur unter klaren Rahmenbedingungen</div>
+    <div class="quiz-opt" onclick="selectOpt(10,3)" id="qo10_3"><div class="qo-radio"></div>Offen - relevante Cloud- und Modelloptionen sind grundsätzlich nutzbar</div>
+  </div></div>
+
+  <div class="quiz-nav" id="quizNav">
+    <button class="btn btn-o" id="qBtnBack" onclick="quizBack()" style="display:none">&#8592; Zur&uuml;ck</button>
+    <button class="btn btn-y" id="qBtnNext" onclick="quizNext()" disabled style="opacity:0.3;cursor:not-allowed">Weiter &#8594;</button>
+  </div>
+</div></div>
+
+<!-- S2: SCORE -->
+<div class="slide" id="s2"><div style="width:100%;max-width:1900px;z-index:2">
+  <div style="text-align:center">
+    <div class="sl-label yel">&#10022; AI Ready Zwischenstand</div>
+    <div class="sl-title" style="font-size:clamp(24px,3.5vw,42px)">4 Dimensionen. <span class="yel">100 Punkte.</span> Dein Score.</div>
+    <div style="display:inline-flex;align-items:center;gap:8px;background:var(--yellow-dim);border:1px solid var(--border-accent);border-radius:20px;padding:5px 14px;margin-top:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--yellow)"><span style="width:6px;height:6px;border-radius:50%;background:var(--yellow);animation:dotPulse 2s infinite"></span>Zwischentest &middot; 2 von 4 Dimensionen bewertet</div>
+  </div>
+  <div class="cmp-tabs" id="cmpTabs">
+    <div class="cmp-tab sel" data-id="kunde" onclick="clickTab('kunde')"><div class="ct-dot" style="background:var(--red)"></div><div class="ct-info"><div class="ct-name" id="phScoreFirma">[FIRMENNAME]</div><div class="ct-sub" id="phScoreName">[KUNDENNAME]</div></div><div><div class="ct-score" style="color:var(--red)">[SCORE]</div></div></div>
+    <div class="cmp-tab off" data-id="everlast" onclick="clickTab('everlast')"><div class="ct-dot" style="background:var(--green)"></div><div class="ct-info"><div class="ct-name">SOLL-Zustand</div><div class="ct-sub">Ziel: KI-Vorreiter</div></div><div><div class="ct-score" style="color:var(--green)">95</div></div></div>
+  </div>
+  <div class="fw-wrap">
+    <div class="fw-left">
+      <div class="radar-container"><canvas id="radarCanvas" width="500" height="500"></canvas></div>
+      <div class="radar-legend" id="radarLegend"></div>
+    </div>
+    <div class="fw-right" id="fwRight">
+      <div class="fw-block-label">4 Dimensionen &middot; Gewichteter Score</div>
+      <div class="fw-score-card" data-dim="0" onclick="hlDim(0)"><div class="sc-color" style="background:var(--red)"></div><div class="sc-info"><div class="sc-name">Prozessreife</div><div class="sc-sub">Dokumentation, Standards, Wissensfl&uuml;sse &middot; Gewicht &times;3</div><div class="sc-bar"><div class="sc-bar-fill" id="bar0"></div></div></div><div class="sc-score-wrap"><div class="sc-score" id="scv0"></div><div class="sc-pct" id="scp0"></div></div></div>
+      <div class="fw-score-card" data-dim="1" onclick="hlDim(1)"><div class="sc-color" style="background:var(--red)"></div><div class="sc-info"><div class="sc-name">Datenqualit&auml;t &amp; Verf&uuml;gbarkeit</div><div class="sc-sub">Struktur, Zugriff, Zentralisierung &middot; Gewicht &times;3</div><div class="sc-bar"><div class="sc-bar-fill" id="bar1"></div></div></div><div class="sc-score-wrap"><div class="sc-score" id="scv1"></div><div class="sc-pct" id="scp1"></div></div></div>
+      <div class="fw-score-card pending" data-dim="2"><div class="sc-color" style="background:var(--text-muted)"></div><div class="sc-info"><div class="sc-name">Technische Infrastruktur</div><div class="sc-sub">Software, APIs, Hosting, IT-Verantwortung &middot; Gewicht &times;2</div></div><div class="sc-pending-label">Folgt im n&auml;chsten Gespr&auml;ch</div></div>
+      <div class="fw-score-card pending" data-dim="3"><div class="sc-color" style="background:var(--text-muted)"></div><div class="sc-info"><div class="sc-name">Organisation &amp; Governance</div><div class="sc-sub">Owner, Entscheidungen, Kapazit&auml;t &middot; Gewicht &times;2</div></div><div class="sc-pending-label">Folgt im n&auml;chsten Gespr&auml;ch</div></div>
+      <!-- Total + Score-Stufen -->
+      <div class="fw-total" id="fwTotal"><div><div class="ft-score" id="ftScoreVal"></div><div class="ft-label" id="ftLabel"></div></div><div style="flex:1"><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted);margin-bottom:3px"><span id="ftBlockA"></span><span id="ftBlockB"></span></div><div class="ft-bar"><div class="ft-bar-fill" id="ftBarFill"></div></div><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-muted);margin-top:2px"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div></div></div>
+      <!-- Klickbare Score-Stufen -->
+      <div id="scoreLevels" style="margin-top:8px;cursor:pointer" onclick="toggleLevels()">
+        <div id="currentLevel" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;transition:all 0.3s">
+          <div style="display:flex;align-items:center;gap:10px"><div id="lvlDot" style="width:10px;height:10px;border-radius:50%"></div><div><div id="lvlName" style="font-size:13px;font-weight:700"></div><div style="font-size:10px;color:var(--text-muted)">Deine Einordnung</div></div></div>
+          <div id="lvlArrow" style="font-size:11px;color:var(--text-muted);transition:transform 0.3s">&#9660; Alle Stufen</div>
+        </div>
+        <div id="allLevels" style="max-height:0;overflow:hidden;transition:max-height 0.4s ease;margin-top:0">
+          <div style="background:var(--card);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:6px 14px">
+            <div class="lvl-row" data-range="91-100" style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--divider)"><div style="width:10px;height:10px;border-radius:50%;background:#4ade80;flex-shrink:0"></div><div style="flex:1;font-size:12px;font-weight:600;color:#4ade80">KI-Vorreiter</div><div style="font-size:11px;color:var(--text-muted)">91 &ndash; 100</div></div>
+            <div class="lvl-row" data-range="71-90" style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--divider)"><div style="width:10px;height:10px;border-radius:50%;background:#4ade80;flex-shrink:0"></div><div style="flex:1;font-size:12px;font-weight:600;color:#4ade80">Fortgeschritten</div><div style="font-size:11px;color:var(--text-muted)">71 &ndash; 90</div></div>
+            <div class="lvl-row" data-range="51-70" style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--divider)"><div style="width:10px;height:10px;border-radius:50%;background:#E8540A;flex-shrink:0"></div><div style="flex:1;font-size:12px;font-weight:600;color:#E8540A">Solide Basis</div><div style="font-size:11px;color:var(--text-muted)">51 &ndash; 70</div></div>
+            <div class="lvl-row" data-range="31-50" style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--divider)"><div style="width:10px;height:10px;border-radius:50%;background:#fb923c;flex-shrink:0"></div><div style="flex:1;font-size:12px;font-weight:600;color:#fb923c">Aufholbedarf</div><div style="font-size:11px;color:var(--text-muted)">31 &ndash; 50</div></div>
+            <div class="lvl-row" data-range="0-30" style="display:flex;align-items:center;gap:10px;padding:7px 0"><div style="width:10px;height:10px;border-radius:50%;background:#ff4d4d;flex-shrink:0"></div><div style="flex:1;font-size:12px;font-weight:600;color:#ff4d4d">Fr&uuml;her Anfang</div><div style="font-size:11px;color:var(--text-muted)">0 &ndash; 30</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- S7: NAECHSTE SCHRITTE -->
+<!-- S8: DOWNLOAD -->
+<div class="slide" id="s3"><div style="width:100%;max-width:900px;z-index:2;text-align:center;padding-bottom:40px">
+  <div class="sl-label yel">&#10022; Dein Ergebnis</div>
+  <div class="sl-title">AI-Readiness <span class="yel">Zwischenbericht</span></div>
+  <div class="sl-sub" style="margin-bottom:24px">Deine aktuelle Standortbestimmung auf einen Blick. Der vollst&auml;ndige Report wird im n&auml;chsten Gespr&auml;ch gemeinsam ausgewertet.</div>
+
+  <div style="background:var(--card);border:2px solid var(--border-accent);border-radius:18px;padding:36px 44px;margin:0 auto;max-width:700px">
+    <div style="font-size:14px;color:var(--text);font-weight:700;margin-bottom:4px" id="dlFirma">[FIRMENNAME]</div>
+    <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px" id="dlKunde">[KUNDENNAME]</div>
+    <div style="font-family:'Playfair Display',serif;font-size:72px;font-weight:900;color:var(--yellow)" id="dlScore">0</div>
+    <div style="font-size:14px;color:var(--text-muted);margin-bottom:4px">von 100 Punkten &middot; Zwischenstand</div>
+    <div id="dlLevel" style="font-size:16px;font-weight:700;margin-bottom:20px"></div>
+
+    <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);text-align:left;margin-bottom:8px">2 von 4 Dimensionen bewertet</div>
+    <div id="dlDims" style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;text-align:left"></div>
+
+    <div style="background:var(--yellow-dim);border:1px solid var(--border-accent);border-radius:12px;padding:16px 20px;text-align:center">
+      <div style="font-size:13px;color:var(--yellow);font-weight:700;margin-bottom:4px">Tipp: Screenshot speichern</div>
+      <div style="font-size:12px;color:var(--text-dim);line-height:1.5">Mache jetzt einen Screenshot dieser Seite als Zwischenergebnis. Der ausf&uuml;hrliche Report mit Handlungsempfehlungen wird im n&auml;chsten Gespr&auml;ch besprochen.</div>
+    </div>
+  </div>
+</div></div>
+
+
+
+<script>
+// ===== THEME TOGGLE =====
+function isLight(){return document.body.classList.contains('light')}
+function setTheme(t){
+  document.body.classList.toggle('light', t==='light');
+  document.querySelectorAll('.theme-btn').forEach(function(b){b.classList.toggle('active', b.dataset.theme===t)});
+  try{localStorage.setItem('ai-ready-theme', t)}catch(e){}
+  if(window._themeChanged) window._themeChanged();
+}
+document.querySelectorAll('.theme-btn').forEach(function(b){b.addEventListener('click',function(){setTheme(b.dataset.theme)})});
+try{var savedTheme=localStorage.getItem('ai-ready-theme'); if(savedTheme==='light') setTheme('light');}catch(e){}
+
+// ===== PARTICLES =====
+const cv=document.getElementById('bgCanvas'),cx2=cv.getContext('2d');let W,H,ptsList=[];
+function resize(){const d=devicePixelRatio||1;W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;cv.style.width=W+'px';cv.style.height=H+'px';cx2.setTransform(d,0,0,d,0,0)}
+const CS_DARK=['#E8540A','#4ade80','#60a5fa','#ff4d4d','#a78bfa','#fb923c'];
+const CS_LIGHT=['#c94800','#16a34a','#2563eb','#c92a2a','#7c3aed','#d97706'];
+function particleColors(){return isLight()?CS_LIGHT:CS_DARK}
+function linkColor(a){return isLight()?'rgba(232,84,10,'+a+')':'rgba(232,84,10,'+a+')'}
+class Pt{constructor(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-0.5)*0.3;this.vy=(Math.random()-0.5)*0.3;this.r=2.5+Math.random()*3;this.ci=Math.floor(Math.random()*6);this.c=particleColors()[this.ci];this.a=0.3+Math.random()*0.35;this.ps=0.008+Math.random()*0.01;this.pp=Math.random()*Math.PI*2}update(t){this.x+=this.vx;this.y+=this.vy;if(this.x<0)this.x=W;if(this.x>W)this.x=0;if(this.y<0)this.y=H;if(this.y>H)this.y=0;this.ca=this.a*(0.6+0.4*Math.sin(t*this.ps+this.pp))}draw(){cx2.beginPath();cx2.arc(this.x,this.y,this.r,0,Math.PI*2);cx2.fillStyle=this.c;cx2.globalAlpha=this.ca;cx2.fill();const g=cx2.createRadialGradient(this.x,this.y,0,this.x,this.y,this.r*3);g.addColorStop(0,this.c);g.addColorStop(1,'transparent');cx2.fillStyle=g;cx2.globalAlpha=this.ca*0.15;cx2.beginPath();cx2.arc(this.x,this.y,this.r*3,0,Math.PI*2);cx2.fill();cx2.globalAlpha=1}}
+function initP(){ptsList=[];for(let i=0;i<50;i++)ptsList.push(new Pt())}let af=0;
+window._themeChanged=function(){ptsList.forEach(function(p){p.c=particleColors()[p.ci]})};
+function pLoop(){cx2.clearRect(0,0,W,H);af++;ptsList.forEach(p=>{p.update(af);p.draw()});const lAlpha=isLight()?0.18:0.12;for(let i=0;i<ptsList.length;i++)for(let j=i+1;j<ptsList.length;j++){const dx=ptsList[i].x-ptsList[j].x,dy=ptsList[i].y-ptsList[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<180){cx2.beginPath();cx2.moveTo(ptsList[i].x,ptsList[i].y);cx2.lineTo(ptsList[j].x,ptsList[j].y);cx2.strokeStyle=linkColor(((1-d/180)*lAlpha));cx2.lineWidth=1;cx2.stroke()}}requestAnimationFrame(pLoop)}
+resize();initP();pLoop();addEventListener('resize',function(){resize();initP()});
+
+// ===== SLIDES =====
+var SN=['Willkommen','Fragebogen','Score','Zwischenbericht'];var cur=-1;var tot=SN.length;
+var dotsEl=document.getElementById('dots');SN.forEach(function(n,i){var d=document.createElement('div');d.className='topnav-dot';d.onclick=function(){go(i)};d.title=n;dotsEl.appendChild(d)});
+function go(n){if(n<-1||n>=tot||n===cur)return;
+  if(n>=2&&!window._quizComplete)return; // Block score+later slides until quiz done
+  if(window._quizComplete){
+    if(n<2)return; // After completion: only s2 and s3 allowed
+  }else{
+    if(n<cur&&n!==-1)return; // Before completion: no going back
+    if(cur===0&&n===1)return; // Block scroll/key from Welcome to Quiz - only button allowed
+  }
+  if(cur===-1)document.getElementById('sAdmin').classList.remove('active');
+  else document.getElementById('s'+cur).classList.remove('active');
+  if(n===-1){document.getElementById('sAdmin').classList.add('active')}
+  else{document.getElementById('s'+n).classList.add('active');document.getElementById('s'+n).scrollTop=0}
+  cur=n;document.querySelectorAll('.topnav-dot').forEach(function(d,i){d.classList.toggle('active',i===n)});
+  document.getElementById('btnP').disabled=(window._quizComplete?n<=2:true);
+  document.getElementById('btnN').disabled=true; // Always disable forward arrow
+  if(n===1)showQuizQuestion(curQuizIdx);if(n===2)animFW();if(n===3)updateDownloadSlide()}
+addEventListener('keydown',function(e){if(cur===-1)return;if(e.key==='ArrowRight'||e.key==='ArrowDown')go(cur+1);if((e.key==='ArrowLeft'||e.key==='ArrowUp')&&window._quizComplete)go(cur-1)});
+window._quizComplete=false;
+var wl=false;addEventListener('wheel',function(e){if(cur===-1)return;if(wl)return;wl=true;if(e.deltaY>0)go(cur+1);else if(window._quizComplete)go(cur-1);setTimeout(function(){wl=false},700)},{passive:true});
+
+function startQuiz(){
+  if(cur!==0)return;
+  document.getElementById('s0').classList.remove('active');
+  document.getElementById('s1').classList.add('active');
+  document.getElementById('s1').scrollTop=0;
+  cur=1;
+  document.querySelectorAll('.topnav-dot').forEach(function(d,i){d.classList.toggle('active',i===1)});
+  document.getElementById('btnP').disabled=true;
+  document.getElementById('btnN').disabled=true;
+  showQuizQuestion(curQuizIdx);
+}
+
+function updatePlaceholders(kname,fname){
+  var b=document.getElementById('phBadgeName');if(b)b.textContent=kname;
+  var hf=document.getElementById('phHeroFirma');if(hf)hf.textContent=fname;
+  var hn=document.getElementById('phHeroName');if(hn)hn.textContent=kname;
+  var sf=document.getElementById('phScoreFirma');if(sf)sf.textContent=fname;
+  var sn=document.getElementById('phScoreName');if(sn)sn.textContent=kname;
+  var df=document.getElementById('dlFirma');if(df)df.textContent=fname;
+  var dk=document.getElementById('dlKunde');if(dk)dk.textContent=kname;
+  document.title='AI Readiness Score: '+fname;
+  P.kunde.l=kname;
+  window._firmenname=fname;
+  window._kundenname=kname;
+}
+
+function startPresentation(){
+  var kname=document.getElementById('adminKunde').value.trim()||'[KUNDENNAME]';
+  var fname=document.getElementById('adminFirma').value.trim()||'[FIRMENNAME]';
+  updatePlaceholders(kname,fname);
+  go(0);
+}
+
+function resetAll(){
+  answers=new Array(TOTAL_Q).fill(-1);
+  curQuizIdx=0;
+  // Reset all MC selections
+  document.querySelectorAll('.quiz-opt').forEach(function(el){el.classList.remove('selected')});
+  // Reset all scale selections
+  document.querySelectorAll('.scale-btn').forEach(function(el){el.classList.remove('selected')});
+  // Reset all notes
+  document.querySelectorAll('.quiz-notes textarea').forEach(function(t){t.value=''});
+  // Reset quiz state
+  document.querySelectorAll('.quiz-q').forEach(function(el){el.classList.add('quiz-q-hidden')});
+  var firstQ=document.querySelector('.quiz-q[data-qidx="0"]');
+  if(firstQ)firstQ.classList.remove('quiz-q-hidden');
+  document.querySelectorAll('.quiz-dim-header').forEach(function(el){el.classList.add('quiz-dim-hidden')});
+  var firstDim=document.querySelector('.quiz-dim-header[data-fordim="0"]');
+  if(firstDim)firstDim.classList.remove('quiz-dim-hidden');
+  // Reset profile
+  P.kunde.s=[0,0,0,0];P.kunde.t=0;
+  // Reset quiz completed flag
+  window._quizComplete=false;
+  // Reset placeholders
+  updatePlaceholders('[KUNDENNAME]','[FIRMENNAME]');
+  // Clear admin inputs
+  document.getElementById('adminKunde').value='';
+  document.getElementById('adminFirma').value='';
+  // Go back to admin
+  if(cur!==-1){
+    document.getElementById('s'+cur).classList.remove('active');
+    cur=-1;
+    document.getElementById('sAdmin').classList.add('active');
+    document.querySelectorAll('.topnav-dot').forEach(function(d){d.classList.remove('active')});
+  }
+}
+
+// ===== PROFILE DATA =====
+// <!-- PLATZHALTER: Hier Kundenwerte anpassen -->
+// Jede Dimension hat max 165 (3 Fragen x 55) oder 220 (4 Fragen x 55). Total max = 990, normiert auf 1000.
+// Dimensionen: Wissensverteilung(max 165), Dokumentation(max 220), Datenlandschaft(max 220), KI-Bereitschaft(max 220), Engpass(max 165)
+var DIMS=[{n:'Prozessreife',m:100},{n:'Datenqualit\u00e4t',m:100},{n:'Techn. Infrastruktur',m:100},{n:'Organisation',m:100}];
+var P={
+  // <!-- PLATZHALTER: Kundenwerte hier eintragen (Summe der Antworten pro Dimension) -->
+  kunde:{l:'[KUNDENNAME]',c:'#ff4d4d',cf:'rgba(255,77,77,0.10)',s:[0,0,0,0],t:0},
+
+  everlast:{l:'SOLL-Zustand',c:'#4ade80',cf:'rgba(74,222,128,0.08)',s:[95,95,95,95],t:95}
+};
+var vis={kunde:true,everlast:false};
+var sel='kunde',hlIdx=-1;
+var rv={kunde:DIMS.map(function(){return 0}),everlast:DIMS.map(function(){return 0})};
+
+function clickTab(id){
+  if(vis[id]){if(id===sel){var others=Object.keys(vis).filter(function(k){return k!==id&&vis[k]});if(others.length>0){vis[id]=false;sel=others[0]}}else{sel=id}}else{vis[id]=true;sel=id}
+  syncUI();
+}
+
+function syncUI(){
+  document.querySelectorAll('.cmp-tab').forEach(function(t){
+    var id=t.dataset.id;t.classList.toggle('off',!vis[id]);t.classList.toggle('sel',id===sel);
+    t.style.borderColor=vis[id]?P[id].c:'';t.style.background=id===sel?P[id].cf:'';
+  });
+  var p=P[sel];
+  DIMS.forEach(function(_,i){
+    if(!dimAssessed[i])return; // pending dims: HTML zeigt statisches "folgt"
+    var sc=p.s[i],mx=DIMS[i].m,pct=Math.round(sc/mx*100),col=pctCol(pct);
+    var scvEl=document.getElementById('scv'+i);if(scvEl){scvEl.innerHTML=sc+'<span style="font-size:11px;color:var(--text-muted)">/'+mx+'</span>';scvEl.style.color=col;}
+    var scpEl=document.getElementById('scp'+i);if(scpEl)scpEl.textContent=pct+'%';
+    var b=document.getElementById('bar'+i);if(b){b.style.background=col;b.style.width=pct+'%';}
+  });
+  document.getElementById('ftScoreVal').innerHTML=p.t+'<span style="font-size:16px;color:var(--text-muted)">/100</span>';
+  document.getElementById('ftScoreVal').style.color=p.c;
+  document.getElementById('ftLabel').textContent=p.l;document.getElementById('ftLabel').style.color=p.c;
+  var totalPct=Math.round(p.t);
+  document.getElementById('ftBlockA').textContent='Score: '+p.t+' von 100';
+  document.getElementById('ftBlockB').textContent=totalPct+'% AI Ready (Zwischenstand)';
+  var fb=document.getElementById('ftBarFill');fb.style.background=p.c;fb.style.width=(p.t)+'%';
+  document.getElementById('fwTotal').style.borderColor=p.c;
+  var lg=document.getElementById('radarLegend');lg.innerHTML='';
+  ['kunde','everlast'].forEach(function(id){
+    if(!vis[id])return;var pp=P[id];
+    var el=document.createElement('div');el.className='rl-item';
+    el.innerHTML='<div class="rl-line" style="background:'+pp.c+(id===sel?'':';opacity:0.5')+'"></div>'+(id===sel?'<strong>':'')+(pp.l)+' ('+pp.t+')'+(id===sel?'</strong>':'');
+    lg.appendChild(el);
+  });
+}
+
+function pctCol(p){return p>=70?'var(--green)':p>=50?'var(--yellow)':p>=35?'var(--orange)':'var(--red)'}
+function hlDim(i){if(!dimAssessed[i])return;hlIdx=hlIdx===i?-1:i;document.querySelectorAll('.fw-score-card').forEach(function(c,j){c.classList.toggle('active',j===i&&hlIdx===i)})}
+
+
+function toggleLevels(){
+  var el=document.getElementById('allLevels');
+  var arrow=document.getElementById('lvlArrow');
+  var isOpen=el.style.maxHeight&&el.style.maxHeight!=='0px'&&el.style.maxHeight!=='0';
+  if(isOpen){el.style.maxHeight='0';arrow.innerHTML='&#9660; Alle Stufen'}
+  else{el.style.maxHeight='300px';arrow.innerHTML='&#9650; Ausblenden'}
+  // Highlight current level row
+  var score=P[sel].t;
+  document.querySelectorAll('.lvl-row').forEach(function(r){r.style.background='';r.style.borderRadius=''});
+  var ranges=[[91,100],[71,90],[51,70],[31,50],[0,30]];
+  var rows=document.querySelectorAll('.lvl-row');
+  ranges.forEach(function(rng,i){
+    if(score>=rng[0]&&score<=rng[1]&&rows[i]){rows[i].style.background='var(--yellow-dim)';rows[i].style.borderRadius='6px'}
+  });
+}
+
+function updateLevelDisplay(){
+  var score=P[sel].t;
+  var lvl=getScoreLabel(score);
+  var dot=document.getElementById('lvlDot');if(dot)dot.style.background=lvl.color;
+  var name=document.getElementById('lvlName');if(name){name.textContent=lvl.label;name.style.color=lvl.color}
+}
+
+// ===== RADAR =====
+var rCtx;var RS=500,RCX=250,RCY=250,MR=190;
+function initR(){var c=document.getElementById('radarCanvas');var d=devicePixelRatio||1;c.width=RS*d;c.height=RS*d;c.style.width=RS+'px';c.style.height=RS+'px';rCtx=c.getContext('2d');rCtx.setTransform(d,0,0,d,0,0);rv={kunde:DIMS.map(function(){return 0}),everlast:DIMS.map(function(){return 0})};drawR()}
+
+function drawR(){
+  var ctx=rCtx;if(!ctx)return;var n=DIMS.length;
+  ctx.clearRect(0,0,RS,RS);
+  var lt=isLight();
+  var cGrid=lt?'rgba(0,0,0,0.08)':'rgba(255,255,255,0.05)';
+  var cGridText=lt?'rgba(0,0,0,0.25)':'rgba(255,255,255,0.12)';
+  var cAxis=lt?'rgba(0,0,0,0.05)':'rgba(255,255,255,0.03)';
+  var cAxisHl=lt?'rgba(232,84,10,0.35)':'rgba(232,84,10,0.25)';
+  var cLabel=lt?'#666':'#94a3b8';
+  var cLabelHl=lt?'#c94800':'#E8540A';
+  var cInner=lt?'#555':'#64748b';
+  var cDotRing=lt?'#0a0a0f':'#fff';
+  ['kunde','everlast'].forEach(function(id){rv[id].forEach(function(v,i){var tgt=vis[id]?(P[id].s[i]/DIMS[i].m):0;rv[id][i]+=(tgt-v)*0.07})});
+  for(var r=1;r<=4;r++){var rad=MR*(r/4);ctx.beginPath();for(var i=0;i<=n;i++){var a=(i/n)*Math.PI*2-Math.PI/2;var x=RCX+Math.cos(a)*rad,y=RCY+Math.sin(a)*rad;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.strokeStyle=cGrid;ctx.lineWidth=1;ctx.stroke();ctx.font='9px Inter';ctx.fillStyle=cGridText;ctx.textAlign='left';ctx.textBaseline='bottom';ctx.fillText((r*25)+'%',RCX+3,RCY-rad+11)}
+  for(var i=0;i<n;i++){var a=(i/n)*Math.PI*2-Math.PI/2;var ex=RCX+Math.cos(a)*MR,ey=RCY+Math.sin(a)*MR;var isPending=!dimAssessed[i];ctx.beginPath();ctx.moveTo(RCX,RCY);ctx.lineTo(ex,ey);ctx.strokeStyle=hlIdx===i?cAxisHl:cAxis;ctx.lineWidth=hlIdx===i?2:1;if(isPending)ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);var lx=RCX+Math.cos(a)*(MR+22),ly=RCY+Math.sin(a)*(MR+22);ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=(hlIdx===i?'bold ':'')+' 10px Inter,sans-serif';ctx.fillStyle=isPending?cInner:(hlIdx===i?cLabelHl:cLabel);ctx.globalAlpha=isPending?0.55:1;ctx.fillText(DIMS[i].n,lx,ly);if(isPending){ctx.font='8px Inter,sans-serif';ctx.fillText('(folgt)',lx,ly+12)}ctx.globalAlpha=1}
+  var order=['everlast','kunde'];
+  order.forEach(function(id){
+    if(!vis[id])return;var p=P[id];var isSel=id===sel;
+    ctx.beginPath();for(var i=0;i<=n;i++){var idx=i%n;var a=(idx/n)*Math.PI*2-Math.PI/2;var r2=MR*rv[id][idx];var x=RCX+Math.cos(a)*r2,y=RCY+Math.sin(a)*r2;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}
+    ctx.fillStyle=p.cf;ctx.fill();ctx.strokeStyle=isSel?p.c:p.c+'77';ctx.lineWidth=isSel?2.5:1.5;if(!isSel)ctx.setLineDash([6,4]);ctx.stroke();ctx.setLineDash([]);
+    for(var i=0;i<n;i++){var a=(i/n)*Math.PI*2-Math.PI/2;var r2=MR*rv[id][i];var x=RCX+Math.cos(a)*r2,y=RCY+Math.sin(a)*r2;var isKundePending=(id==='kunde'&&!dimAssessed[i]);
+      if(isSel||hlIdx===i){if(isKundePending){ctx.beginPath();ctx.arc(x,y,isSel?5:3.5,0,Math.PI*2);ctx.strokeStyle=p.c;ctx.lineWidth=1.5;ctx.setLineDash([2,2]);ctx.stroke();ctx.setLineDash([])}else{ctx.beginPath();ctx.arc(x,y,isSel?5:3.5,0,Math.PI*2);ctx.fillStyle=p.c;ctx.fill();if(isSel&&hlIdx===i){ctx.strokeStyle=cDotRing;ctx.lineWidth=2;ctx.stroke()}}}}
+  });
+  var sp2=P[sel];ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='bold 28px Playfair Display,serif';ctx.fillStyle=sp2.c;ctx.fillText(sp2.t,RCX,RCY-6);ctx.font='11px Inter';ctx.fillStyle=cInner;ctx.fillText('von 100',RCX,RCY+14);
+  requestAnimationFrame(drawR);
+}
+
+// ===== ANIM =====
+function animFW(){
+  rv={kunde:DIMS.map(function(){return 0}),everlast:DIMS.map(function(){return 0})};
+  hlIdx=-1;vis={kunde:true,everlast:false};sel='kunde';
+  initR();syncUI();
+  var cards=document.querySelectorAll('.fw-score-card');cards.forEach(function(c){c.classList.remove('show','active')});
+  cards.forEach(function(c,i){setTimeout(function(){c.classList.add('show')},i*50+200)});
+  setTimeout(function(){document.getElementById('fwTotal').classList.add('show')},cards.length*50+600);
+}
+function animDF(){
+  document.querySelectorAll('.df-card,.df-brain,.df-arrow').forEach(function(el){el.classList.remove('show')});
+  ['dfc0','dfc1','dfc2','dfc3','dfc4'].forEach(function(id,i){setTimeout(function(){document.getElementById(id).classList.add('show')},i*90+200)});
+  setTimeout(function(){document.getElementById('dfa0').classList.add('show')},750);
+  setTimeout(function(){document.getElementById('dfBrain').classList.add('show')},950);
+  setTimeout(function(){document.getElementById('dfa1').classList.add('show')},1250);
+  ['dfo0','dfo1','dfo2','dfo3'].forEach(function(id,i){setTimeout(function(){document.getElementById(id).classList.add('show')},i*80+1450)});
+}
+function animAP(){
+  document.querySelectorAll('#s1 .ap-step,#s1 .ap-del').forEach(function(el){el.classList.remove('show')});
+  if(document.getElementById('apd3'))document.getElementById('apd3').style.opacity='0';
+  if(document.getElementById('apd4'))document.getElementById('apd4').style.opacity='0';
+  ['aps0','aps1','aps2'].forEach(function(id,i){setTimeout(function(){document.getElementById(id).classList.add('show')},i*200+200)});
+  setTimeout(function(){var e=document.getElementById('apd3');if(e){e.style.opacity='1';e.style.transform='scale(1)'}},1000);
+  setTimeout(function(){var e=document.getElementById('apd4');if(e){e.style.opacity='1';e.style.transform='scale(1)'}},1200);
+  ['apd0','apd1','apd2','apd5'].forEach(function(id,i){setTimeout(function(){document.getElementById(id).classList.add('show')},i*120+1500)});
+}
+function animAP2(){
+  ['aps0b','aps1b','aps2b'].forEach(function(id){var e=document.getElementById(id);if(e)e.classList.remove('show')});
+  ['apd0b','apd1b','apd2b','apd5b'].forEach(function(id){var e=document.getElementById(id);if(e){e.style.opacity='0';e.style.transform='scale(0.9)';e.classList.remove('show')}});
+  var o1=document.getElementById('opt1card');if(o1){o1.style.opacity='0';o1.style.transform='scale(0.9)'}
+  var o2=document.getElementById('opt2card');if(o2){o2.style.opacity='0';o2.style.transform='scale(0.9)'}
+  // Reset expanded state
+  var d1=document.getElementById('opt1detail');if(d1){d1.style.maxHeight='0';d1.style.opacity='0'}
+  var d2=document.getElementById('opt2detail');if(d2){d2.style.maxHeight='0';d2.style.opacity='0'}
+  document.getElementById('opt1arrow').innerHTML='&#9660; Ablauf anzeigen';
+  document.getElementById('opt2arrow').innerHTML='&#9660; Ablauf anzeigen';
+  ['aps0b','aps1b','aps2b'].forEach(function(id,i){setTimeout(function(){document.getElementById(id).classList.add('show')},i*200+200)});
+  setTimeout(function(){var e=document.getElementById('opt1card');if(e){e.style.opacity='1';e.style.transform='scale(1)'}},1000);
+  setTimeout(function(){var e=document.getElementById('opt2card');if(e){e.style.opacity='1';e.style.transform='scale(1)'}},1200);
+  ['apd0b','apd1b','apd2b','apd5b'].forEach(function(id,i){setTimeout(function(){var e=document.getElementById(id);if(e){e.style.opacity='1';e.style.transform='scale(1)'}},i*120+1500)});
+}
+
+function toggleOpt(n){
+  var detail=document.getElementById('opt'+n+'detail');
+  var arrow=document.getElementById('opt'+n+'arrow');
+  var card=document.getElementById('opt'+n+'card');
+  if(!detail)return;
+  var isOpen=detail.style.maxHeight&&detail.style.maxHeight!=='0px'&&detail.style.maxHeight!=='0';
+  if(isOpen){
+    detail.style.maxHeight='0';detail.style.opacity='0';
+    arrow.innerHTML='&#9660; Ablauf anzeigen';
+    card.style.borderColor='';
+  }else{
+    detail.style.maxHeight='400px';detail.style.opacity='1';
+    arrow.innerHTML='&#9650; Ablauf ausblenden';
+    card.style.borderColor=n===1?'var(--green)':'var(--yellow)';
+    card.style.background=n===1?'rgba(74,222,128,0.04)':'rgba(232,84,10,0.04)';
+  }
+}
+
+
+// ===== QUIZ CONFIG =====
+var TOTAL_Q=11;
+var answers=new Array(TOTAL_Q).fill(-1);
+var qType=["mc","mc","mc","mc","mc","mc","mc","mc","mc","mc","mc"];
+var qScore=[true,true,true,true,true,true,true,true,true,true,true];
+var qDim=[0,0,0,0,0,1,1,1,1,1,1];
+var dimNames=["Prozessreife","Datenqualit\u00e4t & Verf\u00fcgbarkeit","Technische Infrastruktur","Organisation & Governance"];
+var dimWeights=[3,3,2,2]; // Final-Gewichtung: Prozessreife/Datenqualit\u00e4t \u00d73, Tech-Infra/Organisation \u00d72
+var dimStarts=[0,5];
+var dimAssessed=[true,true,false,false]; // Tech-Infra + Org sind im Zwischentest noch nicht bewertet
+var curQuizIdx=0;
+
+function selectOpt(qIdx,optIdx){
+  answers[qIdx]=optIdx;
+  for(var o=0;o<4;o++){
+    var el=document.getElementById('qo'+qIdx+'_'+o);
+    if(el)el.classList.toggle('selected',o===optIdx);
+  }
+  var btn=document.getElementById('qBtnNext');
+  btn.disabled=false;btn.style.opacity='1';btn.style.cursor='pointer';
+  if(qIdx===TOTAL_Q-1)btn.textContent='Auswertung anzeigen \u2192';
+  updateProgress();
+}
+
+function selectScale(qIdx,val){
+  answers[qIdx]=val;
+  for(var v=1;v<=10;v++){
+    var el=document.getElementById('qs'+qIdx+'_'+v);
+    if(el)el.classList.toggle('selected',v===val);
+  }
+  var btn=document.getElementById('qBtnNext');
+  btn.disabled=false;btn.style.opacity='1';btn.style.cursor='pointer';
+  if(qIdx===TOTAL_Q-1)btn.textContent='Auswertung anzeigen \u2192';
+  updateProgress();
+}
+
+function showQuizQuestion(idx){
+  curQuizIdx=idx;
+  document.querySelectorAll('.quiz-q').forEach(function(el){el.classList.add('quiz-q-hidden')});
+  document.querySelectorAll('.quiz-dim-header').forEach(function(dl){dl.classList.add('quiz-dim-hidden')});
+  var qEl=document.querySelector('.quiz-q[data-qidx="'+idx+'"]');
+  if(qEl)qEl.classList.remove('quiz-q-hidden');
+  var dimIdx=qDim[idx];
+  var dl=document.querySelector('.quiz-dim-header[data-fordim="'+dimIdx+'"]');
+  if(dl)dl.classList.remove('quiz-dim-hidden');
+  var backBtn=document.getElementById('qBtnBack');
+  backBtn.style.display=idx>0?'':'none';
+  var nextBtn=document.getElementById('qBtnNext');
+  if(answers[idx]>=0){
+    nextBtn.disabled=false;nextBtn.style.opacity='1';nextBtn.style.cursor='pointer';
+  }else{
+    nextBtn.disabled=true;nextBtn.style.opacity='0.3';nextBtn.style.cursor='not-allowed';
+  }
+  nextBtn.textContent=idx===TOTAL_Q-1?'Auswertung anzeigen \u2192':'Weiter \u2192';
+  updateProgress();
+}
+
+function quizNext(){
+  if(answers[curQuizIdx]<0&&answers[curQuizIdx]!==0)return;
+  if(curQuizIdx>=TOTAL_Q-1){
+    calcAndShowScore();
+    return;
+  }
+  showQuizQuestion(curQuizIdx+1);
+}
+
+function quizBack(){
+  if(curQuizIdx<=0)return;
+  showQuizQuestion(curQuizIdx-1);
+}
+
+function updateProgress(){
+  var pf=document.getElementById('progFill');if(pf)pf.style.width=((curQuizIdx+1)/TOTAL_Q*100)+'%';
+  var pt=document.getElementById('progText');if(pt)pt.textContent='Frage '+(curQuizIdx+1)+' von '+TOTAL_Q;
+}
+
+function calcScore(){
+  // Calculate per-dimension percentage (only assessed dims get real values)
+  var dimRaw=[0,0,0,0];
+  var dimMax=[0,0,0,0];
+  for(var i=0;i<TOTAL_Q;i++){
+    if(!qScore[i])continue;
+    var d=qDim[i];
+    if(qType[i]==='mc'){
+      dimMax[d]+=3; // max is 3 (option index 0-3)
+      if(answers[i]>=0)dimRaw[d]+=answers[i];
+    }else{
+      dimMax[d]+=10; // max is 10
+      if(answers[i]>=1)dimRaw[d]+=answers[i];
+    }
+  }
+  var dimPct=dimRaw.map(function(r,i){return dimMax[i]>0?Math.round(r/dimMax[i]*100):0});
+  // Zwischen-Score: nur bewertete Dimensionen mit ihren Gewichten, normiert auf 100
+  var wSum=0,wTotal=0;
+  dimPct.forEach(function(p,i){if(!dimAssessed[i])return;wSum+=p*dimWeights[i];wTotal+=dimWeights[i]});
+  var totalScore=wTotal>0?Math.round(wSum/wTotal):0;
+  return {dimPct:dimPct,totalScore:totalScore};
+}
+
+function getScoreLabel(s){
+  if(s>=91)return {label:'KI-Vorreiter',color:'#4ade80'};
+  if(s>=71)return {label:'Fortgeschritten',color:'#4ade80'};
+  if(s>=51)return {label:'Solide Basis',color:'#E8540A'};
+  if(s>=31)return {label:'Aufholbedarf',color:'#fb923c'};
+  return {label:'Fr\u00fcher Anfang',color:'#ff4d4d'};
+}
+
+function calcAndShowScore(){
+  window._quizComplete=true;
+  var result=calcScore();
+  // Update radar profile: assessed dims get real values, pending dims stay 0
+  for(var i=0;i<DIMS.length;i++){
+    P.kunde.s[i]=dimAssessed[i]?Math.round(result.dimPct[i]/100*DIMS[i].m):0;
+  }
+  P.kunde.t=result.totalScore;
+  var tabScore=document.querySelector('[data-id="kunde"] .ct-score');
+  if(tabScore)tabScore.textContent=result.totalScore;
+  go(2);
+}
+
+function resetQuiz(){
+  answers=new Array(TOTAL_Q).fill(-1);
+  curQuizIdx=0;
+  for(var q=0;q<TOTAL_Q;q++){
+    if(qType[q]==='mc'){
+      for(var o=0;o<4;o++){var el=document.getElementById('qo'+q+'_'+o);if(el)el.classList.remove('selected')}
+    }else{
+      for(var v=1;v<=10;v++){var el=document.getElementById('qs'+q+'_'+v);if(el)el.classList.remove('selected')}
+    }
+  }
+  showQuizQuestion(0);
+}
+
+
+// ===== DOWNLOAD SLIDE =====
+var dimNames4=['Prozessreife','Datenqualit\u00e4t & Verf\u00fcgbarkeit','Technische Infrastruktur','Organisation & Governance'];
+
+function updateDownloadSlide(){
+  var result2=calcScore();
+  document.getElementById('dlScore').textContent=result2.totalScore;
+  var lvl=getScoreLabel(result2.totalScore);
+  var dlLvl=document.getElementById('dlLevel');
+  if(dlLvl){dlLvl.textContent=lvl.label;dlLvl.style.color=lvl.color;}
+  var dimsEl=document.getElementById('dlDims');
+  dimsEl.innerHTML='';
+  dimNames4.forEach(function(name,i){
+    var assessed=dimAssessed[i];
+    if(assessed){
+      var pct=result2.dimPct[i];
+      var col=pct>=70?'#4ade80':pct>=50?'#E8540A':pct>=35?'#fb923c':'#ff4d4d';
+      dimsEl.innerHTML+='<div style="display:flex;align-items:center;gap:12px"><div style="width:240px;font-size:12px;color:var(--text-dim)">'+name+'</div><div style="flex:1;height:8px;background:var(--bar-track);border-radius:4px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+col+';border-radius:4px;transition:width 0.8s"></div></div><div style="width:50px;text-align:right;font-family:Playfair Display,serif;font-size:14px;font-weight:900;color:'+col+'">'+pct+'%</div></div>';
+    }else{
+      dimsEl.innerHTML+='<div style="display:flex;align-items:center;gap:12px;opacity:0.5"><div style="width:240px;font-size:12px;color:var(--text-dim)">'+name+'</div><div style="flex:1;height:8px;background:var(--bar-track);border-radius:4px;overflow:hidden;border:1px dashed var(--border)"></div><div style="width:90px;text-align:right;font-size:10px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px">folgt</div></div>';
+    }
+  });
+}
+
+
+// ===== VERTIEFENDE RÜCKFRAGEN + NOTIZEN =====
+(function(){
+var VT={
+0:["Welche 2\u20133 Kernprozesse sind am kritischsten?","Gibt es bereits SOPs oder Checklisten daf\u00fcr?"],
+1:["F\u00fcr welche Leistungen gibt es den Happy Path?","Wo entstehen die meisten Abweichungen?"],
+2:["Welche konkreten Tools/Systeme werden genutzt?","Wie lange dauert die Suche typischerweise?"],
+3:["Wer sind die Schl\u00fcsselpersonen?","Gibt es Vertretungsregelungen oder dokumentierte \u00dcbergaben?"],
+5:["Welche Systeme/Formate konkret?","Gibt es eine zentrale Datenquelle oder sind die Daten verteilt?"],
+6:["Wann wurde zuletzt eine Datenbereinigung durchgef\u00fchrt?","Wer pflegt die Daten operativ?"],
+7:["Wie viele verschiedene Systeme sind im Einsatz?","Gibt es ein f\u00fchrendes System?"],
+8:["Welche Informationen werden am h\u00e4ufigsten gesucht?","Gesch\u00e4tzte Stunden pro Woche, die f\u00fcr Suche verloren gehen?"],
+10:["Welche konkreten Compliance-Vorgaben gelten? (DSGVO, branchenspezifisch)","Ist Cloud-Hosting grunds\u00e4tzlich m\u00f6glich oder ausgeschlossen?"]
+};
+var PH={
+0:"Notizen zu dokumentierten Prozessen...",
+1:"Notizen zu Standardabl\u00e4ufen...",
+2:"Notizen zu Wissensquellen...",
+3:"Namen der Schl\u00fcsselpersonen und Vertretung...",
+4:"Stichpunktartig Notizen aufschreiben",
+5:"Notizen zu Datenformaten und Systemen...",
+6:"Notizen zur Datenqualit\u00e4t...",
+7:"Notizen zu Systemlandschaft...",
+8:"Notizen zum Suchaufwand...",
+9:"Notizen zu Datenvertrauen und KPI-Prüfung...",
+10:"Notizen zu Compliance und Einschr\u00e4nkungen..."
+};
+for(var i=0;i<11;i++){
+  var qEl=document.querySelector('.quiz-q[data-qidx="'+i+'"]');
+  if(!qEl)continue;
+  var html='';
+  if(VT[i]&&VT[i].length>0){
+    html+='<div class="quiz-vertiefung"><div class="qv-label">Vertiefende R\u00fcckfragen</div><ol>';
+    VT[i].forEach(function(v){html+='<li>'+v+'</li>'});
+    html+='</ol></div>';
+  }
+  html+='<div class="quiz-notes"><div class="qn-label">Notizen</div><textarea placeholder="'+(PH[i]||'Notizen...')+'"></textarea></div>';
+  qEl.insertAdjacentHTML('beforeend',html);
+}
+})();
+
+</script>
+</body>
+</html>
+
