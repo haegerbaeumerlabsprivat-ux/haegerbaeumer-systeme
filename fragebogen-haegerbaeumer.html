@@ -224,34 +224,34 @@
 
     <div class="section-label">Kontaktdaten</div>
     <div class="grid-2">
-      <div class="field"><label>Firmenname <span class="req">*</span></label><input type="text" placeholder="Musterfirma GmbH"></div>
-      <div class="field"><label>Ansprechpartner <span class="req">*</span></label><input type="text" placeholder="Vorname und Nachname"></div>
+      <div class="field"><label>Firmenname <span class="req">*</span></label><input id="f-firmenname" type="text" placeholder="Musterfirma GmbH"></div>
+      <div class="field"><label>Ansprechpartner <span class="req">*</span></label><input id="f-ansprechpartner" type="text" placeholder="Vorname und Nachname"></div>
     </div>
     <div class="grid-2">
-      <div class="field"><label>E-Mail-Adresse <span class="req">*</span></label><input type="email" placeholder="max@musterfirma.de"></div>
-      <div class="field"><label>WhatsApp-Nummer</label><input type="tel" placeholder="+49 170 1234567"></div>
+      <div class="field"><label>E-Mail-Adresse <span class="req">*</span></label><input id="f-email" type="email" placeholder="max@musterfirma.de"></div>
+      <div class="field"><label>WhatsApp-Nummer</label><input id="f-whatsapp" type="tel" placeholder="+49 170 1234567"></div>
     </div>
     <div class="field">
       <label>Weitere Ansprechpartner</label>
       <div class="hint">Optional — falls weitere Personen teilnehmen</div>
-      <input type="text" placeholder="Name, E-Mail">
+      <input id="f-weitere" type="text" placeholder="Name, E-Mail">
     </div>
 
     <div class="section-label">Unternehmensprofil</div>
     <div class="field">
       <label>Unternehmensgröße (FTE)</label>
       <div class="hint">Inkl. GF und Founder</div>
-      <input type="text" placeholder="z.B. 45">
+      <input id="f-fte" type="text" placeholder="z.B. 45">
     </div>
     <div class="field">
       <label>Wie viele Aufträge habt ihr ungefähr pro Jahr? Wie viel davon sind Neukunden, wie viel Bestandskunden?</label>
       <div class="grid-2" style="margin-top:8px;">
-        <div><div class="hint">Aufträge gesamt / Jahr</div><input type="text" placeholder="z.B. 120"></div>
-        <div><div class="hint">davon Neukunden / Bestandskunden</div><input type="text" placeholder="z.B. 40 Neu / 80 Bestand"></div>
+        <div><div class="hint">Aufträge gesamt / Jahr</div><input id="f-auftraege-gesamt" type="text" placeholder="z.B. 120"></div>
+        <div><div class="hint">davon Neukunden / Bestandskunden</div><input id="f-auftraege-split" type="text" placeholder="z.B. 40 Neu / 80 Bestand"></div>
       </div>
     </div>
-    <div class="field"><label>Was ist euer durchschnittlicher Kundenwert pro Jahr?</label><input type="text" placeholder="z.B. 8.000€ pro Jahr"></div>
-    <div class="field"><label>Wie hoch ist euer durchschnittlicher Deckungsbeitrag in Prozent?</label><input type="text" placeholder="z.B. 35%"></div>
+    <div class="field"><label>Was ist euer durchschnittlicher Kundenwert pro Jahr?</label><input id="f-kundenwert" type="text" placeholder="z.B. 8.000€ pro Jahr"></div>
+    <div class="field"><label>Wie hoch ist euer durchschnittlicher Deckungsbeitrag in Prozent?</label><input id="f-deckungsbeitrag" type="text" placeholder="z.B. 35%"></div>
 
     <div class="nav-bar"><div></div><button class="btn-next" onclick="goTo(2)">Weiter →</button></div>
   </div>
@@ -263,9 +263,9 @@
       <div><div class="page-title">Wettbewerb und Marktbegleiter</div><div class="page-subtitle">Wie positioniert ihr euch im Markt?</div></div>
     </div>
 
-    <div class="field"><label>Wer sind eure 2–3 größten Wettbewerber? Und warum?</label><textarea placeholder="z.B. Firma A – weil ähnliches Leistungsspektrum und gleiche Zielgruppe..."></textarea></div>
-    <div class="field"><label>Wo seid ihr jetzt aber gerade im Verhältnis zu einem Wettbewerb absolute Vorreiter? Warum?</label><textarea placeholder="In welchen Bereichen seid ihr führend und warum?"></textarea></div>
-    <div class="field"><label>Wo sind euch eure Marktbegleiter voraus? Warum?</label><textarea placeholder="In welchen Bereichen haben eure Wettbewerber die Nase vorn?"></textarea></div>
+    <div class="field"><label>Wer sind eure 2–3 größten Wettbewerber? Und warum?</label><textarea id="f-wettbewerber" placeholder="z.B. Firma A – weil ähnliches Leistungsspektrum und gleiche Zielgruppe..."></textarea></div>
+    <div class="field"><label>Wo seid ihr jetzt aber gerade im Verhältnis zu einem Wettbewerb absolute Vorreiter? Warum?</label><textarea id="f-vorreiter" placeholder="In welchen Bereichen seid ihr führend und warum?"></textarea></div>
+    <div class="field"><label>Wo sind euch eure Marktbegleiter voraus? Warum?</label><textarea id="f-rueckstand" placeholder="In welchen Bereichen haben eure Wettbewerber die Nase vorn?"></textarea></div>
 
     <div class="nav-bar"><button class="btn-back" onclick="goTo(1)">← Zurück</button><button class="btn-next" onclick="goTo(3)">Weiter →</button></div>
   </div>
@@ -279,17 +279,17 @@
 
     <div class="field">
       <label>Welche Abteilung hat die höchste Priorität? <span class="req">*</span></label>
-      <input type="text" placeholder="z.B. Vertrieb, Buchhaltung, Produktion...">
+      <input id="f-prioritaet" type="text" placeholder="z.B. Vertrieb, Buchhaltung, Produktion...">
     </div>
     <div class="field">
       <label>Wie viele definierte Prozesse gibt es in dieser Abteilung?</label>
       <div class="hint">z.B. Onboarding-Prozess, Erstellung von Angeboten, Anlage neuer Lieferanten usw.</div>
-      <input type="number" placeholder="z.B. 8" min="0">
+      <input id="f-prozesse" type="number" placeholder="z.B. 8" min="0">
     </div>
     <div class="field">
       <label>Welche Plattformen sind in dieser Abteilung im Einsatz?</label>
       <div class="hint">z.B. ERP, CRM, Projektmanagement-Tools, spezifische Branchensoftware</div>
-      <textarea placeholder="z.B. SAP (ERP), Salesforce (CRM), Monday.com (Projektmanagement)..."></textarea>
+      <textarea id="f-plattformen" placeholder="z.B. SAP (ERP), Salesforce (CRM), Monday.com (Projektmanagement)..."></textarea>
     </div>
     <div class="field">
       <label>Wie viele strukturell verschiedene Dokumenten-Arten gibt es in dieser Abteilung?</label>
@@ -302,14 +302,14 @@
         • Angebotsvorlage intern + Auftragsbestätigung = <strong>2 Dokumenten-Arten</strong><br><br>
         <span class="hint-tip">💡 Typischer Bereich: 5 bis 25 Dokumenten-Arten pro Abteilung.</span>
       </div>
-      <input type="number" placeholder="z.B. 12" min="0">
+      <input id="f-dokumentenarten" type="number" placeholder="z.B. 12" min="0">
     </div>
 
     <div class="section-label">Dein KI-Vorhaben</div>
     <div class="field">
       <label>Prozess Walk-Through</label>
       <div class="hint">Bitte benenne den Prozess und erkläre ihn Schritt für Schritt — vom Auslöser bis zum Endergebnis.</div>
-      <textarea style="min-height:160px;" placeholder="Prozessname: z.B. &quot;Angebotserstellung&quot;&#10;&#10;Schritt 1: Kundenanfrage geht per E-Mail ein&#10;Schritt 2: Vertriebsmitarbeiter prüft Anfrage manuell&#10;Schritt 3: ..."></textarea>
+      <textarea id="f-walkthrough" style="min-height:160px;" placeholder="Prozessname: z.B. &quot;Angebotserstellung&quot;&#10;&#10;Schritt 1: Kundenanfrage geht per E-Mail ein&#10;Schritt 2: Vertriebsmitarbeiter prüft Anfrage manuell&#10;Schritt 3: ..."></textarea>
     </div>
 
     <div class="nav-bar"><button class="btn-back" onclick="goTo(2)">← Zurück</button><button class="btn-next" onclick="goTo(4)">Weiter →</button></div>
@@ -557,6 +557,9 @@
 
     </div><!-- /acc-org -->
 
+    <div id="send-error" style="display:none;margin-top:12px;padding:12px 16px;background:rgba(220,53,69,0.15);border:1.5px solid rgba(220,53,69,0.4);border-radius:8px;color:#ff6b6b;font-size:0.88rem;">
+      ⚠ Beim Senden ist ein Fehler aufgetreten. Bitte prüfe deine Internetverbindung und versuche es erneut.
+    </div>
     <div class="nav-bar"><button class="btn-back" onclick="goTo(4)">← Zurück</button><button class="btn-next" onclick="submitForm()">Fragebogen absenden ✓</button></div>
   </div>
 
@@ -623,11 +626,82 @@
     if (el) el.parentElement.remove();
   }
 
-  function submitForm() {
-    document.getElementById('page-5').classList.remove('active');
-    document.getElementById('success').classList.add('active');
-    document.querySelector('.stepper-wrap').style.display = 'none';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  async function submitForm() {
+    const WEBHOOK_URL = 'https://nicklaurin.app.n8n.cloud/webhook/fragebogen-eingang';
+
+    // Infrastruktur-Antworten auslesen
+    function getAccAnswer(id) {
+      const sel = document.querySelector('[data-acc="' + id + '"] .acc-opt.selected .acc-opt-text');
+      return sel ? sel.textContent.trim() : '';
+    }
+    function getAccNotes(id) {
+      const ta = document.querySelector('[data-acc="' + id + '"] .acc-notes');
+      return ta ? ta.value.trim() : '';
+    }
+
+    // Tools-Liste zusammenbauen
+    const toolRows = document.querySelectorAll('#tools-list .tool-row');
+    let toolsText = '';
+    toolRows.forEach(row => {
+      const inputs = row.querySelectorAll('input');
+      if (inputs[0] && inputs[0].value.trim()) {
+        toolsText += inputs[0].value.trim() + ' — API: ' + (inputs[1] ? inputs[1].value.trim() : '') + '\n';
+      }
+    });
+
+    const payload = {
+      firmenname:              document.getElementById('f-firmenname')?.value?.trim() || '',
+      ansprechpartner:         document.getElementById('f-ansprechpartner')?.value?.trim() || '',
+      email:                   document.getElementById('f-email')?.value?.trim() || '',
+      whatsapp:                document.getElementById('f-whatsapp')?.value?.trim() || '',
+      weitere_ansprechpartner: document.getElementById('f-weitere')?.value?.trim() || '',
+      unternehmensgroesse:     document.getElementById('f-fte')?.value?.trim() || '',
+      auftraege_gesamt:        document.getElementById('f-auftraege-gesamt')?.value?.trim() || '',
+      auftraege_neu_bestand:   document.getElementById('f-auftraege-split')?.value?.trim() || '',
+      kundenwert:              document.getElementById('f-kundenwert')?.value?.trim() || '',
+      deckungsbeitrag:         document.getElementById('f-deckungsbeitrag')?.value?.trim() || '',
+      wettbewerber:            document.getElementById('f-wettbewerber')?.value?.trim() || '',
+      vorreiter:               document.getElementById('f-vorreiter')?.value?.trim() || '',
+      rueckstand:              document.getElementById('f-rueckstand')?.value?.trim() || '',
+      prioritaet_abteilung:    document.getElementById('f-prioritaet')?.value?.trim() || '',
+      prozesse_anzahl:         document.getElementById('f-prozesse')?.value?.trim() || '',
+      plattformen:             document.getElementById('f-plattformen')?.value?.trim() || '',
+      dokumentenarten:         document.getElementById('f-dokumentenarten')?.value?.trim() || '',
+      prozess_walkthrough:     document.getElementById('f-walkthrough')?.value?.trim() || '',
+      tools_liste:             toolsText,
+      infra_i1: getAccAnswer('i1'), infra_i1_notizen: getAccNotes('i1'),
+      infra_i2: getAccAnswer('i2'), infra_i2_notizen: getAccNotes('i2'),
+      infra_i3: getAccAnswer('i3'), infra_i3_notizen: getAccNotes('i3'),
+      infra_i4: getAccAnswer('i4'), infra_i4_notizen: getAccNotes('i4'),
+      infra_i5: getAccAnswer('i5'), infra_i5_notizen: getAccNotes('i5'),
+      infra_i6: getAccAnswer('i6'), infra_i6_notizen: getAccNotes('i6'),
+      org_o1: getAccAnswer('o1'), org_o1_notizen: getAccNotes('o1'),
+      org_o2: getAccAnswer('o2'), org_o2_notizen: getAccNotes('o2'),
+      org_o3: getAccAnswer('o3'), org_o3_notizen: getAccNotes('o3')
+    };
+
+    const btn = document.querySelector('#page-5 .btn-next');
+    btn.disabled = true;
+    btn.textContent = 'Wird gesendet …';
+
+    try {
+      const res = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      document.getElementById('page-5').classList.remove('active');
+      document.getElementById('success').classList.add('active');
+      document.querySelector('.stepper-wrap').style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Fragebogen absenden ✓';
+      const errDiv = document.getElementById('send-error');
+      if (errDiv) errDiv.style.display = 'block';
+      console.error(err);
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => { addToolRow(); addToolRow(); });
