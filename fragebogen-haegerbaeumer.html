@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Ready Check · Hägerbäumer Systeme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #E8540A;
+    --gold-light: #ff7a3d;
+    --gold-dark: #c94800;
+    --cream: #F4EFE4;
+    --cream-dark: #EDE6D6;
+    --text: #1a1a1a;
+    --text-muted: #6b6453;
+    --border: #d8ceb8;
+    --white: #ffffff;
+    --input-bg: #ffffff;
+    --hint-bg: #fdf6e8;
+    --opt-hover-bg: #fdf8f0;
+    --radius: 10px;
+    --shadow: 0 2px 16px rgba(0,0,0,0.07);
+  }
+  body.dark {
+    --gold: #E8540A;
+    --gold-light: #ff7a3d;
+    --gold-dark: #c94800;
+    --cream: #14141d;
+    --cream-dark: #1c1c28;
+    --text: #e8e8f0;
+    --text-muted: #9a9aad;
+    --border: rgba(232, 201, 106, 0.18);
+    --white: #1c1c28;
+    --input-bg: #20202d;
+    --hint-bg: rgba(232, 201, 106, 0.08);
+    --opt-hover-bg: rgba(232, 201, 106, 0.06);
+    --shadow: 0 2px 16px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; transition: background 0.3s ease, color 0.3s ease; }
+
+  /* THEME TOGGLE */
+  .theme-toggle {
+    position: fixed;
+    top: 20px; right: 20px;
+    z-index: 100;
+    display: flex;
+    gap: 4px;
+    background: var(--cream-dark);
+    border: 1.5px solid var(--border);
+    border-radius: 99px;
+    padding: 4px;
+    box-shadow: var(--shadow);
+  }
+  .theme-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+  }
+  .theme-btn:hover { color: var(--text); }
+  .theme-btn.active { background: var(--gold); color: #fff; }
+  body.dark .theme-btn.active { color: #14141d; }
+
+  /* Themed Hint Box (Dokumenten-Arten Erklärung etc.) */
+  .hint-box {
+    background: var(--hint-bg);
+    border: 1.5px solid var(--gold-light);
+    border-radius: 8px;
+    padding: 13px 15px;
+    margin-bottom: 10px;
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+  .hint-box strong { color: var(--text); }
+  .hint-box em { color: var(--text); }
+  .hint-tip { color: var(--gold-dark); }
+  body.dark .hint-tip { color: var(--gold-light); }
+  body.dark .field input::placeholder,
+  body.dark .field textarea::placeholder,
+  body.dark .tool-row input::placeholder,
+  body.dark .acc-notes::placeholder { color: rgba(154, 154, 173, 0.55); }
+
+  /* LOGO PLACEHOLDER */
+  .logo-placeholder {
+    display: inline-block;
+    padding: 18px 32px;
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+
+  /* HEADER */
+  .header { background: var(--cream); text-align: center; padding: 44px 24px 32px; border-bottom: 1px solid var(--border); }
+  .logo { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 900; letter-spacing: 0.06em; color: var(--text); line-height: 1; }
+  .badge { display: inline-block; margin: 14px 0 20px; padding: 5px 18px; border: 1.5px solid var(--gold); border-radius: 99px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase; }
+  .header-title { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 400; }
+  .header-title span { color: var(--gold); font-weight: 600; }
+  .header-subtitle { margin-top: 8px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
+
+  /* STEPPER */
+  .stepper-wrap { background: var(--cream); padding: 24px 16px 0; overflow-x: auto; border-bottom: 1px solid var(--border); }
+  .stepper { display: flex; justify-content: center; min-width: 400px; max-width: 640px; margin: 0 auto; }
+  .step { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; padding-bottom: 16px; }
+  .step:not(:last-child)::after { content: ''; position: absolute; top: 17px; left: calc(50% + 18px); right: calc(-50% + 18px); height: 2px; background: var(--border); z-index: 0; }
+  .step.done:not(:last-child)::after { background: var(--gold); }
+  .step-num { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); background: var(--cream); position: relative; z-index: 1; transition: all 0.3s; }
+  .step.done .step-num { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .step.active .step-num { border-color: var(--gold); color: var(--gold); border-width: 2.5px; }
+  .step-label { margin-top: 6px; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .step.active .step-label { color: var(--gold); }
+  .step.done .step-label { color: var(--gold-dark); }
+
+  /* LAYOUT */
+  .container { max-width: 680px; margin: 0 auto; padding: 32px 16px 60px; }
+  .page { display: none; }
+  .page.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  /* PAGE HEADER */
+  .page-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+  .page-icon { width: 54px; height: 54px; border-radius: 14px; background: var(--cream-dark); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0; border: 1.5px solid var(--border); }
+  .page-title { font-size: 1.5rem; font-weight: 700; }
+  .page-subtitle { color: var(--text-muted); font-size: 0.9rem; margin-top: 2px; }
+
+  /* SECTION LABEL */
+  .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin: 28px 0 16px; padding-bottom: 6px; border-bottom: 1.5px solid var(--gold-light); }
+
+  /* FIELDS */
+  .field { margin-bottom: 20px; }
+  .field label { display: block; font-size: 0.93rem; font-weight: 600; margin-bottom: 6px; }
+  .field .hint { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 400; line-height: 1.4; }
+  .field input[type="text"], .field input[type="email"], .field input[type="tel"],
+  .field input[type="number"], .field input[type="url"], .field textarea, .field select {
+    width: 100%; background: var(--input-bg); border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 11px 14px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.93rem; color: var(--text); transition: border-color 0.2s; outline: none; appearance: none;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(232,84,10,0.12); }
+  .field textarea { resize: vertical; min-height: 100px; }
+  .field input::placeholder, .field textarea::placeholder { color: #b0a48a; }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 480px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* RADIO */
+  .radio-btn { display: flex; align-items: center; gap: 8px; padding: 9px 16px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--white); cursor: pointer; font-size: 0.9rem; transition: border-color 0.2s, background 0.2s; user-select: none; }
+  .radio-btn:hover { border-color: var(--gold); }
+  .radio-btn input { display: none; }
+  .radio-btn.selected { border-color: var(--gold); background: var(--hint-bg); }
+  .radio-dot { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s; }
+  .radio-btn.selected .radio-dot { border-color: var(--gold); background: var(--gold); }
+  .radio-btn.selected .radio-dot::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #fff; }
+
+  /* NAV */
+  .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 36px; gap: 12px; }
+  .btn-back { padding: 12px 24px; border: 1.5px solid var(--border); border-radius: 8px; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 0.93rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+  .btn-back:hover { border-color: var(--text-muted); color: var(--text); }
+  .btn-next { padding: 13px 32px; border: none; border-radius: 8px; background: var(--gold); font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 700; color: #fff; cursor: pointer; transition: background 0.2s, transform 0.15s; box-shadow: 0 3px 12px rgba(232,84,10,0.35); }
+  .btn-next:hover { background: var(--gold-dark); transform: translateY(-1px); }
+
+  /* TOOL ROWS */
+  .tool-header-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; margin-bottom: 4px; }
+  .tool-col-label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.04em; }
+  .tool-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: start; margin-bottom: 10px; }
+  .tool-row input { width: 100%; background: var(--input-bg); border: 1.5px solid var(--border); border-radius: 8px; padding: 11px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.93rem; color: var(--text); outline: none; transition: border-color 0.2s; }
+  .tool-row input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(232,84,10,0.12); }
+  .tool-row input::placeholder { color: #b0a48a; }
+  .btn-remove { width: 36px; height: 36px; border: 1.5px solid var(--border); border-radius: 8px; background: transparent; color: var(--text-muted); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s, color 0.2s; flex-shrink: 0; }
+  .btn-remove:hover { border-color: #c0392b; color: #c0392b; }
+  .btn-add { display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; padding: 9px 18px; border: 1.5px dashed var(--gold); border-radius: 8px; background: transparent; color: var(--gold); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .btn-add:hover { background: var(--hint-bg); }
+
+  /* ACCORDION */
+  .acc-item { border: 1.5px solid var(--border); border-radius: var(--radius); background: var(--white); margin-bottom: 8px; overflow: hidden; }
+  .acc-item.open { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(232,84,10,0.10); }
+  .acc-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 16px 18px; cursor: pointer; user-select: none; transition: background 0.15s; }
+  .acc-header:hover, .acc-item.open .acc-header { background: var(--opt-hover-bg); }
+  .acc-header-left { flex: 1; }
+  .acc-num { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 3px; }
+  .acc-question { font-size: 0.93rem; font-weight: 600; line-height: 1.4; }
+  .acc-sublabel { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; line-height: 1.35; }
+  .acc-preview { font-size: 0.78rem; color: var(--gold-dark); font-weight: 600; margin-top: 5px; }
+  .acc-chevron { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--text-muted); transition: transform 0.25s, border-color 0.2s, color 0.2s; margin-top: 2px; }
+  .acc-item.open .acc-chevron { transform: rotate(180deg); border-color: var(--gold); color: var(--gold); }
+  .acc-body { display: none; padding: 0 18px 18px; border-top: 1px solid var(--border); }
+  .acc-item.open .acc-body { display: block; }
+  .acc-options { display: flex; flex-direction: column; gap: 8px; margin: 14px 0 16px; }
+  .acc-opt { display: flex; align-items: flex-start; gap: 12px; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--white); cursor: pointer; transition: border-color 0.2s, background 0.2s; user-select: none; }
+  .acc-opt:hover { border-color: var(--gold); background: var(--opt-hover-bg); }
+  .acc-opt.selected { border-color: var(--gold); background: var(--hint-bg); }
+  .acc-opt input { display: none; }
+  .acc-rdot { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; transition: border-color 0.2s, background 0.2s; }
+  .acc-opt.selected .acc-rdot { border-color: var(--gold); background: var(--gold); }
+  .acc-opt.selected .acc-rdot::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #fff; }
+  .acc-opt-text { font-size: 0.9rem; line-height: 1.4; }
+  .acc-notes-lbl { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+  .acc-notes { width: 100%; background: var(--cream); border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 13px; font-family: 'DM Sans', sans-serif; font-size: 0.87rem; color: var(--text); resize: vertical; min-height: 72px; outline: none; transition: border-color 0.2s; }
+  .acc-notes:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(232,84,10,0.10); }
+  .acc-notes::placeholder { color: #b0a48a; }
+  .acc-hint { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5; padding-top: 2px; }
+
+  /* FOOTER & SUCCESS */
+  .footer { text-align: center; padding: 24px; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border); }
+  .success-page { display: none; text-align: center; padding: 60px 24px; }
+  .success-page.active { display: block; animation: fadeIn 0.5s ease; }
+  .success-icon { font-size: 3.5rem; margin-bottom: 20px; }
+  .success-title { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 12px; }
+  .success-text { color: var(--text-muted); font-size: 1rem; line-height: 1.6; }
+  .req { color: var(--gold); margin-left: 2px; }
+</style>
+</head>
+<body>
+
+<div class="theme-toggle">
+  <button class="theme-btn active" data-theme="light" title="Heller Modus" aria-label="Heller Modus">☀</button>
+  <button class="theme-btn" data-theme="dark" title="Dunkler Modus" aria-label="Dunkler Modus">☾</button>
+</div>
+
+<div class="header">
+  <div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:4px">
+    <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Triangle sides: thick rounded lines -->
+      <line x1="50" y1="18" x2="12" y2="82" stroke="#f0ede8" stroke-width="11" stroke-linecap="round"/>
+      <line x1="50" y1="18" x2="88" y2="82" stroke="#f0ede8" stroke-width="11" stroke-linecap="round"/>
+      <line x1="12" y1="82" x2="88" y2="82" stroke="#f0ede8" stroke-width="11" stroke-linecap="round"/>
+      <!-- Orange dot at top -->
+      <circle cx="50" cy="18" r="11" fill="#E8540A"/>
+      <!-- White dots at bottom corners -->
+      <circle cx="12" cy="82" r="9" fill="#f0ede8"/>
+      <circle cx="88" cy="82" r="9" fill="#f0ede8"/>
+    </svg>
+    <span style="color:var(--text);font-family:'DM Sans',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:-0.3px">Hägerbäumer<span style="color:#E8540A"> Systeme</span></span>
+  </div>
+  <div class="badge">+ AI-READY CHECK</div>
+  <div class="header-title">AI-Ready Check <span>Fragebogen</span></div>
+  <p class="header-subtitle">Bitte fülle diesen Fragebogen nach deinem AI-Ready Check Call aus.<br>Dauer: ca. 15 Minuten.</p>
+</div>
+
+<div class="stepper-wrap">
+  <div class="stepper" id="stepper">
+    <div class="step active" data-step="1"><div class="step-num">1</div><div class="step-label">Unternehmen</div></div>
+    <div class="step" data-step="2"><div class="step-num">2</div><div class="step-label">Wettbewerb</div></div>
+    <div class="step" data-step="3"><div class="step-num">3</div><div class="step-label">Use Cases</div></div>
+    <div class="step" data-step="4"><div class="step-num">4</div><div class="step-label">Infrastruktur</div></div>
+    <div class="step" data-step="5"><div class="step-num">5</div><div class="step-label">Organisation</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ── PAGE 1: UNTERNEHMEN ── -->
+  <div class="page active" id="page-1">
+    <div class="page-header">
+      <div class="page-icon">🏢</div>
+      <div><div class="page-title">Unternehmensprofil</div><div class="page-subtitle">Kontakt und Basisdaten zu eurem Unternehmen</div></div>
+    </div>
+
+    <div class="section-label">Kontaktdaten</div>
+    <div class="grid-2">
+      <div class="field"><label>Firmenname <span class="req">*</span></label><input type="text" placeholder="Musterfirma GmbH"></div>
+      <div class="field"><label>Ansprechpartner <span class="req">*</span></label><input type="text" placeholder="Vorname und Nachname"></div>
+    </div>
+    <div class="grid-2">
+      <div class="field"><label>E-Mail-Adresse <span class="req">*</span></label><input type="email" placeholder="max@musterfirma.de"></div>
+      <div class="field"><label>WhatsApp-Nummer</label><input type="tel" placeholder="+49 170 1234567"></div>
+    </div>
+    <div class="field">
+      <label>Weitere Ansprechpartner</label>
+      <div class="hint">Optional — falls weitere Personen teilnehmen</div>
+      <input type="text" placeholder="Name, E-Mail">
+    </div>
+
+    <div class="section-label">Unternehmensprofil</div>
+    <div class="field">
+      <label>Unternehmensgröße (FTE)</label>
+      <div class="hint">Inkl. GF und Founder</div>
+      <input type="text" placeholder="z.B. 45">
+    </div>
+    <div class="field">
+      <label>Wie viele Aufträge habt ihr ungefähr pro Jahr? Wie viel davon sind Neukunden, wie viel Bestandskunden?</label>
+      <div class="grid-2" style="margin-top:8px;">
+        <div><div class="hint">Aufträge gesamt / Jahr</div><input type="text" placeholder="z.B. 120"></div>
+        <div><div class="hint">davon Neukunden / Bestandskunden</div><input type="text" placeholder="z.B. 40 Neu / 80 Bestand"></div>
+      </div>
+    </div>
+    <div class="field"><label>Was ist euer durchschnittlicher Kundenwert pro Jahr?</label><input type="text" placeholder="z.B. 8.000€ pro Jahr"></div>
+    <div class="field"><label>Wie hoch ist euer durchschnittlicher Deckungsbeitrag in Prozent?</label><input type="text" placeholder="z.B. 35%"></div>
+
+    <div class="nav-bar"><div></div><button class="btn-next" onclick="goTo(2)">Weiter →</button></div>
+  </div>
+
+  <!-- ── PAGE 2: WETTBEWERB ── -->
+  <div class="page" id="page-2">
+    <div class="page-header">
+      <div class="page-icon">🏆</div>
+      <div><div class="page-title">Wettbewerb und Marktbegleiter</div><div class="page-subtitle">Wie positioniert ihr euch im Markt?</div></div>
+    </div>
+
+    <div class="field"><label>Wer sind eure 2–3 größten Wettbewerber? Und warum?</label><textarea placeholder="z.B. Firma A – weil ähnliches Leistungsspektrum und gleiche Zielgruppe..."></textarea></div>
+    <div class="field"><label>Wo seid ihr jetzt aber gerade im Verhältnis zu einem Wettbewerb absolute Vorreiter? Warum?</label><textarea placeholder="In welchen Bereichen seid ihr führend und warum?"></textarea></div>
+    <div class="field"><label>Wo sind euch eure Marktbegleiter voraus? Warum?</label><textarea placeholder="In welchen Bereichen haben eure Wettbewerber die Nase vorn?"></textarea></div>
+
+    <div class="nav-bar"><button class="btn-back" onclick="goTo(1)">← Zurück</button><button class="btn-next" onclick="goTo(3)">Weiter →</button></div>
+  </div>
+
+  <!-- ── PAGE 3: USE CASES ── -->
+  <div class="page" id="page-3">
+    <div class="page-header">
+      <div class="page-icon">🎯</div>
+      <div><div class="page-title">Use Cases &amp; KI-Vorhaben</div><div class="page-subtitle">Die wichtigste Abteilung und der konkrete Prozess</div></div>
+    </div>
+
+    <div class="field">
+      <label>Welche Abteilung hat die höchste Priorität? <span class="req">*</span></label>
+      <input type="text" placeholder="z.B. Vertrieb, Buchhaltung, Produktion...">
+    </div>
+    <div class="field">
+      <label>Wie viele definierte Prozesse gibt es in dieser Abteilung?</label>
+      <div class="hint">z.B. Onboarding-Prozess, Erstellung von Angeboten, Anlage neuer Lieferanten usw.</div>
+      <input type="number" placeholder="z.B. 8" min="0">
+    </div>
+    <div class="field">
+      <label>Welche Plattformen sind in dieser Abteilung im Einsatz?</label>
+      <div class="hint">z.B. ERP, CRM, Projektmanagement-Tools, spezifische Branchensoftware</div>
+      <textarea placeholder="z.B. SAP (ERP), Salesforce (CRM), Monday.com (Projektmanagement)..."></textarea>
+    </div>
+    <div class="field">
+      <label>Wie viele strukturell verschiedene Dokumenten-Arten gibt es in dieser Abteilung?</label>
+      <div class="hint hint-box">
+        <strong>Eine Dokumenten-Art = ein einzigartiger Aufbau.</strong> Nicht die Anzahl der Dokumente zählt, sondern wie viele <em>strukturell verschiedene</em> Formate oder Layouts existieren, denn jede neue Struktur bedeutet für eine KI eine neue Lernaufgabe und bestimmt, wie komplex die Umsetzung wird.<br><br>
+        <strong>So zählst du:</strong> Geh den Prozess gedanklich durch: Welche Dokumente kommen rein, werden intern erstellt oder gehen raus? Für jedes mit eigenem Aufbau: +1.<br><br>
+        <strong>Beispiele:</strong><br>
+        • 200 Rechnungen im gleichen Layout = <strong>1 Dokumenten-Art</strong><br>
+        • Leistungsverzeichnisse von 5 verschiedenen Auftraggebern = <strong>5 Dokumenten-Arten</strong><br>
+        • Angebotsvorlage intern + Auftragsbestätigung = <strong>2 Dokumenten-Arten</strong><br><br>
+        <span class="hint-tip">💡 Typischer Bereich: 5 bis 25 Dokumenten-Arten pro Abteilung.</span>
+      </div>
+      <input type="number" placeholder="z.B. 12" min="0">
+    </div>
+
+    <div class="section-label">Dein KI-Vorhaben</div>
+    <div class="field">
+      <label>Prozess Walk-Through</label>
+      <div class="hint">Bitte benenne den Prozess und erkläre ihn Schritt für Schritt — vom Auslöser bis zum Endergebnis.</div>
+      <textarea style="min-height:160px;" placeholder="Prozessname: z.B. &quot;Angebotserstellung&quot;&#10;&#10;Schritt 1: Kundenanfrage geht per E-Mail ein&#10;Schritt 2: Vertriebsmitarbeiter prüft Anfrage manuell&#10;Schritt 3: ..."></textarea>
+    </div>
+
+    <div class="nav-bar"><button class="btn-back" onclick="goTo(2)">← Zurück</button><button class="btn-next" onclick="goTo(4)">Weiter →</button></div>
+  </div>
+
+  <!-- ── PAGE 4: INFRASTRUKTUR ── -->
+  <div class="page" id="page-4">
+    <div class="page-header">
+      <div class="page-icon">🔧</div>
+      <div><div class="page-title">Technische Infrastruktur</div><div class="page-subtitle">Software-Landschaft, Systeme und technische Reife</div></div>
+    </div>
+
+    <div class="field">
+      <label>Welche Tools / Software sind im Unternehmen im Einsatz?</label>
+      <div class="hint">Trage alle relevanten Tools ein und gib jeweils an, ob eine API-Schnittstelle vorhanden ist.</div>
+      <div class="tool-header-row">
+        <div class="tool-col-label">Tool / Software</div>
+        <div class="tool-col-label">API-Schnittstelle vorhanden?</div>
+        <div></div>
+      </div>
+      <div id="tools-list"></div>
+      <button type="button" class="btn-add" onclick="addToolRow()">
+        <span style="font-size:1.1em;font-weight:700;">+</span> Weiteres Tool hinzufügen
+      </button>
+    </div>
+
+    <div class="section-label">Technische Einschätzung</div>
+    <p class="acc-hint">Klicke auf eine Frage, um die Antwortoptionen einzublenden. Pro Frage ist genau eine Antwort wählbar.</p>
+
+    <div id="acc-infra">
+
+      <div class="acc-item" data-acc="i1">
+        <div class="acc-header" onclick="toggleAcc('i1','acc-infra')">
+          <div class="acc-header-left">
+            <div class="acc-num">Frage 1 von 6</div>
+            <div class="acc-question">Wie modern und anschlussfähig ist eure aktuelle Software-Landschaft?</div>
+            <div class="acc-sublabel">Veraltete Software, fehlende Updates oder starre On-Premise-Insellösungen bremsen Integrationen oft aus.</div>
+            <div class="acc-preview" id="prev-i1"></div>
+          </div>
+          <div class="acc-chevron">▾</div>
+        </div>
+        <div class="acc-body">
+          <div class="acc-options">
+            <label class="acc-opt" onclick="pickOpt(this,'i1')"><input type="radio" name="i1"><span class="acc-rdot"></span><span class="acc-opt-text">Stark veraltet – viele Legacy-Systeme oder individuelle Altlösungen ohne moderne Schnittstellen</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i1')"><input type="radio" name="i1"><span class="acc-rdot"></span><span class="acc-opt-text">Eher veraltet – moderne Tools existieren punktuell, die Kernlandschaft ist aber schwerfällig</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i1')"><input type="radio" name="i1"><span class="acc-rdot"></span><span class="acc-opt-text">Gemischt – moderne Cloud-Tools und ältere Systeme existieren nebeneinander</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i1')"><input type="radio" name="i1"><span class="acc-rdot"></span><span class="acc-opt-text">Modern – die Kernlandschaft ist aktuell, cloud- oder API-fähig und gut wartbar</span></label>
+          </div>
+          <div class="acc-notes-lbl">Notizen</div>
+          <textarea class="acc-notes" placeholder="Stichpunktartig Notizen aufschreiben …"></textarea>
+        </div>
+      </div>
+
+      <div class="acc-item" data-acc="i2">
+        <div class="acc-header" onclick="toggleAcc('i2','acc-infra')">
+          <div class="acc-header-left">
+            <div class="acc-num">Frage 2 von 6</div>
+            <div class="acc-question">Wie weit seid ihr heute bei der realen Nutzung von KI-Tools und ersten Erfahrungen?</div>
+            <div class="acc-sublabel">Gemeint ist: Nutzt ihr KI bereits aktiv — oder steckt ihr noch in der Orientierungsphase?</div>
+            <div class="acc-preview" id="prev-i2"></div>
+          </div>
+          <div class="acc-chevron">▾</div>
+        </div>
+        <div class="acc-body">
+          <div class="acc-options">
+            <label class="acc-opt" onclick="pickOpt(this,'i2')"><input type="radio" name="i2"><span class="acc-rdot"></span><span class="acc-opt-text">Noch am Anfang – es gibt bislang kaum praktische Nutzung oder Erfahrung</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i2')"><input type="radio" name="i2"><span class="acc-rdot"></span><span class="acc-opt-text">Erste Erfahrungen – einzelne Personen oder Teams testen KI punktuell</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i2')"><input type="radio" name="i2"><span class="acc-rdot"></span><span class="acc-opt-text">Solide Anfänge – mehrere Personen oder Bereiche nutzen KI bereits für konkrete Aufgaben</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i2')"><input type="radio" name="i2"><span class="acc-rdot"></span><span class="acc-opt-text">Etabliert – es gibt praktische Anwendungserfahrung, wiederkehrende Nutzung oder klare interne Standards</span></label>
+          </div>
+          <div class="acc-notes-lbl">Notizen</div>
+          <textarea class="acc-notes" placeholder="Stichpunktartig Notizen aufschreiben …"></textarea>
+        </div>
+      </div>
+
+      <div class="acc-item" data-acc="i3">
+        <div class="acc-header" onclick="toggleAcc('i3','acc-infra')">
+          <div class="acc-header-left">
+            <div class="acc-num">Frage 3 von 6</div>
+            <div class="acc-question">Wie konsequent nutzt ihr euer CRM, ERP oder andere führende Business-Systeme im Alltag?</div>
+            <div class="acc-sublabel">Die Existenz von Systemen allein reicht nicht — entscheidend ist, ob sie wirklich operativ genutzt werden.</div>
+            <div class="acc-preview" id="prev-i3"></div>
+          </div>
+          <div class="acc-chevron">▾</div>
+        </div>
+        <div class="acc-body">
+          <div class="acc-options">
+            <label class="acc-opt" onclick="pickOpt(this,'i3')"><input type="radio" name="i3"><span class="acc-rdot"></span><span class="acc-opt-text">Kaum – viele Kerndaten leben in Tabellen, Postfächern oder Schattenprozessen außerhalb der Systeme</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i3')"><input type="radio" name="i3"><span class="acc-rdot"></span><span class="acc-opt-text">Begrenzt – Systeme existieren, werden aber nicht konsequent gepflegt oder genutzt</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i3')"><input type="radio" name="i3"><span class="acc-rdot"></span><span class="acc-opt-text">Solide – Kerninformationen sind in führenden Systemen verankert</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i3')"><input type="radio" name="i3"><span class="acc-rdot"></span><span class="acc-opt-text">Sehr gut – führende Business-Systeme sind zentral, gepflegt und operativ verbindlich</span></label>
+          </div>
+          <div class="acc-notes-lbl">Notizen</div>
+          <textarea class="acc-notes" placeholder="Stichpunktartig Notizen aufschreiben …"></textarea>
+        </div>
+      </div>
+
+      <div class="acc-item" data-acc="i4">
+        <div class="acc-header" onclick="toggleAcc('i4','acc-infra')">
+          <div class="acc-header-left">
+            <div class="acc-num">Frage 4 von 6</div>
+            <div class="acc-question">Wie gut ist technische Verantwortung bei euch intern verankert?</div>
+            <div class="acc-sublabel">Gibt es jemanden, der technische Themen treiben kann — intern oder eng angebunden extern?</div>
+            <div class="acc-preview" id="prev-i4"></div>
+          </div>
+          <div class="acc-chevron">▾</div>
+        </div>
+        <div class="acc-body">
+          <div class="acc-options">
+            <label class="acc-opt" onclick="pickOpt(this,'i4')"><input type="radio" name="i4"><span class="acc-rdot"></span><span class="acc-opt-text">Schwach – Technik läuft nebenbei oder ausschließlich über schwer verfügbare Externe</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i4')"><input type="radio" name="i4"><span class="acc-rdot"></span><span class="acc-opt-text">Begrenzt – es gibt Ansprechpartner, aber kaum Kapazität oder wenig Systemtiefe</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i4')"><input type="radio" name="i4"><span class="acc-rdot"></span><span class="acc-opt-text">Solide – interne oder eng angebundene Verantwortliche können Vorhaben begleiten</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i4')"><input type="radio" name="i4"><span class="acc-rdot"></span><span class="acc-opt-text">Gut – es gibt technisch anschlussfähige Verantwortliche mit Entscheidungs- und Umsetzungskraft</span></label>
+          </div>
+          <div class="acc-notes-lbl">Notizen</div>
+          <textarea class="acc-notes" placeholder="Stichpunktartig Notizen aufschreiben …"></textarea>
+        </div>
+      </div>
+
+      <div class="acc-item" data-acc="i5">
+        <div class="acc-header" onclick="toggleAcc('i5','acc-infra')">
+          <div class="acc-header-left">
+            <div class="acc-num">Frage 5 von 6</div>
+            <div class="acc-question">Wie schnell könnt ihr neue digitale Tools oder Integrationen typischerweise einführen?</div>
+            <div class="acc-sublabel">Gemeint ist der reale Weg von der Entscheidung bis zur produktiven Nutzung — inklusive Freigaben und technischer Umsetzung.</div>
+            <div class="acc-preview" id="prev-i5"></div>
+          </div>
+          <div class="acc-chevron">▾</div>
+        </div>
+        <div class="acc-body">
+          <div class="acc-options">
+            <label class="acc-opt" onclick="pickOpt(this,'i5')"><input type="radio" name="i5"><span class="acc-rdot"></span><span class="acc-opt-text">Sehr langsam – Entscheidungen, Freigaben oder technische Hürden ziehen sich über Monate</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i5')"><input type="radio" name="i5"><span class="acc-rdot"></span><span class="acc-opt-text">Eher langsam – Einführungen dauern meist mehrere Wochen bis Monate</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i5')"><input type="radio" name="i5"><span class="acc-rdot"></span><span class="acc-opt-text">Solide – neue Tools sind in überschaubarer Zeit einführbar</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i5')"><input type="radio" name="i5"><span class="acc-rdot"></span><span class="acc-opt-text">Schnell – neue Tools oder Integrationen können zügig pilotiert und eingeführt werden</span></label>
+          </div>
+          <div class="acc-notes-lbl">Notizen</div>
+          <textarea class="acc-notes" placeholder="Stichpunktartig Notizen aufschreiben …"></textarea>
+        </div>
+      </div>
+
+      <div class="acc-item" data-acc="i6">
+        <div class="acc-header" onclick="toggleAcc('i6','acc-infra')">
+          <div class="acc-header-left">
+            <div class="acc-num">Frage 6 von 6</div>
+            <div class="acc-question">Habt ihr eine tragfähige Umgebung für Automatisierungs- oder KI-Bausteine wie Workflows, Container oder Cloud-Services?</div>
+            <div class="acc-sublabel">Gemeint sind Server, Hosting, Zugriffe und ob solche Komponenten bei euch betrieben werden könnten.</div>
+            <div class="acc-preview" id="prev-i6"></div>
+          </div>
+          <div class="acc-chevron">▾</div>
+        </div>
+        <div class="acc-body">
+          <div class="acc-options">
+            <label class="acc-opt" onclick="pickOpt(this,'i6')"><input type="radio" name="i6"><span class="acc-rdot"></span><span class="acc-opt-text">Nein – es gibt praktisch keine geeignete Laufzeit- oder Hosting-Umgebung</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i6')"><input type="radio" name="i6"><span class="acc-rdot"></span><span class="acc-opt-text">Minimal – Einzelserver oder Altumgebungen existieren, sind aber nur eingeschränkt nutzbar</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i6')"><input type="radio" name="i6"><span class="acc-rdot"></span><span class="acc-opt-text">Grundlegend – eine nutzbare Hosting- oder Cloud-Basis ist vorhanden</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'i6')"><input type="radio" name="i6"><span class="acc-rdot"></span><span class="acc-opt-text">Gut – eine tragfähige Umgebung für Automatisierung und KI kann zügig bereitgestellt oder genutzt werden</span></label>
+          </div>
+          <div class="acc-notes-lbl">Notizen</div>
+          <textarea class="acc-notes" placeholder="Stichpunktartig Notizen aufschreiben …"></textarea>
+        </div>
+      </div>
+
+    </div><!-- /acc-infra -->
+
+    <div class="nav-bar"><button class="btn-back" onclick="goTo(3)">← Zurück</button><button class="btn-next" onclick="goTo(5)">Weiter →</button></div>
+  </div>
+
+  <!-- ── PAGE 5: ORGANISATION ── -->
+  <div class="page" id="page-5">
+    <div class="page-header">
+      <div class="page-icon">🧭</div>
+      <div><div class="page-title">Organisation &amp; Governance</div><div class="page-subtitle">Verantwortung, Priorisierung und Umsetzungskapazität</div></div>
+    </div>
+
+    <p class="acc-hint">Klicke auf eine Frage, um die Antwortoptionen einzublenden. Pro Frage ist genau eine Antwort wählbar.</p>
+
+    <div id="acc-org">
+
+      <div class="acc-item" data-acc="o1">
+        <div class="acc-header" onclick="toggleAcc('o1','acc-org')">
+          <div class="acc-header-left">
+            <div class="acc-num">Frage 1 von 3</div>
+            <div class="acc-question">Gibt es bei euch einen klaren Owner für das Vorhaben?</div>
+            <div class="acc-sublabel">Ohne klaren Owner bleiben Entscheidungen und Zuarbeit oft hängen — wer trägt bei euch die Verantwortung?</div>
+            <div class="acc-preview" id="prev-o1"></div>
+          </div>
+          <div class="acc-chevron">▾</div>
+        </div>
+        <div class="acc-body">
+          <div class="acc-options">
+            <label class="acc-opt" onclick="pickOpt(this,'o1')"><input type="radio" name="o1"><span class="acc-rdot"></span><span class="acc-opt-text">Nein – mehrere Personen reden mit, aber niemand fühlt sich wirklich verantwortlich</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'o1')"><input type="radio" name="o1"><span class="acc-rdot"></span><span class="acc-opt-text">Teilweise – es gibt Ansprechpartner, aber ohne klare Entscheidungskompetenz</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'o1')"><input type="radio" name="o1"><span class="acc-rdot"></span><span class="acc-opt-text">Ja – eine verantwortliche Person ist benannt und kann Themen treiben</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'o1')"><input type="radio" name="o1"><span class="acc-rdot"></span><span class="acc-opt-text">Ja, sehr klar – es gibt einen Owner mit Zeit, Budgetnähe und echter Entscheidungskompetenz</span></label>
+          </div>
+          <div class="acc-notes-lbl">Notizen</div>
+          <textarea class="acc-notes" placeholder="Stichpunktartig Notizen aufschreiben …"></textarea>
+        </div>
+      </div>
+
+      <div class="acc-item" data-acc="o2">
+        <div class="acc-header" onclick="toggleAcc('o2','acc-org')">
+          <div class="acc-header-left">
+            <div class="acc-num">Frage 2 von 3</div>
+            <div class="acc-question">Wie klar priorisiert sind eure KI- oder Automatisierungs-Anwendungsfälle bereits?</div>
+            <div class="acc-sublabel">Offenheit für KI ist ein guter Start — aber habt ihr schon konkrete Ideen, wo ihr anfangen wollt?</div>
+            <div class="acc-preview" id="prev-o2"></div>
+          </div>
+          <div class="acc-chevron">▾</div>
+        </div>
+        <div class="acc-body">
+          <div class="acc-options">
+            <label class="acc-opt" onclick="pickOpt(this,'o2')"><input type="radio" name="o2"><span class="acc-rdot"></span><span class="acc-opt-text">Noch in Orientierung – greifbare Anwendungsfälle werden erst gesammelt</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'o2')"><input type="radio" name="o2"><span class="acc-rdot"></span><span class="acc-opt-text">In Klärung – Ideen sind da, Priorisierung und Business-Bezug werden noch geschärft</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'o2')"><input type="radio" name="o2"><span class="acc-rdot"></span><span class="acc-opt-text">Solide – einige konkrete Anwendungsfälle sind benannt und plausibel</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'o2')"><input type="radio" name="o2"><span class="acc-rdot"></span><span class="acc-opt-text">Sehr klar – priorisierte Anwendungsfälle mit erkennbarem Nutzen und Zielbild sind vorhanden</span></label>
+          </div>
+          <div class="acc-notes-lbl">Notizen</div>
+          <textarea class="acc-notes" placeholder="Stichpunktartig Notizen aufschreiben …"></textarea>
+        </div>
+      </div>
+
+      <div class="acc-item" data-acc="o3">
+        <div class="acc-header" onclick="toggleAcc('o3','acc-org')">
+          <div class="acc-header-left">
+            <div class="acc-num">Frage 3 von 3</div>
+            <div class="acc-question">Wie realistisch habt ihr Zeit und Kapazität für ein KI- oder Readiness-Vorhaben?</div>
+            <div class="acc-sublabel">Die beste Diagnose hilft wenig, wenn im Tagesgeschäft keine Kapazität für die Umsetzung entsteht.</div>
+            <div class="acc-preview" id="prev-o3"></div>
+          </div>
+          <div class="acc-chevron">▾</div>
+        </div>
+        <div class="acc-body">
+          <div class="acc-options">
+            <label class="acc-opt" onclick="pickOpt(this,'o3')"><input type="radio" name="o3"><span class="acc-rdot"></span><span class="acc-opt-text">Kaum – Tagesgeschäft dominiert vollständig, das Vorhaben hätte keine echte Priorität</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'o3')"><input type="radio" name="o3"><span class="acc-rdot"></span><span class="acc-opt-text">Begrenzt – Interesse ist da, aber es gibt keine sauberen Kapazitäten</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'o3')"><input type="radio" name="o3"><span class="acc-rdot"></span><span class="acc-opt-text">Solide – feste Ansprechpartner können Zeit für das Vorhaben reservieren</span></label>
+            <label class="acc-opt" onclick="pickOpt(this,'o3')"><input type="radio" name="o3"><span class="acc-rdot"></span><span class="acc-opt-text">Gut – dedizierte Zeitfenster, Zuarbeit und Commitment sind realistisch vorhanden</span></label>
+          </div>
+          <div class="acc-notes-lbl">Notizen</div>
+          <textarea class="acc-notes" placeholder="Stichpunktartig Notizen aufschreiben …"></textarea>
+        </div>
+      </div>
+
+    </div><!-- /acc-org -->
+
+    <div class="nav-bar"><button class="btn-back" onclick="goTo(4)">← Zurück</button><button class="btn-next" onclick="submitForm()">Fragebogen absenden ✓</button></div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-page" id="success">
+    <div class="success-icon">✅</div>
+    <div class="success-title">Vielen Dank!</div>
+    <p class="success-text">Deine Angaben wurden erfolgreich übermittelt.<br>Wir melden uns in Kürze mit deinem persönlichen AI-Readout-Termin.</p>
+  </div>
+
+</div>
+
+<div class="footer">Hier könnte deine Adresse stehen</div>
+
+<script>
+  let currentPage = 1;
+
+  function goTo(p) {
+    document.getElementById('page-' + currentPage).classList.remove('active');
+    currentPage = p;
+    document.getElementById('page-' + currentPage).classList.add('active');
+    document.querySelectorAll('.step').forEach(s => {
+      const n = parseInt(s.dataset.step);
+      s.classList.toggle('active', n === p);
+      s.classList.toggle('done', n < p);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* Accordion: click header → open this, close others in same group */
+  function toggleAcc(id, groupId) {
+    const item = document.querySelector(`[data-acc="${id}"]`);
+    const isOpen = item.classList.contains('open');
+    document.getElementById(groupId).querySelectorAll('.acc-item').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  /* Pick option inside accordion */
+  function pickOpt(el, accId) {
+    const item = document.querySelector(`[data-acc="${accId}"]`);
+    item.querySelectorAll('.acc-opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    el.querySelector('input').checked = true;
+    const label = el.querySelector('.acc-opt-text').textContent.split('–')[0].trim();
+    const prev = document.getElementById('prev-' + accId);
+    if (prev) prev.textContent = '✓ ' + label;
+  }
+
+  /* Tool rows */
+  let tc = 0;
+  function addToolRow() {
+    tc++;
+    const id = tc;
+    const wrap = document.createElement('div');
+    wrap.innerHTML = `<div class="tool-row" id="tr-${id}">
+      <input type="text" placeholder="z.B. Salesforce, SAP, DATEV...">
+      <input type="text" placeholder="z.B. Ja – REST-API, Nein, Unsicher...">
+      <button type="button" class="btn-remove" onclick="rmTool(${id})" title="Entfernen">✕</button>
+    </div>`;
+    document.getElementById('tools-list').appendChild(wrap);
+  }
+
+  function rmTool(id) {
+    const el = document.getElementById('tr-' + id);
+    if (el) el.parentElement.remove();
+  }
+
+  function submitForm() {
+    document.getElementById('page-5').classList.remove('active');
+    document.getElementById('success').classList.add('active');
+    document.querySelector('.stepper-wrap').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => { addToolRow(); addToolRow(); });
+
+  /* THEME TOGGLE (Light/Dark) */
+  function setTheme(theme) {
+    if (theme === 'dark') document.body.classList.add('dark');
+    else document.body.classList.remove('dark');
+    document.querySelectorAll('.theme-btn').forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
+    try { localStorage.setItem('fragebogen-theme', theme); } catch(e){}
+  }
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.addEventListener('click', () => setTheme(btn.dataset.theme));
+  });
+  try {
+    const saved = localStorage.getItem('fragebogen-theme');
+    if (saved === 'dark' || saved === 'light') setTheme(saved);
+  } catch(e){}
+</script>
+</body>
+</html>
